@@ -118,6 +118,8 @@ export class ProBudgetPanel extends LitElement {
         box-sizing: border-box;
         height: var(--header-height, 56px);
         max-width: 45%;
+        min-width: 0;
+        overflow: hidden;
         padding: 0 32px;
         color: var(--sidebar-text-color);
         text-decoration: none;
@@ -138,6 +140,10 @@ export class ProBudgetPanel extends LitElement {
       nav a[aria-current="page"] {
         color: var(--primary-color);
         border-bottom: 2px solid var(--primary-color);
+      }
+      /* Hover and press feedback is HA's ripple (secondary text colour at 8 % / 12 %). */
+      nav a ha-ripple {
+        --ha-ripple-color: var(--secondary-text-color);
       }
       nav a:focus-visible::before {
         content: "";
@@ -245,6 +251,7 @@ export class ProBudgetPanel extends LitElement {
             >
               <ha-icon .icon=${v.icon}></ha-icon
               ><span class="name">${t(this.hass, `nav.${v.id}` as I18nKey)}</span>
+              <ha-ripple></ha-ripple>
             </a>
           `,
         )}

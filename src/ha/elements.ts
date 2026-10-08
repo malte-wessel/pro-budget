@@ -16,6 +16,7 @@ export const HA_ELEMENTS = {
   button: "ha-button",
   alert: "ha-alert",
   circularProgress: "ha-spinner",
+  ripple: "ha-ripple",
 } as const;
 
 declare global {
