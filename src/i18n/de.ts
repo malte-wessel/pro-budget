@@ -86,6 +86,8 @@ export const de: Partial<Record<I18nKey, string>> = {
   "items.col_user": "Mitglied",
   "items.col_monthly": "Monatlich",
   "items.empty": "Keine passenden Posten.",
+  "items.col_status": "Status",
+  "items.active": "Aktiv",
   "items.inactive": "Inaktiv",
   "item.title": "Titel",
   "item.type": "Typ",

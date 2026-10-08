@@ -1,6 +1,7 @@
 // The slice of the Home Assistant frontend surface the panel uses. There are no published types;
-// keep this file the single place that names HA internals.
+// keep this file the single place that names HA internals (verified against HA 2026.10).
 import type { Connection, HassConfig, HassUser } from "home-assistant-js-websocket";
+import type { TemplateResult } from "lit";
 
 export interface HomeAssistant {
   connection: Connection;
@@ -24,6 +25,13 @@ export interface Route {
   path: string;
 }
 
+/** An entry of the `tabs` of hass-tabs-subpage. */
+export interface PageNavigation {
+  path: string;
+  name: string;
+  iconPath: string;
+}
+
 // ----- ha-form -----
 
 export interface HaFormSchema {
@@ -38,13 +46,50 @@ export interface HaFormSchema {
   column_min_width?: string;
 }
 
-/** Fired by the panel's views to open a dialog or navigate. */
-export interface PanelEvents {
-  "pro-budget-navigate": CustomEvent<{ view: string }>;
+// ----- ha-data-table (through hass-tabs-subpage-data-table) -----
+
+export interface DataTableColumn<R> {
+  title: string;
+  /** The column shown on narrow screens; `extraTemplate` adds a second line under it. */
+  main?: boolean;
+  sortable?: boolean;
+  filterable?: boolean;
+  groupable?: boolean;
+  direction?: "asc" | "desc";
+  type?: "icon" | "icon-button" | "overflow-menu" | "numeric" | "flex";
+  width?: string;
+  minWidth?: string;
+  maxWidth?: string;
+  flex?: number;
+  showNarrow?: boolean;
+  defaultHidden?: boolean;
+  hidden?: boolean;
+  moveable?: boolean;
+  template?: (row: R) => TemplateResult | string;
+  extraTemplate?: (row: R) => TemplateResult | string;
+}
+
+export type DataTableColumns<R> = Record<string, DataTableColumn<R>>;
+
+export interface DataTableSorting {
+  column: string;
+  direction: "asc" | "desc" | null;
+}
+
+/** An entry of ha-icon-overflow-menu's `items`. */
+export interface OverflowMenuItem {
+  path: string;
+  label: string;
+  action: () => void;
+  warning?: boolean;
+  disabled?: boolean;
+  divider?: boolean;
 }
 
 declare global {
   interface HTMLElementEventMap {
     "value-changed": CustomEvent<{ value: Record<string, unknown> }>;
+    "row-click": CustomEvent<{ id: string }>;
+    "user-changed": CustomEvent<{ userId: string }>;
   }
 }

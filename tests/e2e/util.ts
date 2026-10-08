@@ -14,7 +14,9 @@ export async function openPanel(page: Page, view = ""): Promise<void> {
   await page.goto(`/pro-budget/${view}`);
   // The frontend redirects to the login page client-side; wait for either outcome.
   const login = page.getByRole("textbox", { name: "Username" });
-  const loaded = page.locator("pro-budget-panel nav");
+  const loaded = page
+    .locator("pro-budget-panel hass-tabs-subpage, pro-budget-panel hass-tabs-subpage-data-table")
+    .first();
   await expect(login.or(loaded)).toBeVisible({ timeout: 30_000 });
   if (await login.isVisible()) {
     await login.fill(HA_USER);

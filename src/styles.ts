@@ -97,49 +97,6 @@ export const sharedStyles = css`
     font-weight: 500;
     font-variant-numeric: tabular-nums;
   }
-  /* The toolbar under the header, as on HA's settings pages. */
-  .toolbar {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px 16px;
-    min-height: 64px;
-    background: var(--card-background-color);
-    border-bottom: 1px solid var(--divider-color);
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-  .toolbar .search {
-    flex: 1 1 200px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid var(--divider-color);
-    border-radius: 8px;
-    background: var(--card-background-color);
-    max-width: 480px;
-  }
-  .toolbar .search ha-icon {
-    --mdc-icon-size: 20px;
-    color: var(--secondary-text-color);
-  }
-  .toolbar .search input {
-    flex: 1;
-    min-width: 0;
-    border: 0;
-    outline: 0;
-    background: none;
-    font: inherit;
-    color: var(--primary-text-color);
-  }
-  .toolbar .spacer {
-    flex: 1;
-  }
-  .toolbar select,
   .select {
     height: 40px;
     padding: 0 36px 0 12px;
@@ -154,8 +111,24 @@ export const sharedStyles = css`
     -webkit-appearance: none;
     cursor: pointer;
   }
-  .toolbar ha-button {
-    --mdc-theme-primary: var(--primary-color);
+  .toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 16px 0;
+  }
+  .toolbar .spacer {
+    flex: 1;
+  }
+  .members {
+    padding: 12px 16px 0;
+  }
+  .version {
+    padding: 24px;
+    text-align: center;
+    color: var(--secondary-text-color);
+    font-size: 12px;
   }
   .chips {
     display: flex;

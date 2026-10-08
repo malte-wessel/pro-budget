@@ -1,8 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { money, percent } from "../format.ts";
-import type { HomeAssistant } from "../ha/types.ts";
+import type { HomeAssistant, Route } from "../ha/types.ts";
+import { renderMemberChips } from "../members.ts";
+import { tabs } from "../nav.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { BudgetState, MonthStats } from "../types.ts";
@@ -12,9 +14,20 @@ export class ProBudgetOverview extends LitElement {
   @property({ attribute: false }) hass?: HomeAssistant;
   @property({ attribute: false }) budget?: BudgetState;
   @property() userId = "";
+  @property() version = "";
+  @property({ attribute: false }) route?: Route;
+  @property({ type: Boolean }) narrow = false;
   @state() private _stats: MonthStats[] = [];
 
-  static styles = sharedStyles;
+  static styles = [
+    sharedStyles,
+    css`
+      :host {
+        display: block;
+        height: 100%;
+      }
+    `,
+  ];
 
   protected updated(changed: Map<string, unknown>) {
     if (changed.has("budget") || changed.has("userId")) void this._load();
@@ -39,17 +52,33 @@ export class ProBudgetOverview extends LitElement {
     return this.budget?.categories.find((c) => c.id === id)?.name ?? id;
   }
 
+  private _frame(content: unknown) {
+    const chips = renderMemberChips(this.hass, this.budget!, this.userId, { all: true }, (userId) =>
+      this.dispatchEvent(
+        new CustomEvent("user-changed", { detail: { userId }, bubbles: true, composed: true }),
+      ),
+    );
+    return html`
+      <hass-tabs-subpage .hass=${this.hass} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(this.hass, this.route)} main-page>
+        ${chips} ${content}
+      </hass-tabs-subpage>
+    `;
+  }
+
   render() {
     if (!this.budget) return nothing;
     if (this.budget.items.length === 0) {
-      return html`<div class="cards"><ha-card><div class="empty">${t(this.hass, "overview.empty")}</div></ha-card></div>`;
+      return this._frame(
+        html`<div class="cards"><ha-card><div class="empty">${t(this.hass, "overview.empty")}</div></ha-card></div>`,
+      );
     }
-    return html`
+    return this._frame(html`
       <div class="cards">
         <p class="muted small" style="margin:0 0 12px">${t(this.hass, "common.monthly_hint")}</p>
         ${this._stats.map((s, i) => this._renderCurrency(s, i > 0))}
+        <div class="version">Pro Budget v${this.version}</div>
       </div>
-    `;
+    `);
   }
 
   private _renderCurrency(s: MonthStats, other: boolean) {

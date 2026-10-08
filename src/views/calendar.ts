@@ -2,7 +2,9 @@ import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { formatDate, money, monthName, parseIso, signedMoney, toIso } from "../format.ts";
-import type { HomeAssistant } from "../ha/types.ts";
+import type { HomeAssistant, Route } from "../ha/types.ts";
+import { renderMemberChips } from "../members.ts";
+import { tabs } from "../nav.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { BudgetState, Item, OccurrenceDay } from "../types.ts";
@@ -14,6 +16,8 @@ export class ProBudgetCalendar extends LitElement {
   @property({ attribute: false }) hass?: HomeAssistant;
   @property({ attribute: false }) budget?: BudgetState;
   @property() userId = "";
+  @property({ attribute: false }) route?: Route;
+  @property({ type: Boolean }) narrow = false;
   @state() private _view: "agenda" | "month" = "agenda";
   @state() private _month = toIso(new Date()).slice(0, 7);
   @state() private _days: OccurrenceDay[] = [];
@@ -21,6 +25,10 @@ export class ProBudgetCalendar extends LitElement {
   static styles = [
     sharedStyles,
     css`
+      :host {
+        display: block;
+        height: 100%;
+      }
       .day {
         display: flex;
         gap: 16px;
@@ -149,10 +157,23 @@ export class ProBudgetCalendar extends LitElement {
     await this._load();
   }
 
+  private _frame(content: unknown) {
+    const chips = renderMemberChips(this.hass, this.budget!, this.userId, { all: true }, (userId) =>
+      this.dispatchEvent(
+        new CustomEvent("user-changed", { detail: { userId }, bubbles: true, composed: true }),
+      ),
+    );
+    return html`
+      <hass-tabs-subpage .hass=${this.hass} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(this.hass, this.route)} main-page>
+        ${chips} ${content}
+      </hass-tabs-subpage>
+    `;
+  }
+
   render() {
     if (!this.budget) return nothing;
     const h = this.hass;
-    return html`
+    return this._frame(html`
       <div class="toolbar">
         <div class="chips">
           <button class="chip" aria-pressed=${this._view === "agenda"} @click=${() => (this._view = "agenda")}>
@@ -180,7 +201,7 @@ export class ProBudgetCalendar extends LitElement {
       <div class="cards">
         <ha-card>${this._view === "agenda" ? this._renderAgenda() : this._renderMonth()}</ha-card>
       </div>
-    `;
+    `);
   }
 
   private _entry(e: { item_id: string; paid: boolean }, date: string) {

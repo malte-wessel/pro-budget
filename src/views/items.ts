@@ -1,156 +1,213 @@
-import { html, LitElement, nothing } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { mdiDelete, mdiPencil, mdiPlus } from "@mdi/js";
+import { css, html, LitElement, nothing } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { dueLabel, isActiveInMonth, monthlyEquivalent } from "../budget.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
 import type { ProBudgetItemDialog } from "../dialogs/item-dialog.ts";
 import { money } from "../format.ts";
-import type { HomeAssistant } from "../ha/types.ts";
+import type {
+  DataTableColumns,
+  DataTableSorting,
+  HomeAssistant,
+  OverflowMenuItem,
+  Route,
+} from "../ha/types.ts";
 import { t, type I18nKey } from "../i18n.ts";
+import { tabs } from "../nav.ts";
 import { sharedStyles } from "../styles.ts";
-import { renderTable, sortRows, tableStyles, type Column, type Group } from "../table.ts";
-import { ITEM_TYPES, type BudgetState, type Item } from "../types.ts";
+import type { BudgetState, Item } from "../types.ts";
 
 const TYPE_ICONS: Record<Item["type"], string> = {
   earning: "mdi:cash-plus",
   expense: "mdi:cash-minus",
   saving: "mdi:piggy-bank-outline",
 };
-const GROUPINGS = ["category", "user", "type", "none"] as const;
-type Grouping = (typeof GROUPINGS)[number];
 
+/** A row of the data table: the item plus the values the table sorts, filters and groups by. */
+interface Row {
+  id: string;
+  item: Item;
+  icon: string;
+  title: string;
+  type: string;
+  amount: number;
+  monthly: number;
+  recurrence: string;
+  due: string;
+  cost: string;
+  shared: string;
+  category: string;
+  member: string;
+  currency: string;
+  status: string;
+}
+
+/** The items as Home Assistant's data table page: search, grouping, sorting and column settings are HA's. */
 @customElement("pro-budget-items")
 export class ProBudgetItems extends LitElement {
   @property({ attribute: false }) hass?: HomeAssistant;
   @property({ attribute: false }) budget?: BudgetState;
+  @property({ attribute: false }) route?: Route;
   @property({ type: Boolean }) narrow = false;
-  @state() private _search = "";
-  @state() private _type = "";
-  @state() private _user = "";
-  @state() private _grouping: Grouping = "category";
-  @state() private _sortKey = "monthly";
-  @state() private _sortDesc = true;
-  @state() private _collapsed = new Set<string>();
   @query("pro-budget-item-dialog") private _dialog!: ProBudgetItemDialog;
   @query("pro-budget-confirm") private _confirm!: ProBudgetConfirm;
 
-  static styles = [sharedStyles, tableStyles];
+  static styles = [
+    sharedStyles,
+    css`
+      :host {
+        display: block;
+        height: 100%;
+      }
+      /* Two-line main cell on narrow screens, as HA's entities page. */
+      hass-tabs-subpage-data-table {
+        --data-table-row-height: 60px;
+      }
+    `,
+  ];
 
-  private _name(id: string): string {
-    return this.budget?.users.find((u) => u.id === id)?.name ?? t(this.hass, "common.unknown_user");
-  }
-
-  private _category(id: string) {
-    return this.budget?.categories.find((c) => c.id === id);
-  }
-
-  private get _columns(): Column<Item>[] {
-    const h = this.hass;
+  private get _rows(): Row[] {
     const b = this.budget!;
+    const h = this.hass;
     const now = new Date();
-    const cur = (i: Item) => i.currency ?? b.config.currency;
-    return [
-      {
-        key: "icon",
+    const name = (id: string) =>
+      b.users.find((u) => u.id === id)?.name ?? t(h, "common.unknown_user");
+    return b.items.map((item) => {
+      const category = b.categories.find((c) => c.id === item.category_id);
+      return {
+        id: item.id,
+        item,
+        icon: category?.icon ?? TYPE_ICONS[item.type],
+        title: item.title,
+        type: t(h, `type.${item.type}` as I18nKey),
+        amount: item.amount,
+        monthly: monthlyEquivalent(item.amount, item.recurrence),
+        category: category?.name ?? "",
+        member: name(item.user_id),
+        currency: item.currency ?? b.config.currency,
+        recurrence: t(h, `recurrence.${item.recurrence}` as I18nKey),
+        due: dueLabel(h, item),
+        cost: t(h, `cost_kind.${item.cost_kind}` as I18nKey),
+        shared: item.shared ? t(h, "overview.shared") : t(h, "overview.personal"),
+        status: isActiveInMonth(item, now.getFullYear(), now.getMonth() + 1)
+          ? t(h, "items.active")
+          : t(h, "items.inactive"),
+      };
+    });
+  }
+
+  private get _columns(): DataTableColumns<Row> {
+    const h = this.hass;
+    return {
+      icon: {
         title: "",
-        render: (i) =>
-          html`<ha-icon .icon=${this._category(i.category_id)?.icon ?? TYPE_ICONS[i.type]}></ha-icon>`,
+        type: "icon",
+        showNarrow: true,
+        moveable: false,
+        template: (r) => html`<ha-icon .icon=${r.icon}></ha-icon>`,
       },
-      {
-        key: "title",
+      title: {
         title: t(h, "items.col_title"),
-        width: "40%",
-        sort: (i) => i.title.toLowerCase(),
-        render: (i) => html`
-          ${i.title}
-          ${i.shared ? html`<span class="pill">${t(h, "overview.shared")}</span>` : nothing}
-          ${i.cost_kind === "variable" ? html`<span class="pill">${t(h, "cost_kind.variable")}</span>` : nothing}
-          ${isActiveInMonth(i, now.getFullYear(), now.getMonth() + 1) ? nothing : html`<span class="pill">${t(h, "items.inactive")}</span>`}
-          <span class="secondary">${t(h, `type.${i.type}` as I18nKey)} · ${t(h, `recurrence.${i.recurrence}` as I18nKey)} · ${dueLabel(h, i)}</span>
+        main: true, // no template: on narrow screens HA shows the other columns under it
+        sortable: true,
+        filterable: true,
+        direction: "asc",
+        flex: 2,
+      },
+      amount: {
+        title: t(h, "items.col_amount"),
+        type: "numeric",
+        sortable: true,
+        minWidth: "120px",
+        template: (r) => money(h, r.amount, r.currency),
+      },
+      monthly: {
+        title: t(h, "items.col_monthly"),
+        type: "numeric",
+        sortable: true,
+        minWidth: "120px",
+        template: (r) => html`<span class=${r.item.type}>${money(h, r.monthly, r.currency)}</span>`,
+      },
+      recurrence: {
+        title: t(h, "items.col_recurrence"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "120px",
+      },
+      due: { title: t(h, "items.col_due"), filterable: true, minWidth: "120px" },
+      type: {
+        title: t(h, "items.filter_type"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "100px",
+      },
+      category: {
+        title: t(h, "items.col_category"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "120px",
+      },
+      member: {
+        title: t(h, "items.col_user"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "120px",
+      },
+      status: {
+        title: t(h, "items.col_status"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "100px",
+        defaultHidden: true,
+      },
+      cost: {
+        title: t(h, "item.cost_kind"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "100px",
+        defaultHidden: true,
+      },
+      shared: {
+        title: t(h, "item.shared"),
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        minWidth: "100px",
+        defaultHidden: true,
+      },
+      actions: {
+        title: "",
+        type: "overflow-menu",
+        showNarrow: true,
+        moveable: false,
+        template: (r) => html`
+          <ha-icon-overflow-menu .hass=${h} .narrow=${this.narrow} .items=${this._menu(r.item)}></ha-icon-overflow-menu>
         `,
       },
+    };
+  }
+
+  private _menu(item: Item): OverflowMenuItem[] {
+    return [
       {
-        key: "amount",
-        title: t(h, "items.col_amount"),
-        numeric: true,
-        sort: (i) => i.amount,
-        render: (i) => money(h, i.amount, cur(i)),
+        path: mdiPencil,
+        label: t(this.hass, "common.edit"),
+        action: () => this._dialog.open(item),
       },
       {
-        key: "monthly",
-        title: t(h, "items.col_monthly"),
-        numeric: true,
-        sort: (i) => monthlyEquivalent(i.amount, i.recurrence),
-        render: (i) =>
-          html`<span class=${i.type}>${money(h, monthlyEquivalent(i.amount, i.recurrence), cur(i))}</span>`,
-      },
-      {
-        key: "category",
-        title: t(h, "items.col_category"),
-        optional: true,
-        sort: (i) => this._category(i.category_id)?.name ?? "",
-        render: (i) => this._category(i.category_id)?.name ?? "",
-      },
-      {
-        key: "user",
-        title: t(h, "items.col_user"),
-        optional: true,
-        sort: (i) => this._name(i.user_id),
-        render: (i) => this._name(i.user_id),
+        path: mdiDelete,
+        label: t(this.hass, "common.delete"),
+        warning: true,
+        action: () => void this._delete(item),
       },
     ];
-  }
-
-  private get _groups(): Group<Item>[] {
-    const b = this.budget!;
-    const q = this._search.trim().toLowerCase();
-    const rows = b.items
-      .filter((i) => !this._type || i.type === this._type)
-      .filter((i) => !this._user || i.user_id === this._user)
-      .filter((i) => !q || i.title.toLowerCase().includes(q));
-    const column = this._columns.find((c) => c.key === this._sortKey);
-    const sorted = sortRows(rows, column, this._sortDesc);
-    if (this._grouping === "none") return [{ key: "all", title: "", rows: sorted }];
-    const keyOf = (i: Item) =>
-      this._grouping === "category"
-        ? i.category_id
-        : this._grouping === "user"
-          ? i.user_id
-          : i.type;
-    const titleOf = (key: string) =>
-      this._grouping === "category"
-        ? (this._category(key)?.name ?? key)
-        : this._grouping === "user"
-          ? this._name(key)
-          : t(this.hass, `type.${key}.plural` as I18nKey);
-    const order =
-      this._grouping === "category"
-        ? b.categories.map((c) => c.id)
-        : this._grouping === "user"
-          ? b.users.map((u) => u.id)
-          : [...ITEM_TYPES];
-    const map = new Map<string, Item[]>();
-    for (const i of sorted) map.set(keyOf(i), [...(map.get(keyOf(i)) ?? []), i]);
-    const keys = [
-      ...order.filter((k) => map.has(k)),
-      ...[...map.keys()].filter((k) => !order.includes(k)),
-    ];
-    return keys.map((key) => ({ key, title: titleOf(key), rows: map.get(key)! }));
-  }
-
-  private _sort(key: string) {
-    if (this._sortKey === key) this._sortDesc = !this._sortDesc;
-    else {
-      this._sortKey = key;
-      this._sortDesc = key === "amount" || key === "monthly";
-    }
-  }
-
-  private _toggleGroup(key: string) {
-    const next = new Set(this._collapsed);
-    if (next.has(key)) next.delete(key);
-    else next.add(key);
-    this._collapsed = next;
   }
 
   private async _delete(item: Item) {
@@ -159,65 +216,39 @@ export class ProBudgetItems extends LitElement {
     await api.deleteItem(this.hass!, item.id);
   }
 
+  private _rowClicked(e: CustomEvent<{ id: string }>) {
+    const item = this.budget?.items.find((i) => i.id === e.detail.id);
+    if (item) this._dialog.open(item);
+  }
+
   render() {
     if (!this.budget) return nothing;
     const h = this.hass;
-    const b = this.budget;
+    const sorting: DataTableSorting = { column: "monthly", direction: "desc" };
     return html`
-      <div class="toolbar">
-        <label class="search">
-          <ha-icon icon="mdi:magnify"></ha-icon>
-          <input
-            type="search"
-            placeholder=${t(h, "items.search", { count: b.items.length })}
-            .value=${this._search}
-            @input=${(e: Event) => (this._search = (e.target as HTMLInputElement).value)}
-          />
-        </label>
-        <select class="select" @change=${(e: Event) => (this._type = (e.target as HTMLSelectElement).value)}>
-          <option value="">${t(h, "items.filter_type")}: ${t(h, "common.all")}</option>
-          ${ITEM_TYPES.map((v) => html`<option value=${v} ?selected=${v === this._type}>${t(h, `type.${v}.plural` as I18nKey)}</option>`)}
-        </select>
-        ${
-          b.users.length > 1
-            ? html`
-              <select class="select" @change=${(e: Event) => (this._user = (e.target as HTMLSelectElement).value)}>
-                <option value="">${t(h, "items.filter_user")}: ${t(h, "common.all")}</option>
-                ${b.users.map((u) => html`<option value=${u.id} ?selected=${u.id === this._user}>${u.name}</option>`)}
-              </select>
-            `
-            : nothing
-        }
-        <select class="select" @change=${(e: Event) => (this._grouping = (e.target as HTMLSelectElement).value as Grouping)}>
-          ${GROUPINGS.map((g) => html`<option value=${g} ?selected=${g === this._grouping}>${t(h, "items.group_by")}: ${t(h, `items.group.${g}` as I18nKey)}</option>`)}
-        </select>
-        <span class="spacer"></span>
-        <ha-button @click=${() => this._dialog.open()}>
-          <ha-icon slot="start" icon="mdi:plus"></ha-icon>${this.narrow ? nothing : t(h, "items.add")}
+      <hass-tabs-subpage-data-table
+        .hass=${h}
+        .narrow=${this.narrow}
+        .route=${this.route}
+        .tabs=${tabs(h, this.route)}
+        main-page
+        has-fab
+        clickable
+        id="id"
+        .columns=${this._columns}
+        .data=${this._rows}
+        .searchLabel=${t(h, "items.search", { count: this.budget.items.length })}
+        .noDataText=${t(h, "items.empty")}
+        .initialGroupColumn=${"category"}
+        .initialSorting=${sorting}
+        @row-click=${this._rowClicked}
+      >
+        <ha-button slot="fab" size="l" variant="brand" appearance="accent" @click=${() => this._dialog.open()}>
+          <ha-svg-icon slot="start" .path=${mdiPlus}></ha-svg-icon>
+          ${t(h, "items.add")}
         </ha-button>
-      </div>
-      ${renderTable<Item>({
-        columns: this._columns,
-        groups: this._groups,
-        rowKey: (i) => i.id,
-        onRowClick: (i) => this._dialog.open(i),
-        menu: [
-          { label: t(h, "common.edit"), icon: "mdi:pencil", onSelect: (i) => this._dialog.open(i) },
-          {
-            label: t(h, "common.delete"),
-            icon: "mdi:delete",
-            danger: true,
-            onSelect: (i) => this._delete(i),
-          },
-        ],
-        collapsed: this._collapsed,
-        onToggleGroup: (k) => this._toggleGroup(k),
-        sortKey: this._sortKey,
-        sortDesc: this._sortDesc,
-        onSort: (k) => this._sort(k),
-        emptyText: t(h, "items.empty"),
-      })}
-      <pro-budget-item-dialog .hass=${h} .budget=${b}></pro-budget-item-dialog>
+      </hass-tabs-subpage-data-table>
+      <pro-budget-item-dialog .hass=${h} .budget=${this.budget}></pro-budget-item-dialog>
       <pro-budget-confirm .hass=${h}></pro-budget-confirm>
     `;
   }

@@ -86,6 +86,8 @@ export const en = {
   "items.col_user": "Member",
   "items.col_monthly": "Monthly",
   "items.empty": "No items match.",
+  "items.col_status": "Status",
+  "items.active": "Active",
   "items.inactive": "Inactive",
   "item.title": "Title",
   "item.type": "Type",

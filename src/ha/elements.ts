@@ -17,6 +17,10 @@ export const HA_ELEMENTS = {
   alert: "ha-alert",
   circularProgress: "ha-spinner",
   ripple: "ha-ripple",
+  subpage: "hass-tabs-subpage",
+  subpageDataTable: "hass-tabs-subpage-data-table",
+  overflowMenu: "ha-icon-overflow-menu",
+  svgIcon: "ha-svg-icon",
 } as const;
 
 declare global {
@@ -41,8 +45,9 @@ export function loadHaElements(): Promise<void> {
       // Without the helpers the elements may still be defined; fall through to the wait.
     }
     await Promise.all(
-      [HA_ELEMENTS.form, HA_ELEMENTS.dialog].map((tag) =>
-        Promise.race([customElements.whenDefined(tag), new Promise((r) => setTimeout(r, 4000))]),
+      [HA_ELEMENTS.form, HA_ELEMENTS.dialog, HA_ELEMENTS.subpage, HA_ELEMENTS.subpageDataTable].map(
+        (tag) =>
+          Promise.race([customElements.whenDefined(tag), new Promise((r) => setTimeout(r, 4000))]),
       ),
     );
   })();

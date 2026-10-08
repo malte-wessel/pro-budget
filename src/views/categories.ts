@@ -1,26 +1,101 @@
-import { html, LitElement, nothing } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { mdiDelete, mdiPencil, mdiPlus } from "@mdi/js";
+import { css, html, LitElement, nothing } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import { api } from "../api.ts";
 import type { ProBudgetCategoryDialog } from "../dialogs/category-dialog.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
-import type { HomeAssistant } from "../ha/types.ts";
+import type { DataTableColumns, HomeAssistant, OverflowMenuItem, Route } from "../ha/types.ts";
 import { t } from "../i18n.ts";
+import { tabs } from "../nav.ts";
 import { sharedStyles } from "../styles.ts";
-import { renderTable, tableStyles, type Column } from "../table.ts";
 import type { BudgetState, Category } from "../types.ts";
+
+interface Row {
+  id: string;
+  category: Category;
+  icon: string | null;
+  name: string;
+  items: number;
+}
 
 @customElement("pro-budget-categories")
 export class ProBudgetCategories extends LitElement {
   @property({ attribute: false }) hass?: HomeAssistant;
   @property({ attribute: false }) budget?: BudgetState;
-  @state() private _search = "";
+  @property({ attribute: false }) route?: Route;
+  @property({ type: Boolean }) narrow = false;
   @query("pro-budget-category-dialog") private _dialog!: ProBudgetCategoryDialog;
   @query("pro-budget-confirm") private _confirm!: ProBudgetConfirm;
 
-  static styles = [sharedStyles, tableStyles];
+  static styles = [
+    sharedStyles,
+    css`
+      :host {
+        display: block;
+        height: 100%;
+      }
+    `,
+  ];
 
-  private _count(c: Category): number {
-    return this.budget?.items.filter((i) => i.category_id === c.id).length ?? 0;
+  private get _rows(): Row[] {
+    const b = this.budget!;
+    return b.categories.map((category) => ({
+      id: category.id,
+      category,
+      icon: category.icon,
+      name: category.name,
+      items: b.items.filter((i) => i.category_id === category.id).length,
+    }));
+  }
+
+  private get _columns(): DataTableColumns<Row> {
+    const h = this.hass;
+    return {
+      icon: {
+        title: "",
+        type: "icon",
+        showNarrow: true,
+        moveable: false,
+        template: (r) => (r.icon ? html`<ha-icon .icon=${r.icon}></ha-icon>` : ""),
+      },
+      name: {
+        title: t(h, "categories.name"),
+        main: true,
+        sortable: true,
+        filterable: true,
+        direction: "asc",
+        flex: 2,
+      },
+      items: { title: t(h, "nav.items"), type: "numeric", sortable: true, minWidth: "100px" },
+      actions: {
+        title: "",
+        type: "overflow-menu",
+        showNarrow: true,
+        moveable: false,
+        template: (r) => html`
+          <ha-icon-overflow-menu .hass=${h} .narrow=${this.narrow} .items=${this._menu(r)}></ha-icon-overflow-menu>
+        `,
+      },
+    };
+  }
+
+  private _menu(r: Row): OverflowMenuItem[] {
+    return [
+      {
+        path: mdiPencil,
+        label: t(this.hass, "common.edit"),
+        action: () => this._dialog.open(r.category),
+      },
+      {
+        path: mdiDelete,
+        label: r.items
+          ? t(this.hass, "categories.in_use", { count: r.items })
+          : t(this.hass, "common.delete"),
+        warning: true,
+        disabled: r.items > 0,
+        action: () => void this._delete(r.category),
+      },
+    ];
   }
 
   private async _delete(c: Category) {
@@ -29,60 +104,35 @@ export class ProBudgetCategories extends LitElement {
     await api.deleteCategory(this.hass!, c.id);
   }
 
+  private _rowClicked(e: CustomEvent<{ id: string }>) {
+    const category = this.budget?.categories.find((c) => c.id === e.detail.id);
+    if (category) this._dialog.open(category);
+  }
+
   render() {
     if (!this.budget) return nothing;
     const h = this.hass;
-    const q = this._search.trim().toLowerCase();
-    const rows = this.budget.categories.filter((c) => !q || c.name.toLowerCase().includes(q));
-    const columns: Column<Category>[] = [
-      {
-        key: "icon",
-        title: "",
-        render: (c) => (c.icon ? html`<ha-icon .icon=${c.icon}></ha-icon>` : nothing),
-      },
-      { key: "name", title: t(h, "categories.name"), render: (c) => c.name },
-      {
-        key: "items",
-        title: t(h, "nav.items"),
-        numeric: true,
-        render: (c) => String(this._count(c)),
-      },
-    ];
     return html`
-      <div class="toolbar">
-        <label class="search">
-          <ha-icon icon="mdi:magnify"></ha-icon>
-          <input
-            type="search"
-            placeholder=${t(h, "categories.search", { count: this.budget.categories.length })}
-            .value=${this._search}
-            @input=${(e: Event) => (this._search = (e.target as HTMLInputElement).value)}
-          />
-        </label>
-        <span class="spacer"></span>
-        <ha-button @click=${() => this._dialog.open()}>
-          <ha-icon slot="start" icon="mdi:plus"></ha-icon>${t(h, "categories.add")}
+      <hass-tabs-subpage-data-table
+        .hass=${h}
+        .narrow=${this.narrow}
+        .route=${this.route}
+        .tabs=${tabs(h, this.route)}
+        main-page
+        has-fab
+        clickable
+        id="id"
+        .columns=${this._columns}
+        .data=${this._rows}
+        .searchLabel=${t(h, "categories.search", { count: this.budget.categories.length })}
+        .noDataText=${t(h, "items.empty")}
+        @row-click=${this._rowClicked}
+      >
+        <ha-button slot="fab" size="l" variant="brand" appearance="accent" @click=${() => this._dialog.open()}>
+          <ha-svg-icon slot="start" .path=${mdiPlus}></ha-svg-icon>
+          ${t(h, "categories.add")}
         </ha-button>
-      </div>
-      ${renderTable<Category>({
-        columns,
-        groups: [{ key: "all", title: "", rows }],
-        rowKey: (c) => c.id,
-        onRowClick: (c) => this._dialog.open(c),
-        menu: [
-          { label: t(h, "common.edit"), icon: "mdi:pencil", onSelect: (c) => this._dialog.open(c) },
-          {
-            label: t(h, "common.delete"),
-            icon: "mdi:delete",
-            danger: true,
-            disabled: (c) => this._count(c) > 0,
-            onSelect: (c) => this._delete(c),
-          },
-        ],
-        collapsed: new Set(),
-        onToggleGroup: () => undefined,
-        emptyText: t(h, "items.empty"),
-      })}
+      </hass-tabs-subpage-data-table>
       <pro-budget-category-dialog .hass=${h}></pro-budget-category-dialog>
       <pro-budget-confirm .hass=${h}></pro-budget-confirm>
     `;

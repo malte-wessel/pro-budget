@@ -3,7 +3,9 @@ import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { dueLabel } from "../budget.ts";
 import { money, monthName, percent } from "../format.ts";
-import type { HomeAssistant } from "../ha/types.ts";
+import type { HomeAssistant, Route } from "../ha/types.ts";
+import { renderMemberChips } from "../members.ts";
+import { tabs } from "../nav.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { BudgetState, InsightGroup, Insights, Item } from "../types.ts";
@@ -13,12 +15,18 @@ export class ProBudgetInsights extends LitElement {
   @property({ attribute: false }) hass?: HomeAssistant;
   @property({ attribute: false }) budget?: BudgetState;
   @property() userId = "";
+  @property({ attribute: false }) route?: Route;
+  @property({ type: Boolean }) narrow = false;
   @state() private _year = new Date().getFullYear();
   @state() private _insights?: Insights;
 
   static styles = [
     sharedStyles,
     css`
+      :host {
+        display: block;
+        height: 100%;
+      }
       .months {
         display: grid;
         grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -80,6 +88,24 @@ export class ProBudgetInsights extends LitElement {
     return this.budget?.items.find((i) => i.id === id);
   }
 
+  private _frame(content: unknown) {
+    const chips = renderMemberChips(
+      this.hass,
+      this.budget!,
+      this.userId,
+      { all: false },
+      (userId) =>
+        this.dispatchEvent(
+          new CustomEvent("user-changed", { detail: { userId }, bubbles: true, composed: true }),
+        ),
+    );
+    return html`
+      <hass-tabs-subpage .hass=${this.hass} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(this.hass, this.route)} main-page>
+        ${chips} ${content}
+      </hass-tabs-subpage>
+    `;
+  }
+
   render() {
     if (!this.budget) return nothing;
     const h = this.hass;
@@ -88,8 +114,10 @@ export class ProBudgetInsights extends LitElement {
     const m = (c: number) => money(h, c, cur);
     const user = this.budget.users.find((u) => u.id === this._effectiveUser);
     if (!user)
-      return html`<ha-card><div class="empty">${t(h, "insights.no_member")}</div></ha-card>`;
-    return html`
+      return this._frame(
+        html`<div class="cards"><ha-card><div class="empty">${t(h, "insights.no_member")}</div></ha-card></div>`,
+      );
+    return this._frame(html`
       <div class="toolbar">
         <strong>${user.name}</strong>
         <span class="spacer"></span>
@@ -139,7 +167,7 @@ export class ProBudgetInsights extends LitElement {
             </div>
           `
       }
-    `;
+    `);
   }
 
   private _renderMonths(i: Insights) {
