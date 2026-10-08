@@ -956,13 +956,14 @@ var xt=Object.defineProperty;var wt=Object.getOwnPropertyDescriptor;var m=(n,t,e
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      /* Sized by the tabs (--header-height), overflowing the toolbar padding as in HA; the
+         header's own padding must not clip the underline. */
       nav {
         display: flex;
         flex: 1;
         justify-content: center;
         overflow: hidden;
         font-size: var(--ha-font-size-m, 14px);
-        height: 100%;
       }
       nav a {
         display: flex;
