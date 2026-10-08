@@ -1,0 +1,19 @@
+# Home Assistant configuration of the devcontainer: a minimal instance with the integration mounted
+# at /config/custom_components/pro_budget. Add it under Settings → Devices & services → Add integration.
+default_config:
+
+homeassistant:
+  name: Pro Budget dev
+  latitude: 51.23
+  longitude: 6.78
+  elevation: 40
+  unit_system: metric
+  time_zone: Europe/Berlin
+  currency: EUR
+  country: DE
+  language: en
+
+logger:
+  default: warning
+  logs:
+    custom_components.pro_budget: debug

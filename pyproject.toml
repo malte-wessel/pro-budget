@@ -1,0 +1,63 @@
+[project]
+name = "pro-budget"
+version = "0.1.0"
+description = "Pro Budget – household budget planning for Home Assistant"
+requires-python = ">=3.14.2,<3.15"
+license = "MIT"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "pytest-homeassistant-custom-component==0.13.370",
+  "home-assistant-frontend==20260930.1",  # the frontend component needs it in tests
+  "ruff==0.16.10",
+  "mypy==2.4.0",
+]
+
+[tool.uv]
+package = false
+prerelease = "allow"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "ARG001",                # HA callbacks receive arguments they may not use
+  "ANN401",                # Any is fine for JSON-ish payloads and generic wrappers
+  "D203", "D213",          # conflicting docstring styles; we use D211 + D212
+  "COM812",                # handled by the formatter
+  "TRY003", "EM101", "EM102",
+  "PLR2004",               # magic numbers in budget maths are documented inline
+  "CPY001",                # no per-file copyright headers; LICENSE covers the repo
+  "TC001", "TC002", "TC003",  # HA style: runtime imports, no TYPE_CHECKING blocks
+  "RUF002", "RUF003",      # en dashes in docstrings and comments are fine
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "D", "ANN", "PLR", "ARG001", "SLF001", "INP001", "PT022"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["custom_components.pro_budget"]
+force-sort-within-sections = true
+combine-as-imports = true
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+warn_unreachable = true
+show_error_codes = true
+explicit_package_bases = true
+namespace_packages = true
+
+[[tool.mypy.overrides]]
+module = ["pytest_homeassistant_custom_component.*"]
+ignore_missing_imports = true

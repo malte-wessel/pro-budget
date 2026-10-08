@@ -1,0 +1,6 @@
+{
+  "name": "Pro Budget",
+  "render_readme": true,
+  "hide_default_branch": true,
+  "homeassistant": "2026.10.0"
+}

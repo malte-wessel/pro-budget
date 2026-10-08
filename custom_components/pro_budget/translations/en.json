@@ -1,0 +1,303 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pro Budget",
+        "description": "Adds the Budget panel to the sidebar. Items and categories are managed there."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Already configured. Only a single configuration is possible."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Household",
+        "data": {
+          "members": "Household members",
+          "lead_days": "Days ahead a payment counts as upcoming",
+          "currency": "Currency (leave empty to use Home Assistant's)"
+        },
+        "data_description": {
+          "members": "Users who appear in the budget. Leave empty for every active user."
+        }
+      }
+    }
+  },
+  "selector": {
+    "item_type": {
+      "options": {
+        "earning": "Earning",
+        "expense": "Expense",
+        "saving": "Saving"
+      }
+    },
+    "recurrence": {
+      "options": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "biweekly": "Every two weeks",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "semi_annually": "Semi-annually",
+        "annually": "Annually"
+      }
+    },
+    "cost_kind": {
+      "options": {
+        "fixed": "Fixed",
+        "variable": "Variable"
+      }
+    },
+    "payment_method": {
+      "options": {
+        "direct_debit": "Direct debit",
+        "standing_order": "Standing order",
+        "manual": "Manual / bank transfer",
+        "credit_card": "Credit card",
+        "paypal": "PayPal"
+      }
+    }
+  },
+  "services": {
+    "add_item": {
+      "name": "Add item",
+      "description": "Adds a recurring earning, expense or saving. Returns the new item id.",
+      "fields": {
+        "title": {
+          "name": "Title",
+          "description": "Name of the item."
+        },
+        "type": {
+          "name": "Type",
+          "description": "Earning, expense or saving."
+        },
+        "amount": {
+          "name": "Amount",
+          "description": "Amount per occurrence, in the currency's major unit (e.g. 12.50)."
+        },
+        "recurrence": {
+          "name": "Recurrence",
+          "description": "How often the item is due."
+        },
+        "due_day": {
+          "name": "Due day",
+          "description": "Weekday (1 = Monday … 7 = Sunday) for weekly items, day of month otherwise. Not used for daily items."
+        },
+        "due_month": {
+          "name": "Due month",
+          "description": "First month (1-12) the item is due; quarterly and longer recurrences only."
+        },
+        "category": {
+          "name": "Category",
+          "description": "Category name, as shown in the panel."
+        },
+        "category_id": {
+          "name": "Category id",
+          "description": "Category id, instead of the name."
+        },
+        "cost_kind": {
+          "name": "Cost kind",
+          "description": "Fixed costs recur with the same amount; variable ones are estimates."
+        },
+        "shared": {
+          "name": "Shared",
+          "description": "A shared household cost (counts for fairness)."
+        },
+        "user_id": {
+          "name": "User",
+          "description": "Home Assistant user id who pays or receives. Defaults to the calling user."
+        },
+        "payment_method": {
+          "name": "Payment method",
+          "description": "Manual items appear on the to-do list."
+        },
+        "currency": {
+          "name": "Currency",
+          "description": "ISO 4217 code; defaults to the household currency."
+        },
+        "start": {
+          "name": "Start",
+          "description": "First day the item counts."
+        },
+        "end": {
+          "name": "End",
+          "description": "Last day the item counts."
+        }
+      }
+    },
+    "update_item": {
+      "name": "Update item",
+      "description": "Changes fields of an existing item. Only the given fields change.",
+      "fields": {
+        "item_id": {
+          "name": "Item id",
+          "description": "The item to change."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Name of the item."
+        },
+        "type": {
+          "name": "Type",
+          "description": "Earning, expense or saving."
+        },
+        "amount": {
+          "name": "Amount",
+          "description": "Amount per occurrence, in the currency's major unit."
+        },
+        "recurrence": {
+          "name": "Recurrence",
+          "description": "How often the item is due."
+        },
+        "due_day": {
+          "name": "Due day",
+          "description": "Weekday (1-7) for weekly items, day of month otherwise."
+        },
+        "due_month": {
+          "name": "Due month",
+          "description": "First month (1-12) the item is due."
+        },
+        "category": {
+          "name": "Category",
+          "description": "Category name."
+        },
+        "category_id": {
+          "name": "Category id",
+          "description": "Category id."
+        },
+        "cost_kind": {
+          "name": "Cost kind",
+          "description": "Fixed or variable."
+        },
+        "shared": {
+          "name": "Shared",
+          "description": "A shared household cost."
+        },
+        "user_id": {
+          "name": "User",
+          "description": "Home Assistant user id who pays or receives."
+        },
+        "payment_method": {
+          "name": "Payment method",
+          "description": "How the item is paid."
+        },
+        "currency": {
+          "name": "Currency",
+          "description": "ISO 4217 code."
+        },
+        "start": {
+          "name": "Start",
+          "description": "First day the item counts."
+        },
+        "end": {
+          "name": "End",
+          "description": "Last day the item counts."
+        }
+      }
+    },
+    "remove_item": {
+      "name": "Remove item",
+      "description": "Deletes an item and its paid marks.",
+      "fields": {
+        "item_id": {
+          "name": "Item id",
+          "description": "The item to delete."
+        }
+      }
+    },
+    "mark_paid": {
+      "name": "Mark paid",
+      "description": "Marks one occurrence of an item as paid.",
+      "fields": {
+        "item_id": {
+          "name": "Item id",
+          "description": "The item."
+        },
+        "date": {
+          "name": "Date",
+          "description": "The occurrence date; defaults to today."
+        }
+      }
+    },
+    "unmark_paid": {
+      "name": "Unmark paid",
+      "description": "Removes the paid mark of one occurrence.",
+      "fields": {
+        "item_id": {
+          "name": "Item id",
+          "description": "The item."
+        },
+        "date": {
+          "name": "Date",
+          "description": "The occurrence date; defaults to today."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "item_not_found": {
+      "message": "No item with id {item_id}."
+    },
+    "invalid_item": {
+      "message": "Invalid item: {error}"
+    },
+    "unknown_category": {
+      "message": "No category named \"{name}\"."
+    },
+    "category_required": {
+      "message": "A category is required."
+    },
+    "user_required": {
+      "message": "A user is required when the service is not called by a user."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "income": {
+        "name": "Income"
+      },
+      "expenses": {
+        "name": "Expenses"
+      },
+      "savings": {
+        "name": "Savings"
+      },
+      "remaining": {
+        "name": "Remaining"
+      },
+      "savings_rate": {
+        "name": "Savings rate"
+      },
+      "fixed_cost_rate": {
+        "name": "Fixed cost rate"
+      },
+      "due_this_month": {
+        "name": "Due this month"
+      },
+      "next_payment": {
+        "name": "Next payment"
+      },
+      "member_balance": {
+        "name": "{name} balance"
+      },
+      "member_next_payment": {
+        "name": "{name} next payment"
+      }
+    },
+    "calendar": {
+      "calendar": {
+        "name": "Payments"
+      },
+      "member_calendar": {
+        "name": "{name} payments"
+      }
+    },
+    "todo": {
+      "manual_payments": {
+        "name": "Manual payments"
+      }
+    }
+  }
+}

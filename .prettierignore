@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+custom_components/pro_budget/frontend/
+.venv/
+coverage/
+test-results/
+playwright-report/
+uv.lock
+tests/fixtures/

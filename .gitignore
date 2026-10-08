@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+test-results/
+playwright-report/
+test/ha/.storage/

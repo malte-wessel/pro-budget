@@ -1,0 +1,303 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pro Budget",
+        "description": "Fügt das Budget-Panel zur Seitenleiste hinzu. Posten und Kategorien werden dort verwaltet."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Bereits konfiguriert. Es ist nur eine einzige Konfiguration möglich."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Haushalt",
+        "data": {
+          "members": "Haushaltsmitglieder",
+          "lead_days": "Tage im Voraus, ab denen eine Zahlung als anstehend gilt",
+          "currency": "Währung (leer lassen für die von Home Assistant)"
+        },
+        "data_description": {
+          "members": "Benutzer, die im Budget erscheinen. Leer lassen für alle aktiven Benutzer."
+        }
+      }
+    }
+  },
+  "selector": {
+    "item_type": {
+      "options": {
+        "earning": "Einnahme",
+        "expense": "Ausgabe",
+        "saving": "Sparen"
+      }
+    },
+    "recurrence": {
+      "options": {
+        "daily": "Täglich",
+        "weekly": "Wöchentlich",
+        "biweekly": "Alle zwei Wochen",
+        "monthly": "Monatlich",
+        "quarterly": "Vierteljährlich",
+        "semi_annually": "Halbjährlich",
+        "annually": "Jährlich"
+      }
+    },
+    "cost_kind": {
+      "options": {
+        "fixed": "Fix",
+        "variable": "Variabel"
+      }
+    },
+    "payment_method": {
+      "options": {
+        "direct_debit": "Lastschrift",
+        "standing_order": "Dauerauftrag",
+        "manual": "Manuell / Überweisung",
+        "credit_card": "Kreditkarte",
+        "paypal": "PayPal"
+      }
+    }
+  },
+  "services": {
+    "add_item": {
+      "name": "Posten hinzufügen",
+      "description": "Fügt eine wiederkehrende Einnahme, Ausgabe oder Sparrate hinzu. Gibt die neue Posten-ID zurück.",
+      "fields": {
+        "title": {
+          "name": "Titel",
+          "description": "Name des Postens."
+        },
+        "type": {
+          "name": "Typ",
+          "description": "Einnahme, Ausgabe oder Sparen."
+        },
+        "amount": {
+          "name": "Betrag",
+          "description": "Betrag je Fälligkeit in der Hauptwährungseinheit (z. B. 12,50)."
+        },
+        "recurrence": {
+          "name": "Turnus",
+          "description": "Wie oft der Posten fällig ist."
+        },
+        "due_day": {
+          "name": "Fälligkeitstag",
+          "description": "Wochentag (1 = Montag … 7 = Sonntag) bei wöchentlichen Posten, sonst Tag im Monat. Nicht bei täglichen Posten."
+        },
+        "due_month": {
+          "name": "Fälligkeitsmonat",
+          "description": "Erster Monat (1-12), in dem der Posten fällig ist; nur bei vierteljährlich und länger."
+        },
+        "category": {
+          "name": "Kategorie",
+          "description": "Name der Kategorie, wie im Panel angezeigt."
+        },
+        "category_id": {
+          "name": "Kategorie-ID",
+          "description": "ID der Kategorie statt des Namens."
+        },
+        "cost_kind": {
+          "name": "Kostenart",
+          "description": "Fixkosten wiederholen sich mit gleichem Betrag; variable sind Schätzungen."
+        },
+        "shared": {
+          "name": "Gemeinsam",
+          "description": "Ein gemeinsamer Haushaltsposten (zählt für die Fairness)."
+        },
+        "user_id": {
+          "name": "Benutzer",
+          "description": "Home-Assistant-Benutzer-ID, die zahlt oder empfängt. Standard ist der aufrufende Benutzer."
+        },
+        "payment_method": {
+          "name": "Zahlweise",
+          "description": "Manuelle Posten erscheinen auf der To-do-Liste."
+        },
+        "currency": {
+          "name": "Währung",
+          "description": "ISO-4217-Code; Standard ist die Haushaltswährung."
+        },
+        "start": {
+          "name": "Start",
+          "description": "Erster Tag, an dem der Posten zählt."
+        },
+        "end": {
+          "name": "Ende",
+          "description": "Letzter Tag, an dem der Posten zählt."
+        }
+      }
+    },
+    "update_item": {
+      "name": "Posten ändern",
+      "description": "Ändert Felder eines bestehenden Postens. Nur die angegebenen Felder ändern sich.",
+      "fields": {
+        "item_id": {
+          "name": "Posten-ID",
+          "description": "Der Posten."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Name des Postens."
+        },
+        "type": {
+          "name": "Typ",
+          "description": "Einnahme, Ausgabe oder Sparen."
+        },
+        "amount": {
+          "name": "Betrag",
+          "description": "Betrag je Fälligkeit in der Hauptwährungseinheit (z. B. 12,50)."
+        },
+        "recurrence": {
+          "name": "Turnus",
+          "description": "Wie oft der Posten fällig ist."
+        },
+        "due_day": {
+          "name": "Fälligkeitstag",
+          "description": "Wochentag (1 = Montag … 7 = Sonntag) bei wöchentlichen Posten, sonst Tag im Monat. Nicht bei täglichen Posten."
+        },
+        "due_month": {
+          "name": "Fälligkeitsmonat",
+          "description": "Erster Monat (1-12), in dem der Posten fällig ist; nur bei vierteljährlich und länger."
+        },
+        "category": {
+          "name": "Kategorie",
+          "description": "Name der Kategorie, wie im Panel angezeigt."
+        },
+        "category_id": {
+          "name": "Kategorie-ID",
+          "description": "ID der Kategorie statt des Namens."
+        },
+        "cost_kind": {
+          "name": "Kostenart",
+          "description": "Fixkosten wiederholen sich mit gleichem Betrag; variable sind Schätzungen."
+        },
+        "shared": {
+          "name": "Gemeinsam",
+          "description": "Ein gemeinsamer Haushaltsposten (zählt für die Fairness)."
+        },
+        "user_id": {
+          "name": "Benutzer",
+          "description": "Home-Assistant-Benutzer-ID, die zahlt oder empfängt. Standard ist der aufrufende Benutzer."
+        },
+        "payment_method": {
+          "name": "Zahlweise",
+          "description": "Manuelle Posten erscheinen auf der To-do-Liste."
+        },
+        "currency": {
+          "name": "Währung",
+          "description": "ISO-4217-Code; Standard ist die Haushaltswährung."
+        },
+        "start": {
+          "name": "Start",
+          "description": "Erster Tag, an dem der Posten zählt."
+        },
+        "end": {
+          "name": "Ende",
+          "description": "Letzter Tag, an dem der Posten zählt."
+        }
+      }
+    },
+    "remove_item": {
+      "name": "Posten entfernen",
+      "description": "Löscht einen Posten und seine Bezahlt-Markierungen.",
+      "fields": {
+        "item_id": {
+          "name": "Posten-ID",
+          "description": "Der Posten."
+        }
+      }
+    },
+    "mark_paid": {
+      "name": "Als bezahlt markieren",
+      "description": "Markiert eine Fälligkeit eines Postens als bezahlt.",
+      "fields": {
+        "item_id": {
+          "name": "Posten-ID",
+          "description": "Der Posten."
+        },
+        "date": {
+          "name": "Datum",
+          "description": "Das Fälligkeitsdatum; Standard ist heute."
+        }
+      }
+    },
+    "unmark_paid": {
+      "name": "Bezahlt-Markierung entfernen",
+      "description": "Entfernt die Bezahlt-Markierung einer Fälligkeit.",
+      "fields": {
+        "item_id": {
+          "name": "Posten-ID",
+          "description": "Der Posten."
+        },
+        "date": {
+          "name": "Datum",
+          "description": "Das Fälligkeitsdatum; Standard ist heute."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "item_not_found": {
+      "message": "Kein Posten mit der ID {item_id}."
+    },
+    "invalid_item": {
+      "message": "Ungültiger Posten: {error}"
+    },
+    "unknown_category": {
+      "message": "Keine Kategorie namens \"{name}\"."
+    },
+    "category_required": {
+      "message": "Eine Kategorie ist erforderlich."
+    },
+    "user_required": {
+      "message": "Ein Benutzer ist erforderlich, wenn der Dienst nicht von einem Benutzer aufgerufen wird."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "income": {
+        "name": "Einkommen"
+      },
+      "expenses": {
+        "name": "Ausgaben"
+      },
+      "savings": {
+        "name": "Sparen"
+      },
+      "remaining": {
+        "name": "Verbleibend"
+      },
+      "savings_rate": {
+        "name": "Sparquote"
+      },
+      "fixed_cost_rate": {
+        "name": "Fixkostenquote"
+      },
+      "due_this_month": {
+        "name": "Fällig diesen Monat"
+      },
+      "next_payment": {
+        "name": "Nächste Zahlung"
+      },
+      "member_balance": {
+        "name": "{name} Saldo"
+      },
+      "member_next_payment": {
+        "name": "{name} nächste Zahlung"
+      }
+    },
+    "calendar": {
+      "calendar": {
+        "name": "Zahlungen"
+      },
+      "member_calendar": {
+        "name": "{name} Zahlungen"
+      }
+    },
+    "todo": {
+      "manual_payments": {
+        "name": "Manuelle Zahlungen"
+      }
+    }
+  }
+}

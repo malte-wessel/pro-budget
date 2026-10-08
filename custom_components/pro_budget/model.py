@@ -1,0 +1,217 @@
+"""The budget model: store plus Home Assistant users, with computed views and change signals."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import asdict
+from datetime import date
+from typing import TYPE_CHECKING, Any, TypedDict
+
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.util import dt as dt_util
+
+from .budget.insights import MemberInsights, compute_member_insights
+from .budget.model import Item
+from .budget.occurrences import group_occurrences_by_date
+from .budget.stats import MonthStats, compute_month_stats
+from .const import (
+    CONF_CURRENCY,
+    CONF_LEAD_DAYS,
+    CONF_MEMBERS,
+    DEFAULT_CATEGORIES,
+    DEFAULT_LEAD_DAYS,
+)
+from .store import BudgetStore, CategoryDict, ItemDict, item_from_dict
+
+if TYPE_CHECKING:
+    from .coordinator import BudgetCoordinator
+
+
+class UserInfo(TypedDict):
+    """A household member as sent to the panel."""
+
+    id: str
+    name: str
+    is_admin: bool
+
+
+class BudgetModel:
+    """Owns the store, resolves users and notifies listeners on every change."""
+
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+        """Create the model for a config entry."""
+        self.hass = hass
+        self.entry = entry
+        self.store = BudgetStore(hass)
+        self._listeners: list[Callable[[], None]] = []
+        # Set by async_setup_entry once the entities' coordinator exists.
+        self.coordinator: BudgetCoordinator = None  # type: ignore[assignment]
+
+    async def async_load(self) -> None:
+        """Load the store and seed default categories on first run."""
+        await self.store.async_load()
+        if not self.store.data["categories"] and not self.store.data["items"]:
+            language = (self.hass.config.language or "en").split("-")[0]
+            defaults = DEFAULT_CATEGORIES.get(language, DEFAULT_CATEGORIES["en"])
+            for order, (name, icon) in enumerate(defaults):
+                self.store.add_category({"name": name, "icon": icon, "order": order})
+
+    # --- configuration ---
+
+    @property
+    def currency(self) -> str:
+        """The household currency: the option, else Home Assistant's."""
+        return str(self.entry.options.get(CONF_CURRENCY) or self.hass.config.currency)
+
+    @property
+    def lead_days(self) -> int:
+        """Days ahead a payment counts as upcoming."""
+        return int(self.entry.options.get(CONF_LEAD_DAYS, DEFAULT_LEAD_DAYS))
+
+    async def async_users(self) -> list[UserInfo]:
+        """Household members: the configured users, or every active human user."""
+        selected: list[str] | None = self.entry.options.get(CONF_MEMBERS) or None
+        users = [
+            UserInfo(id=u.id, name=u.name or u.id, is_admin=u.is_admin)
+            for u in await self.hass.auth.async_get_users()
+            if u.is_active and not u.system_generated and (selected is None or u.id in selected)
+        ]
+        return sorted(users, key=lambda u: u["name"].casefold())
+
+    # --- listeners ---
+
+    @callback
+    def async_add_listener(self, listener: Callable[[], None]) -> Callable[[], None]:
+        """Call `listener` after every change; returns the unsubscribe function."""
+        self._listeners.append(listener)
+
+        def remove() -> None:
+            self._listeners.remove(listener)
+
+        return remove
+
+    @callback
+    def _notify(self) -> None:
+        for listener in list(self._listeners):
+            listener()
+
+    # --- data ---
+
+    @property
+    def categories(self) -> list[CategoryDict]:
+        """Categories in display order."""
+        return sorted(self.store.data["categories"], key=lambda c: (c["order"], c["name"]))
+
+    @property
+    def item_dicts(self) -> list[ItemDict]:
+        """Stored items."""
+        return self.store.data["items"]
+
+    @property
+    def paid(self) -> dict[str, list[str]]:
+        """Paid occurrences per item id."""
+        return self.store.data["paid"]
+
+    def items(self, user_id: str | None = None) -> list[Item]:
+        """Domain items, with the household currency filled in, optionally of one user."""
+        out = []
+        for data in self.item_dicts:
+            if user_id is not None and data["user_id"] != user_id:
+                continue
+            item = item_from_dict(data)
+            if not item.currency:
+                item = Item(**{**asdict(item), "currency": self.currency})
+            out.append(item)
+        return out
+
+    # --- mutations (each validates, persists and notifies) ---
+
+    def _now(self) -> str:
+        return dt_util.utcnow().isoformat()
+
+    @callback
+    def add_category(self, fields: dict[str, Any]) -> CategoryDict:
+        """Add a category."""
+        category = self.store.add_category(fields)
+        self._notify()
+        return category
+
+    @callback
+    def update_category(self, category_id: str, fields: dict[str, Any]) -> CategoryDict:
+        """Change a category."""
+        category = self.store.update_category(category_id, fields)
+        self._notify()
+        return category
+
+    @callback
+    def delete_category(self, category_id: str) -> None:
+        """Delete an unused category."""
+        self.store.delete_category(category_id)
+        self._notify()
+
+    @callback
+    def add_item(self, fields: dict[str, Any]) -> ItemDict:
+        """Add an item."""
+        item = self.store.add_item(fields, self._now())
+        self._notify()
+        return item
+
+    @callback
+    def update_item(self, item_id: str, fields: dict[str, Any]) -> ItemDict:
+        """Change an item."""
+        item = self.store.update_item(item_id, fields, self._now())
+        self._notify()
+        return item
+
+    @callback
+    def delete_item(self, item_id: str) -> None:
+        """Delete an item."""
+        self.store.delete_item(item_id)
+        self._notify()
+
+    @callback
+    def set_paid(self, item_id: str, day: str, *, paid: bool) -> None:
+        """Mark or unmark an occurrence as paid."""
+        self.store.set_paid(item_id, day, paid=paid)
+        self._notify()
+
+    # --- computed views ---
+
+    async def async_stats(
+        self, year: int, month: int, user_id: str | None = None
+    ) -> list[MonthStats]:
+        """Monthly-normalized stats for every household member (or one)."""
+        users = await self.async_users()
+        user_ids = [u["id"] for u in users if user_id is None or u["id"] == user_id]
+        return compute_month_stats(self.items(user_id), user_ids, year, month)
+
+    def insights(self, user_id: str, year: int) -> MemberInsights:
+        """Insights for one member and calendar year."""
+        today = dt_util.now().date()
+        return compute_member_insights(self.items(user_id), year, today.year, today.month)
+
+    def occurrences(
+        self, start: date, end: date, user_id: str | None = None
+    ) -> list[dict[str, Any]]:
+        """Occurrences grouped by date, with paid marks, for the panel's calendar."""
+        grouped = group_occurrences_by_date(self.items(user_id), start, end)
+        return [
+            {
+                "date": day.date.isoformat(),
+                "entries": [
+                    {"item_id": item.id, "paid": self.store.is_paid(item.id, day.date.isoformat())}
+                    for item in day.items
+                ],
+            }
+            for day in grouped.days
+        ] + (
+            [
+                {
+                    "date": None,
+                    "entries": [{"item_id": i.id, "paid": False} for i in grouped.unscheduled],
+                }
+            ]
+            if grouped.unscheduled
+            else []
+        )

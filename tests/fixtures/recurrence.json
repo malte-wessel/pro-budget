@@ -1,0 +1,7792 @@
+{
+ "monthly_equivalent": [
+  {
+   "amount": 1,
+   "recurrence": "daily",
+   "expected": 30
+  },
+  {
+   "amount": 83,
+   "recurrence": "daily",
+   "expected": 2525
+  },
+  {
+   "amount": 100,
+   "recurrence": "daily",
+   "expected": 3042
+  },
+  {
+   "amount": 1000,
+   "recurrence": "daily",
+   "expected": 30417
+  },
+  {
+   "amount": 1200,
+   "recurrence": "daily",
+   "expected": 36500
+  },
+  {
+   "amount": 9000,
+   "recurrence": "daily",
+   "expected": 273750
+  },
+  {
+   "amount": 12345,
+   "recurrence": "daily",
+   "expected": 375494
+  },
+  {
+   "amount": 123456,
+   "recurrence": "daily",
+   "expected": 3755120
+  },
+  {
+   "amount": 1,
+   "recurrence": "weekly",
+   "expected": 4
+  },
+  {
+   "amount": 83,
+   "recurrence": "weekly",
+   "expected": 360
+  },
+  {
+   "amount": 100,
+   "recurrence": "weekly",
+   "expected": 433
+  },
+  {
+   "amount": 1000,
+   "recurrence": "weekly",
+   "expected": 4333
+  },
+  {
+   "amount": 1200,
+   "recurrence": "weekly",
+   "expected": 5200
+  },
+  {
+   "amount": 9000,
+   "recurrence": "weekly",
+   "expected": 39000
+  },
+  {
+   "amount": 12345,
+   "recurrence": "weekly",
+   "expected": 53495
+  },
+  {
+   "amount": 123456,
+   "recurrence": "weekly",
+   "expected": 534976
+  },
+  {
+   "amount": 1,
+   "recurrence": "biweekly",
+   "expected": 2
+  },
+  {
+   "amount": 83,
+   "recurrence": "biweekly",
+   "expected": 180
+  },
+  {
+   "amount": 100,
+   "recurrence": "biweekly",
+   "expected": 217
+  },
+  {
+   "amount": 1000,
+   "recurrence": "biweekly",
+   "expected": 2167
+  },
+  {
+   "amount": 1200,
+   "recurrence": "biweekly",
+   "expected": 2600
+  },
+  {
+   "amount": 9000,
+   "recurrence": "biweekly",
+   "expected": 19500
+  },
+  {
+   "amount": 12345,
+   "recurrence": "biweekly",
+   "expected": 26747
+  },
+  {
+   "amount": 123456,
+   "recurrence": "biweekly",
+   "expected": 267488
+  },
+  {
+   "amount": 1,
+   "recurrence": "monthly",
+   "expected": 1
+  },
+  {
+   "amount": 83,
+   "recurrence": "monthly",
+   "expected": 83
+  },
+  {
+   "amount": 100,
+   "recurrence": "monthly",
+   "expected": 100
+  },
+  {
+   "amount": 1000,
+   "recurrence": "monthly",
+   "expected": 1000
+  },
+  {
+   "amount": 1200,
+   "recurrence": "monthly",
+   "expected": 1200
+  },
+  {
+   "amount": 9000,
+   "recurrence": "monthly",
+   "expected": 9000
+  },
+  {
+   "amount": 12345,
+   "recurrence": "monthly",
+   "expected": 12345
+  },
+  {
+   "amount": 123456,
+   "recurrence": "monthly",
+   "expected": 123456
+  },
+  {
+   "amount": 1,
+   "recurrence": "quarterly",
+   "expected": 0
+  },
+  {
+   "amount": 83,
+   "recurrence": "quarterly",
+   "expected": 28
+  },
+  {
+   "amount": 100,
+   "recurrence": "quarterly",
+   "expected": 33
+  },
+  {
+   "amount": 1000,
+   "recurrence": "quarterly",
+   "expected": 333
+  },
+  {
+   "amount": 1200,
+   "recurrence": "quarterly",
+   "expected": 400
+  },
+  {
+   "amount": 9000,
+   "recurrence": "quarterly",
+   "expected": 3000
+  },
+  {
+   "amount": 12345,
+   "recurrence": "quarterly",
+   "expected": 4115
+  },
+  {
+   "amount": 123456,
+   "recurrence": "quarterly",
+   "expected": 41152
+  },
+  {
+   "amount": 1,
+   "recurrence": "semi_annually",
+   "expected": 0
+  },
+  {
+   "amount": 83,
+   "recurrence": "semi_annually",
+   "expected": 14
+  },
+  {
+   "amount": 100,
+   "recurrence": "semi_annually",
+   "expected": 17
+  },
+  {
+   "amount": 1000,
+   "recurrence": "semi_annually",
+   "expected": 167
+  },
+  {
+   "amount": 1200,
+   "recurrence": "semi_annually",
+   "expected": 200
+  },
+  {
+   "amount": 9000,
+   "recurrence": "semi_annually",
+   "expected": 1500
+  },
+  {
+   "amount": 12345,
+   "recurrence": "semi_annually",
+   "expected": 2058
+  },
+  {
+   "amount": 123456,
+   "recurrence": "semi_annually",
+   "expected": 20576
+  },
+  {
+   "amount": 1,
+   "recurrence": "annually",
+   "expected": 0
+  },
+  {
+   "amount": 83,
+   "recurrence": "annually",
+   "expected": 7
+  },
+  {
+   "amount": 100,
+   "recurrence": "annually",
+   "expected": 8
+  },
+  {
+   "amount": 1000,
+   "recurrence": "annually",
+   "expected": 83
+  },
+  {
+   "amount": 1200,
+   "recurrence": "annually",
+   "expected": 100
+  },
+  {
+   "amount": 9000,
+   "recurrence": "annually",
+   "expected": 750
+  },
+  {
+   "amount": 12345,
+   "recurrence": "annually",
+   "expected": 1029
+  },
+  {
+   "amount": 123456,
+   "recurrence": "annually",
+   "expected": 10288
+  }
+ ],
+ "due_months_in_year": [
+  {
+   "recurrence": "daily",
+   "due_month": 1,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 2,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 3,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 4,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 5,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 6,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 7,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 8,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 9,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 10,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 11,
+   "expected": []
+  },
+  {
+   "recurrence": "daily",
+   "due_month": 12,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 1,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 2,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 3,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 4,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 5,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 6,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 7,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 8,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 9,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 10,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 11,
+   "expected": []
+  },
+  {
+   "recurrence": "weekly",
+   "due_month": 12,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 1,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 2,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 3,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 4,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 5,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 6,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 7,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 8,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 9,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 10,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 11,
+   "expected": []
+  },
+  {
+   "recurrence": "biweekly",
+   "due_month": 12,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 1,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 2,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 3,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 4,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 5,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 6,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 7,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 8,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 9,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 10,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 11,
+   "expected": []
+  },
+  {
+   "recurrence": "monthly",
+   "due_month": 12,
+   "expected": []
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 1,
+   "expected": [
+    1,
+    4,
+    7,
+    10
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 2,
+   "expected": [
+    2,
+    5,
+    8,
+    11
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 3,
+   "expected": [
+    3,
+    6,
+    9,
+    12
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 4,
+   "expected": [
+    1,
+    4,
+    7,
+    10
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 5,
+   "expected": [
+    2,
+    5,
+    8,
+    11
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 6,
+   "expected": [
+    3,
+    6,
+    9,
+    12
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 7,
+   "expected": [
+    1,
+    4,
+    7,
+    10
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 8,
+   "expected": [
+    2,
+    5,
+    8,
+    11
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 9,
+   "expected": [
+    3,
+    6,
+    9,
+    12
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 10,
+   "expected": [
+    1,
+    4,
+    7,
+    10
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 11,
+   "expected": [
+    2,
+    5,
+    8,
+    11
+   ]
+  },
+  {
+   "recurrence": "quarterly",
+   "due_month": 12,
+   "expected": [
+    3,
+    6,
+    9,
+    12
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 1,
+   "expected": [
+    1,
+    7
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 2,
+   "expected": [
+    2,
+    8
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 3,
+   "expected": [
+    3,
+    9
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 4,
+   "expected": [
+    4,
+    10
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 5,
+   "expected": [
+    5,
+    11
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 6,
+   "expected": [
+    6,
+    12
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 7,
+   "expected": [
+    1,
+    7
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 8,
+   "expected": [
+    2,
+    8
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 9,
+   "expected": [
+    3,
+    9
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 10,
+   "expected": [
+    4,
+    10
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 11,
+   "expected": [
+    5,
+    11
+   ]
+  },
+  {
+   "recurrence": "semi_annually",
+   "due_month": 12,
+   "expected": [
+    6,
+    12
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 1,
+   "expected": [
+    1
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 2,
+   "expected": [
+    2
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 3,
+   "expected": [
+    3
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 4,
+   "expected": [
+    4
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 5,
+   "expected": [
+    5
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 6,
+   "expected": [
+    6
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 7,
+   "expected": [
+    7
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 8,
+   "expected": [
+    8
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 9,
+   "expected": [
+    9
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 10,
+   "expected": [
+    10
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 11,
+   "expected": [
+    11
+   ]
+  },
+  {
+   "recurrence": "annually",
+   "due_month": 12,
+   "expected": [
+    12
+   ]
+  }
+ ],
+ "due_day_in_month": [
+  {
+   "due_day": 1,
+   "year": 2026,
+   "month": 2,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2026,
+   "month": 2,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2026,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2026,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 30,
+   "year": 2026,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 31,
+   "year": 2026,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 1,
+   "year": 2028,
+   "month": 2,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2028,
+   "month": 2,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2028,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2028,
+   "month": 2,
+   "expected": 29
+  },
+  {
+   "due_day": 30,
+   "year": 2028,
+   "month": 2,
+   "expected": 29
+  },
+  {
+   "due_day": 31,
+   "year": 2028,
+   "month": 2,
+   "expected": 29
+  },
+  {
+   "due_day": 1,
+   "year": 2026,
+   "month": 4,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2026,
+   "month": 4,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2026,
+   "month": 4,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2026,
+   "month": 4,
+   "expected": 29
+  },
+  {
+   "due_day": 30,
+   "year": 2026,
+   "month": 4,
+   "expected": 30
+  },
+  {
+   "due_day": 31,
+   "year": 2026,
+   "month": 4,
+   "expected": 30
+  },
+  {
+   "due_day": 1,
+   "year": 2026,
+   "month": 8,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2026,
+   "month": 8,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2026,
+   "month": 8,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2026,
+   "month": 8,
+   "expected": 29
+  },
+  {
+   "due_day": 30,
+   "year": 2026,
+   "month": 8,
+   "expected": 30
+  },
+  {
+   "due_day": 31,
+   "year": 2026,
+   "month": 8,
+   "expected": 31
+  },
+  {
+   "due_day": 1,
+   "year": 2100,
+   "month": 2,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2100,
+   "month": 2,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2100,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2100,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 30,
+   "year": 2100,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 31,
+   "year": 2100,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 1,
+   "year": 2000,
+   "month": 2,
+   "expected": 1
+  },
+  {
+   "due_day": 15,
+   "year": 2000,
+   "month": 2,
+   "expected": 15
+  },
+  {
+   "due_day": 28,
+   "year": 2000,
+   "month": 2,
+   "expected": 28
+  },
+  {
+   "due_day": 29,
+   "year": 2000,
+   "month": 2,
+   "expected": 29
+  },
+  {
+   "due_day": 30,
+   "year": 2000,
+   "month": 2,
+   "expected": 29
+  },
+  {
+   "due_day": 31,
+   "year": 2000,
+   "month": 2,
+   "expected": 29
+  }
+ ],
+ "active_in_month": [
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 1,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 2,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 3,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 4,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 5,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 6,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 7,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 8,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 9,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 10,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 11,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": null,
+   "year": 2026,
+   "month": 12,
+   "expected": true
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 1,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 2,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 3,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 4,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 5,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 6,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 7,
+   "expected": false
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 8,
+   "expected": true
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 9,
+   "expected": true
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 10,
+   "expected": true
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 11,
+   "expected": true
+  },
+  {
+   "start": "2026-08-31",
+   "end": null,
+   "year": 2026,
+   "month": 12,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 1,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 2,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 3,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 4,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 5,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 6,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 7,
+   "expected": true
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 8,
+   "expected": false
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 9,
+   "expected": false
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 10,
+   "expected": false
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 11,
+   "expected": false
+  },
+  {
+   "start": null,
+   "end": "2026-07-31",
+   "year": 2026,
+   "month": 12,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 1,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 2,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 3,
+   "expected": true
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 4,
+   "expected": true
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 5,
+   "expected": true
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 6,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 7,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 8,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 9,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 10,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 11,
+   "expected": false
+  },
+  {
+   "start": "2026-03-15",
+   "end": "2026-05-10",
+   "year": 2026,
+   "month": 12,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 1,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 2,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 3,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 4,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 5,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 6,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 7,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 8,
+   "expected": true
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 9,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 10,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 11,
+   "expected": false
+  },
+  {
+   "start": "2026-08-01",
+   "end": "2026-08-31",
+   "year": 2026,
+   "month": 12,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 1,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 2,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 3,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 4,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 5,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 6,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 7,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 8,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 9,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 10,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 11,
+   "expected": false
+  },
+  {
+   "start": "2027-01-01",
+   "end": null,
+   "year": 2026,
+   "month": 12,
+   "expected": false
+  }
+ ],
+ "due_in_month": [
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 31,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 28000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 30000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 30000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 30000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 30000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 29000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "daily",
+    "due_day": null,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 31000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 2,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 4,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 4000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 6,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 7,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-03",
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 3,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-01-14",
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 3000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "biweekly",
+    "due_day": 5,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2025-12-26",
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 2000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 2,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 3,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 6,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "semi_annually",
+    "due_day": 1,
+    "due_month": 11,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 1,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 7,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": 12,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "annually",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "quarterly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": null
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": null,
+    "end": "2026-07-31"
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "monthly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-31",
+    "end": null
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 1000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 3,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 4,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 5,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 6,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 7,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 8,
+   "expected": 5000
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 9,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 10,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 11,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2026,
+   "month": 12,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2028,
+   "month": 2,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2027,
+   "month": 1,
+   "expected": 0
+  },
+  {
+   "item": {
+    "recurrence": "weekly",
+    "due_day": 1,
+    "due_month": null,
+    "amount": 1000,
+    "start": "2026-08-10",
+    "end": "2026-08-20"
+   },
+   "year": 2027,
+   "month": 12,
+   "expected": 0
+  }
+ ]
+}

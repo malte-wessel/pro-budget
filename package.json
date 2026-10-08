@@ -1,0 +1,66 @@
+{
+  "name": "pro-budget",
+  "version": "0.1.0",
+  "description": "Pro Budget – household budget planning for Home Assistant",
+  "keywords": [
+    "home-assistant",
+    "hacs",
+    "integration",
+    "budget"
+  ],
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Malte Wessel",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "node build.ts",
+    "watch": "node build.ts --watch",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "py:lint": "uv run ruff check . && uv run ruff format --check .",
+    "py:format": "uv run ruff format . && uv run ruff check --fix .",
+    "py:typecheck": "uv run mypy custom_components tests/python",
+    "py:test": "uv run pytest",
+    "ha": "sh scripts/ha.sh",
+    "ha:stop": "sh scripts/ha.sh stop",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run test:unit && npm run py:lint && npm run py:typecheck && npm run py:test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "lit": "^3.3.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^22.20.4",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "happy-dom": "^20.14.5",
+    "home-assistant-js-websocket": "^9.7.1",
+    "husky": "^9.1.7",
+    "jiti": "^2.7.0",
+    "lint-staged": "^17.5.1",
+    "prettier": "^3.9.8",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.1"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown",
+    "*.{js,mjs,ts,mts}": "eslint --max-warnings 0 --no-warn-ignored",
+    "*.py": [
+      "ruff format",
+      "ruff check --fix"
+    ]
+  }
+}

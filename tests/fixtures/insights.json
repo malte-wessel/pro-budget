@@ -1,0 +1,2069 @@
+{
+ "scenarios": [
+  {
+   "name": "groups and ratios",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "earning",
+     "amount": 300000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "expense",
+     "amount": 120000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "expense",
+     "amount": 9000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "quarterly",
+     "due_day": 1,
+     "due_month": 2,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i4",
+     "title": "i4",
+     "type": "saving",
+     "amount": 60000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 8
+   },
+   "expected": {
+    "earnings": {
+     "items": [
+      {
+       "id": "i1",
+       "monthly": 300000
+      }
+     ],
+     "total": 300000
+    },
+    "expenses": {
+     "items": [
+      {
+       "id": "i2",
+       "monthly": 120000
+      },
+      {
+       "id": "i3",
+       "monthly": 3000
+      }
+     ],
+     "total": 123000
+    },
+    "savings": {
+     "items": [
+      {
+       "id": "i4",
+       "monthly": 60000
+      }
+     ],
+     "total": 60000
+    },
+    "savings_rate": 0.2,
+    "fixed_cost_rate": 0.4,
+    "top_expenses": [
+     "i2",
+     "i3"
+    ],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 189000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       },
+       {
+        "id": "i3",
+        "due": 9000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 189000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       },
+       {
+        "id": "i3",
+        "due": 9000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 8,
+      "total": 189000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       },
+       {
+        "id": "i3",
+        "due": 9000
+       }
+      ]
+     },
+     {
+      "month": 9,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 10,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 11,
+      "total": 189000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       },
+       {
+        "id": "i3",
+        "due": 9000
+       }
+      ]
+     },
+     {
+      "month": 12,
+      "total": 180000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 120000
+       },
+       {
+        "id": "i4",
+        "due": 60000
+       }
+      ]
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 183000,
+    "max_month": 2,
+    "min_month": 1
+   }
+  },
+  {
+   "name": "zero income",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 1000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 8
+   },
+   "expected": {
+    "earnings": {
+     "items": [],
+     "total": 0
+    },
+    "expenses": {
+     "items": [
+      {
+       "id": "i1",
+       "monthly": 1000
+      }
+     ],
+     "total": 1000
+    },
+    "savings": {
+     "items": [],
+     "total": 0
+    },
+    "savings_rate": null,
+    "fixed_cost_rate": null,
+    "top_expenses": [
+     "i1"
+    ],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 8,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 9,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 10,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 11,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     },
+     {
+      "month": 12,
+      "total": 1000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 1000
+       }
+      ]
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 1000,
+    "max_month": 1,
+    "min_month": 1
+   }
+  },
+  {
+   "name": "payment calendar",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 100000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "expense",
+     "amount": 60000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "annually",
+     "due_day": 15,
+     "due_month": 3,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "earning",
+     "amount": 500000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 8
+   },
+   "expected": {
+    "earnings": {
+     "items": [
+      {
+       "id": "i3",
+       "monthly": 500000
+      }
+     ],
+     "total": 500000
+    },
+    "expenses": {
+     "items": [
+      {
+       "id": "i1",
+       "monthly": 100000
+      },
+      {
+       "id": "i2",
+       "monthly": 5000
+      }
+     ],
+     "total": 105000
+    },
+    "savings": {
+     "items": [],
+     "total": 0
+    },
+    "savings_rate": 0,
+    "fixed_cost_rate": 0.21,
+    "top_expenses": [
+     "i1",
+     "i2"
+    ],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 160000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       },
+       {
+        "id": "i2",
+        "due": 60000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 8,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 9,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 10,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 11,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     },
+     {
+      "month": 12,
+      "total": 100000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 100000
+       }
+      ]
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 105000,
+    "max_month": 3,
+    "min_month": 1
+   }
+  },
+  {
+   "name": "legacy unscheduled",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 50000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "Legacy",
+     "type": "expense",
+     "amount": 1000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "annually",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 8
+   },
+   "expected": {
+    "earnings": {
+     "items": [],
+     "total": 0
+    },
+    "expenses": {
+     "items": [
+      {
+       "id": "i1",
+       "monthly": 50000
+      },
+      {
+       "id": "i2",
+       "monthly": 83
+      }
+     ],
+     "total": 50083
+    },
+    "savings": {
+     "items": [],
+     "total": 0
+    },
+    "savings_rate": null,
+    "fixed_cost_rate": null,
+    "top_expenses": [
+     "i1",
+     "i2"
+    ],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 8,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 9,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 10,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 11,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     },
+     {
+      "month": 12,
+      "total": 50000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 50000
+       }
+      ]
+     }
+    ],
+    "unscheduled": [
+     "i2"
+    ],
+    "avg_month": 50000,
+    "max_month": 1,
+    "min_month": 1
+   }
+  },
+  {
+   "name": "date bounded",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 40000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": "2026-06-30"
+    }
+   ],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 8
+   },
+   "expected": {
+    "earnings": {
+     "items": [],
+     "total": 0
+    },
+    "expenses": {
+     "items": [],
+     "total": 0
+    },
+    "savings": {
+     "items": [],
+     "total": 0
+    },
+    "savings_rate": null,
+    "fixed_cost_rate": null,
+    "top_expenses": [],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 40000,
+      "entries": [
+       {
+        "id": "i1",
+        "due": 40000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 8,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 9,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 10,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 11,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 12,
+      "total": 0,
+      "entries": []
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 20000,
+    "max_month": 1,
+    "min_month": 7
+   }
+  },
+  {
+   "name": "empty",
+   "items": [],
+   "year": 2026,
+   "current": {
+    "year": 2026,
+    "month": 1
+   },
+   "expected": {
+    "earnings": {
+     "items": [],
+     "total": 0
+    },
+    "expenses": {
+     "items": [],
+     "total": 0
+    },
+    "savings": {
+     "items": [],
+     "total": 0
+    },
+    "savings_rate": null,
+    "fixed_cost_rate": null,
+    "top_expenses": [],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 2,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 3,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 4,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 5,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 6,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 7,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 8,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 9,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 10,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 11,
+      "total": 0,
+      "entries": []
+     },
+     {
+      "month": 12,
+      "total": 0,
+      "entries": []
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 0,
+    "max_month": null,
+    "min_month": null
+   }
+  },
+  {
+   "name": "many items, other year",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "earning",
+     "amount": 420000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "Rent",
+     "type": "expense",
+     "amount": 150000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "expense",
+     "amount": 4500,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "weekly",
+     "due_day": 6,
+     "due_month": null,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i4",
+     "title": "i4",
+     "type": "expense",
+     "amount": 2000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "biweekly",
+     "due_day": 2,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": "2026-11-03",
+     "end": null
+    },
+    {
+     "id": "i5",
+     "title": "i5",
+     "type": "expense",
+     "amount": 90000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "annually",
+     "due_day": 1,
+     "due_month": 11,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i6",
+     "title": "i6",
+     "type": "expense",
+     "amount": 24000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "semi_annually",
+     "due_day": 1,
+     "due_month": 4,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i7",
+     "title": "i7",
+     "type": "expense",
+     "amount": 15000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "quarterly",
+     "due_day": 1,
+     "due_month": 1,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i8",
+     "title": "i8",
+     "type": "saving",
+     "amount": 50000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i9",
+     "title": "i9",
+     "type": "saving",
+     "amount": 120000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "annually",
+     "due_day": 20,
+     "due_month": 12,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i10",
+     "title": "i10",
+     "type": "expense",
+     "amount": 300,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "daily",
+     "due_day": null,
+     "due_month": null,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i11",
+     "title": "i11",
+     "type": "expense",
+     "amount": 5000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": "2027-06-01",
+     "end": null
+    },
+    {
+     "id": "i12",
+     "title": "i12",
+     "type": "expense",
+     "amount": 7000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": "2027-03-31"
+    },
+    {
+     "id": "i13",
+     "title": "a",
+     "type": "expense",
+     "amount": 8000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i14",
+     "title": "b",
+     "type": "expense",
+     "amount": 8000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i15",
+     "title": "c",
+     "type": "expense",
+     "amount": 8000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i16",
+     "title": "d",
+     "type": "expense",
+     "amount": 8000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "year": 2027,
+   "current": {
+    "year": 2026,
+    "month": 12
+   },
+   "expected": {
+    "earnings": {
+     "items": [
+      {
+       "id": "i1",
+       "monthly": 420000
+      }
+     ],
+     "total": 420000
+    },
+    "expenses": {
+     "items": [
+      {
+       "id": "i2",
+       "monthly": 150000
+      },
+      {
+       "id": "i3",
+       "monthly": 19500
+      },
+      {
+       "id": "i10",
+       "monthly": 9125
+      },
+      {
+       "id": "i13",
+       "monthly": 8000
+      },
+      {
+       "id": "i14",
+       "monthly": 8000
+      },
+      {
+       "id": "i15",
+       "monthly": 8000
+      },
+      {
+       "id": "i16",
+       "monthly": 8000
+      },
+      {
+       "id": "i5",
+       "monthly": 7500
+      },
+      {
+       "id": "i12",
+       "monthly": 7000
+      },
+      {
+       "id": "i7",
+       "monthly": 5000
+      },
+      {
+       "id": "i4",
+       "monthly": 4333
+      },
+      {
+       "id": "i6",
+       "monthly": 4000
+      }
+     ],
+     "total": 238458
+    },
+    "savings": {
+     "items": [
+      {
+       "id": "i8",
+       "monthly": 50000
+      },
+      {
+       "id": "i9",
+       "monthly": 10000
+      }
+     ],
+     "total": 60000
+    },
+    "savings_rate": 0.14285714285714285,
+    "fixed_cost_rate": 0.48769761904761905,
+    "top_expenses": [
+     "i2",
+     "i3",
+     "i10",
+     "i13",
+     "i14"
+    ],
+    "calendar": [
+     {
+      "month": 1,
+      "total": 289800,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 22500
+       },
+       {
+        "id": "i7",
+        "due": 15000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i12",
+        "due": 7000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 2,
+      "total": 269400,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 8400
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i12",
+        "due": 7000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 3,
+      "total": 270300,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i12",
+        "due": 7000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 4,
+      "total": 302000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i6",
+        "due": 24000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i7",
+        "due": 15000
+       },
+       {
+        "id": "i10",
+        "due": 9000
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 5,
+      "total": 267800,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 22500
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 6,
+      "total": 270000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9000
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i4",
+        "due": 6000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       }
+      ]
+     },
+     {
+      "month": 7,
+      "total": 287800,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 22500
+       },
+       {
+        "id": "i7",
+        "due": 15000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 8,
+      "total": 268300,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 9,
+      "total": 268000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9000
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 10,
+      "total": 311800,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i6",
+        "due": 24000
+       },
+       {
+        "id": "i3",
+        "due": 22500
+       },
+       {
+        "id": "i7",
+        "due": 15000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     },
+     {
+      "month": 11,
+      "total": 360000,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i5",
+        "due": 90000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9000
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i4",
+        "due": 6000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       }
+      ]
+     },
+     {
+      "month": 12,
+      "total": 388300,
+      "entries": [
+       {
+        "id": "i2",
+        "due": 150000
+       },
+       {
+        "id": "i9",
+        "due": 120000
+       },
+       {
+        "id": "i8",
+        "due": 50000
+       },
+       {
+        "id": "i3",
+        "due": 18000
+       },
+       {
+        "id": "i10",
+        "due": 9300
+       },
+       {
+        "id": "i13",
+        "due": 8000
+       },
+       {
+        "id": "i14",
+        "due": 8000
+       },
+       {
+        "id": "i15",
+        "due": 8000
+       },
+       {
+        "id": "i16",
+        "due": 8000
+       },
+       {
+        "id": "i11",
+        "due": 5000
+       },
+       {
+        "id": "i4",
+        "due": 4000
+       }
+      ]
+     }
+    ],
+    "unscheduled": [],
+    "avg_month": 296125,
+    "max_month": 12,
+    "min_month": 5
+   }
+  }
+ ]
+}

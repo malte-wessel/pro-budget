@@ -1,0 +1,274 @@
+"""Websocket API used by the panel."""
+
+from __future__ import annotations
+
+from dataclasses import asdict, is_dataclass
+from datetime import date
+from typing import Any
+
+from homeassistant.components import websocket_api
+from homeassistant.components.websocket_api.connection import ActiveConnection
+from homeassistant.components.websocket_api.decorators import async_response, websocket_command
+from homeassistant.core import HomeAssistant, callback
+import probatio as vol
+
+from .const import DOMAIN
+from .model import BudgetModel
+
+ERR_NOT_FOUND = "not_found"
+ERR_INVALID = "invalid"
+ERR_IN_USE = "in_use"
+
+
+def _model(hass: HomeAssistant) -> BudgetModel:
+    model: BudgetModel = hass.data[DOMAIN]
+    return model
+
+
+def _plain(value: Any) -> Any:
+    """Turn dataclasses, dates and enums into JSON-friendly values."""
+    if is_dataclass(value) and not isinstance(value, type):
+        return _plain(asdict(value))
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items()}
+    if isinstance(value, list | tuple):
+        return [_plain(v) for v in value]
+    if isinstance(value, date):
+        return value.isoformat()
+    return value
+
+
+async def _state(model: BudgetModel) -> dict[str, Any]:
+    return {
+        "categories": model.categories,
+        "items": model.item_dicts,
+        "paid": model.paid,
+        "users": await model.async_users(),
+        "config": {
+            "currency": model.currency,
+            "lead_days": model.lead_days,
+            "language": model.hass.config.language,
+        },
+    }
+
+
+@websocket_command({vol.Required("type"): f"{DOMAIN}/subscribe"})
+@async_response
+async def ws_subscribe(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Send the full state now and after every change."""
+    model = _model(hass)
+
+    @callback
+    def _changed() -> None:
+        hass.async_create_task(_send())
+
+    async def _send() -> None:
+        connection.send_event(msg["id"], await _state(model))
+
+    connection.subscriptions[msg["id"]] = model.async_add_listener(_changed)
+    connection.send_result(msg["id"])
+    await _send()
+
+
+def _run(connection: ActiveConnection, msg: dict[str, Any], action: Any) -> None:
+    """Run a mutation and translate its errors into websocket errors."""
+    try:
+        result = action()
+    except KeyError as err:
+        connection.send_error(msg["id"], ERR_NOT_FOUND, f"not found: {err.args[0]}")
+    except vol.Invalid as err:
+        connection.send_error(msg["id"], ERR_INVALID, str(err))
+    except ValueError as err:
+        connection.send_error(msg["id"], ERR_IN_USE, str(err))
+    else:
+        connection.send_result(msg["id"], _plain(result))
+
+
+@websocket_command(
+    {vol.Required("type"): f"{DOMAIN}/categories/create", vol.Required("fields"): dict}
+)
+@callback
+def ws_category_create(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Create a category."""
+    _run(connection, msg, lambda: _model(hass).add_category(msg["fields"]))
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/categories/update",
+        vol.Required("category_id"): str,
+        vol.Required("fields"): dict,
+    }
+)
+@callback
+def ws_category_update(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Change a category."""
+    _run(connection, msg, lambda: _model(hass).update_category(msg["category_id"], msg["fields"]))
+
+
+@websocket_command(
+    {vol.Required("type"): f"{DOMAIN}/categories/delete", vol.Required("category_id"): str}
+)
+@callback
+def ws_category_delete(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Delete a category."""
+    _run(connection, msg, lambda: _model(hass).delete_category(msg["category_id"]))
+
+
+@websocket_command({vol.Required("type"): f"{DOMAIN}/items/create", vol.Required("fields"): dict})
+@callback
+def ws_item_create(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Create an item."""
+    _run(connection, msg, lambda: _model(hass).add_item(msg["fields"]))
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/items/update",
+        vol.Required("item_id"): str,
+        vol.Required("fields"): dict,
+    }
+)
+@callback
+def ws_item_update(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Change an item."""
+    _run(connection, msg, lambda: _model(hass).update_item(msg["item_id"], msg["fields"]))
+
+
+@websocket_command({vol.Required("type"): f"{DOMAIN}/items/delete", vol.Required("item_id"): str})
+@callback
+def ws_item_delete(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Delete an item."""
+    _run(connection, msg, lambda: _model(hass).delete_item(msg["item_id"]))
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/paid/set",
+        vol.Required("item_id"): str,
+        vol.Required("date"): str,
+        vol.Required("paid"): bool,
+    }
+)
+@callback
+def ws_paid_set(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Mark or unmark an occurrence as paid."""
+    _run(
+        connection,
+        msg,
+        lambda: _model(hass).set_paid(msg["item_id"], msg["date"], paid=msg["paid"]),
+    )
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/stats",
+        vol.Required("year"): int,
+        vol.Required("month"): vol.All(int, vol.Range(min=1, max=12)),
+        vol.Optional("user_id"): str,
+    }
+)
+@async_response
+async def ws_stats(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Monthly stats, one group per currency."""
+    stats = await _model(hass).async_stats(msg["year"], msg["month"], msg.get("user_id"))
+    connection.send_result(
+        msg["id"],
+        [
+            {
+                **_plain(s),
+                "members": [{**_plain(m), "balance": m.balance} for m in s.members],
+                "totals": {**_plain(s.totals), "remaining": s.totals.remaining},
+            }
+            for s in stats
+        ],
+    )
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/insights",
+        vol.Required("user_id"): str,
+        vol.Required("year"): int,
+    }
+)
+@callback
+def ws_insights(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Insights of one member for a year. Items are referenced by id."""
+    o = _model(hass).insights(msg["user_id"], msg["year"])
+
+    def group(g: Any) -> dict[str, Any]:
+        return {
+            "items": [{"item_id": e.item.id, "monthly": e.monthly} for e in g.items],
+            "total": g.total,
+        }
+
+    connection.send_result(
+        msg["id"],
+        {
+            "earnings": group(o.earnings),
+            "expenses": group(o.expenses),
+            "savings": group(o.savings),
+            "savings_rate": o.savings_rate,
+            "fixed_cost_rate": o.fixed_cost_rate,
+            "top_expenses": [e.item.id for e in o.top_expenses],
+            "calendar": [
+                {
+                    "month": m.month,
+                    "total": m.total,
+                    "entries": [{"item_id": e.item.id, "due": e.due} for e in m.entries],
+                }
+                for m in o.calendar
+            ],
+            "unscheduled": [i.id for i in o.unscheduled],
+            "avg_month": o.avg_month,
+            "max_month": o.max_month,
+            "min_month": o.min_month,
+        },
+    )
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/occurrences",
+        vol.Required("start"): str,
+        vol.Required("end"): str,
+        vol.Optional("user_id"): str,
+    }
+)
+@callback
+def ws_occurrences(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Occurrences by date within [start, end]; a final group with date null is unscheduled."""
+    try:
+        start, end = date.fromisoformat(msg["start"]), date.fromisoformat(msg["end"])
+    except ValueError as err:
+        connection.send_error(msg["id"], ERR_INVALID, str(err))
+        return
+    connection.send_result(msg["id"], _model(hass).occurrences(start, end, msg.get("user_id")))
+
+
+@callback
+def async_register_websocket(hass: HomeAssistant) -> None:
+    """Register every command once."""
+    for command in (
+        ws_subscribe,
+        ws_category_create,
+        ws_category_update,
+        ws_category_delete,
+        ws_item_create,
+        ws_item_update,
+        ws_item_delete,
+        ws_paid_set,
+        ws_stats,
+        ws_insights,
+        ws_occurrences,
+    ):
+        websocket_api.async_register_command(hass, command)

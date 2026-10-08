@@ -1,0 +1,172 @@
+add_item:
+  fields:
+    title:
+      required: true
+      example: Rent
+      selector:
+        text:
+    type:
+      required: true
+      default: expense
+      selector:
+        select:
+          translation_key: item_type
+          options: [earning, expense, saving]
+    amount:
+      required: true
+      example: 1250
+      selector:
+        number:
+          min: 0.01
+          step: 0.01
+          mode: box
+    recurrence:
+      required: true
+      default: monthly
+      selector:
+        select:
+          translation_key: recurrence
+          options: [daily, weekly, biweekly, monthly, quarterly, semi_annually, annually]
+    due_day:
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 31
+          mode: box
+    due_month:
+      selector:
+        number:
+          min: 1
+          max: 12
+          mode: box
+    category:
+      example: Housing
+      selector:
+        text:
+    category_id:
+      selector:
+        text:
+    cost_kind:
+      default: fixed
+      selector:
+        select:
+          translation_key: cost_kind
+          options: [fixed, variable]
+    shared:
+      default: false
+      selector:
+        boolean:
+    user_id:
+      selector:
+        text:
+    payment_method:
+      selector:
+        select:
+          translation_key: payment_method
+          options: [direct_debit, standing_order, manual, credit_card, paypal]
+    currency:
+      selector:
+        text:
+    start:
+      selector:
+        date:
+    end:
+      selector:
+        date:
+
+update_item:
+  fields:
+    item_id:
+      required: true
+      selector:
+        text:
+    title:
+      selector:
+        text:
+    type:
+      selector:
+        select:
+          translation_key: item_type
+          options: [earning, expense, saving]
+    amount:
+      selector:
+        number:
+          min: 0.01
+          step: 0.01
+          mode: box
+    recurrence:
+      selector:
+        select:
+          translation_key: recurrence
+          options: [daily, weekly, biweekly, monthly, quarterly, semi_annually, annually]
+    due_day:
+      selector:
+        number:
+          min: 1
+          max: 31
+          mode: box
+    due_month:
+      selector:
+        number:
+          min: 1
+          max: 12
+          mode: box
+    category:
+      selector:
+        text:
+    category_id:
+      selector:
+        text:
+    cost_kind:
+      selector:
+        select:
+          translation_key: cost_kind
+          options: [fixed, variable]
+    shared:
+      selector:
+        boolean:
+    user_id:
+      selector:
+        text:
+    payment_method:
+      selector:
+        select:
+          translation_key: payment_method
+          options: [direct_debit, standing_order, manual, credit_card, paypal]
+    currency:
+      selector:
+        text:
+    start:
+      selector:
+        date:
+    end:
+      selector:
+        date:
+
+remove_item:
+  fields:
+    item_id:
+      required: true
+      selector:
+        text:
+
+mark_paid:
+  fields:
+    item_id:
+      required: true
+      selector:
+        text:
+    date:
+      selector:
+        date:
+
+unmark_paid:
+  fields:
+    item_id:
+      required: true
+      selector:
+        text:
+    date:
+      selector:
+        date:

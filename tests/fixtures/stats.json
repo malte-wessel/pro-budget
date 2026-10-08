@@ -1,0 +1,789 @@
+{
+ "scenarios": [
+  {
+   "name": "two members, shared rent, quarterly hobby, saving",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "earning",
+     "amount": 300000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "earning",
+     "amount": 100000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "expense",
+     "amount": 120000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": true,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i4",
+     "title": "i4",
+     "type": "expense",
+     "amount": 9000,
+     "currency": "EUR",
+     "category_id": "c2",
+     "recurrence": "quarterly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i5",
+     "title": "i5",
+     "type": "saving",
+     "amount": 50000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "users": [
+    "u1",
+    "u2"
+   ],
+   "year": 2026,
+   "month": 8,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 300000,
+       "expenses": {
+        "total": 120000,
+        "shared": 120000,
+        "personal": 0,
+        "fixed": 120000,
+        "variable": 0
+       },
+       "savings": 50000,
+       "balance": 130000
+      },
+      {
+       "user_id": "u2",
+       "earnings": 100000,
+       "expenses": {
+        "total": 3000,
+        "shared": 0,
+        "personal": 3000,
+        "fixed": 0,
+        "variable": 3000
+       },
+       "savings": 0,
+       "balance": 97000
+      }
+     ],
+     "totals": {
+      "income": 400000,
+      "expenses": 123000,
+      "savings": 50000,
+      "remaining": 227000
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 120000,
+       "shared_cost_share": 1,
+       "income": 300000,
+       "income_share": 0.75
+      },
+      {
+       "user_id": "u2",
+       "shared_costs_paid": 0,
+       "shared_cost_share": 0,
+       "income": 100000,
+       "income_share": 0.25
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 400000,
+       "expenses": 120000,
+       "savings": 50000
+      },
+      {
+       "category_id": "c2",
+       "earnings": 0,
+       "expenses": 3000,
+       "savings": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "inactive item excluded",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 5000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "expense",
+     "amount": 7000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": "2026-07-31"
+    }
+   ],
+   "users": [
+    "u1"
+   ],
+   "year": 2026,
+   "month": 8,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 0,
+       "expenses": {
+        "total": 5000,
+        "shared": 0,
+        "personal": 5000,
+        "fixed": 5000,
+        "variable": 0
+       },
+       "savings": 0,
+       "balance": -5000
+      }
+     ],
+     "totals": {
+      "income": 0,
+      "expenses": 5000,
+      "savings": 0,
+      "remaining": -5000
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 0,
+       "shared_cost_share": null,
+       "income": 0,
+       "income_share": null
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 0,
+       "expenses": 5000,
+       "savings": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "currencies grouped, EUR first",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 9000,
+     "currency": "CHF",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "expense",
+     "amount": 5000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "expense",
+     "amount": 100,
+     "currency": "USD",
+     "category_id": "c1",
+     "recurrence": "weekly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "users": [
+    "u1"
+   ],
+   "year": 2026,
+   "month": 8,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 0,
+       "expenses": {
+        "total": 5000,
+        "shared": 0,
+        "personal": 5000,
+        "fixed": 5000,
+        "variable": 0
+       },
+       "savings": 0,
+       "balance": -5000
+      }
+     ],
+     "totals": {
+      "income": 0,
+      "expenses": 5000,
+      "savings": 0,
+      "remaining": -5000
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 0,
+       "shared_cost_share": null,
+       "income": 0,
+       "income_share": null
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 0,
+       "expenses": 5000,
+       "savings": 0
+      }
+     ]
+    },
+    {
+     "currency": "CHF",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 0,
+       "expenses": {
+        "total": 9000,
+        "shared": 0,
+        "personal": 9000,
+        "fixed": 9000,
+        "variable": 0
+       },
+       "savings": 0,
+       "balance": -9000
+      }
+     ],
+     "totals": {
+      "income": 0,
+      "expenses": 9000,
+      "savings": 0,
+      "remaining": -9000
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 0,
+       "shared_cost_share": null,
+       "income": 0,
+       "income_share": null
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 0,
+       "expenses": 9000,
+       "savings": 0
+      }
+     ]
+    },
+    {
+     "currency": "USD",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 0,
+       "expenses": {
+        "total": 433,
+        "shared": 0,
+        "personal": 433,
+        "fixed": 433,
+        "variable": 0
+       },
+       "savings": 0,
+       "balance": -433
+      }
+     ],
+     "totals": {
+      "income": 0,
+      "expenses": 433,
+      "savings": 0,
+      "remaining": -433
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 0,
+       "shared_cost_share": null,
+       "income": 0,
+       "income_share": null
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 0,
+       "expenses": 433,
+       "savings": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "empty",
+   "items": [],
+   "users": [
+    "u1"
+   ],
+   "year": 2026,
+   "month": 8,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 0,
+       "expenses": {
+        "total": 0,
+        "shared": 0,
+        "personal": 0,
+        "fixed": 0,
+        "variable": 0
+       },
+       "savings": 0,
+       "balance": 0
+      }
+     ],
+     "totals": {
+      "income": 0,
+      "expenses": 0,
+      "savings": 0,
+      "remaining": 0
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 0,
+       "shared_cost_share": null,
+       "income": 0,
+       "income_share": null
+      }
+     ],
+     "categories": []
+    }
+   ]
+  },
+  {
+   "name": "no members",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "expense",
+     "amount": 5000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    }
+   ],
+   "users": [],
+   "year": 2026,
+   "month": 1,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [],
+     "totals": {
+      "income": 0,
+      "expenses": 0,
+      "savings": 0,
+      "remaining": 0
+     },
+     "fairness": [],
+     "categories": [
+      {
+       "category_id": "c1",
+       "earnings": 0,
+       "expenses": 5000,
+       "savings": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "mixed recurrences and categories",
+   "items": [
+    {
+     "id": "i1",
+     "title": "i1",
+     "type": "earning",
+     "amount": 250000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i2",
+     "title": "i2",
+     "type": "earning",
+     "amount": 1500,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "weekly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i3",
+     "title": "i3",
+     "type": "expense",
+     "amount": 2500,
+     "currency": "EUR",
+     "category_id": "c3",
+     "recurrence": "weekly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "variable",
+     "shared": true,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i4",
+     "title": "i4",
+     "type": "expense",
+     "amount": 1200,
+     "currency": "EUR",
+     "category_id": "c3",
+     "recurrence": "daily",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "variable",
+     "shared": false,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i5",
+     "title": "i5",
+     "type": "expense",
+     "amount": 80000,
+     "currency": "EUR",
+     "category_id": "c2",
+     "recurrence": "annually",
+     "due_day": 1,
+     "due_month": 5,
+     "cost_kind": "fixed",
+     "shared": true,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i6",
+     "title": "i6",
+     "type": "expense",
+     "amount": 30000,
+     "currency": "EUR",
+     "category_id": "c2",
+     "recurrence": "semi_annually",
+     "due_day": 1,
+     "due_month": 1,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i7",
+     "title": "i7",
+     "type": "saving",
+     "amount": 10000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "biweekly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u2",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i8",
+     "title": "i8",
+     "type": "saving",
+     "amount": 1000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u3",
+     "start": null,
+     "end": null
+    },
+    {
+     "id": "i9",
+     "title": "i9",
+     "type": "expense",
+     "amount": 999,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u1",
+     "start": "2026-03-01",
+     "end": null
+    },
+    {
+     "id": "i10",
+     "title": "i10",
+     "type": "earning",
+     "amount": 50000,
+     "currency": "EUR",
+     "category_id": "c1",
+     "recurrence": "monthly",
+     "due_day": 1,
+     "due_month": null,
+     "cost_kind": "fixed",
+     "shared": false,
+     "user_id": "u3",
+     "start": null,
+     "end": "2026-02-15"
+    }
+   ],
+   "users": [
+    "u1",
+    "u2",
+    "u3"
+   ],
+   "year": 2026,
+   "month": 2,
+   "expected": [
+    {
+     "currency": "EUR",
+     "members": [
+      {
+       "user_id": "u1",
+       "earnings": 250000,
+       "expenses": {
+        "total": 15833,
+        "shared": 10833,
+        "personal": 5000,
+        "fixed": 5000,
+        "variable": 10833
+       },
+       "savings": 0,
+       "balance": 234167
+      },
+      {
+       "user_id": "u2",
+       "earnings": 6500,
+       "expenses": {
+        "total": 43167,
+        "shared": 6667,
+        "personal": 36500,
+        "fixed": 6667,
+        "variable": 36500
+       },
+       "savings": 21667,
+       "balance": -58334
+      },
+      {
+       "user_id": "u3",
+       "earnings": 50000,
+       "expenses": {
+        "total": 0,
+        "shared": 0,
+        "personal": 0,
+        "fixed": 0,
+        "variable": 0
+       },
+       "savings": 1000,
+       "balance": 49000
+      }
+     ],
+     "totals": {
+      "income": 306500,
+      "expenses": 59000,
+      "savings": 22667,
+      "remaining": 224833
+     },
+     "fairness": [
+      {
+       "user_id": "u1",
+       "shared_costs_paid": 10833,
+       "shared_cost_share": 0.6190285714285715,
+       "income": 250000,
+       "income_share": 0.8156606851549756
+      },
+      {
+       "user_id": "u2",
+       "shared_costs_paid": 6667,
+       "shared_cost_share": 0.38097142857142857,
+       "income": 6500,
+       "income_share": 0.021207177814029365
+      },
+      {
+       "user_id": "u3",
+       "shared_costs_paid": 0,
+       "shared_cost_share": 0,
+       "income": 50000,
+       "income_share": 0.1631321370309951
+      }
+     ],
+     "categories": [
+      {
+       "category_id": "c3",
+       "earnings": 0,
+       "expenses": 47333,
+       "savings": 0
+      },
+      {
+       "category_id": "c1",
+       "earnings": 306500,
+       "expenses": 0,
+       "savings": 22667
+      },
+      {
+       "category_id": "c2",
+       "earnings": 0,
+       "expenses": 11667,
+       "savings": 0
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
