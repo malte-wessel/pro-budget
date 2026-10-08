@@ -193,7 +193,7 @@ export class ProBudgetItems extends LitElement {
         </select>
         <span class="spacer"></span>
         <ha-button @click=${() => this._dialog.open()}>
-          <ha-icon slot="icon" icon="mdi:plus"></ha-icon>${this.narrow ? nothing : t(h, "items.add")}
+          <ha-icon slot="start" icon="mdi:plus"></ha-icon>${this.narrow ? nothing : t(h, "items.add")}
         </ha-button>
       </div>
       ${renderTable<Item>({

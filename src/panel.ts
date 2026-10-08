@@ -40,6 +40,9 @@ export class ProBudgetPanel extends LitElement {
   @state() private _userId = "";
   private _unsubscribe?: () => Promise<void>;
 
+  // Mirrors hass-tabs-subpage and ha-tab of Home Assistant 2026.10 (measured on the integrations
+  // page): a header of --header-height in the sidebar colours with the tabs centred in it, and on
+  // narrow screens a bottom bar with the icon above a small label.
   static styles = [
     sharedStyles,
     css`
@@ -50,86 +53,131 @@ export class ProBudgetPanel extends LitElement {
         background: var(--primary-background-color);
         color: var(--primary-text-color);
       }
-      /* Header as hass-tabs-subpage: 64px, tabs centred on wide screens. */
+      /* As hass-tabs-subpage: pinned to the viewport, so the bottom bar stays visible. */
+      :host([narrow]) {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+      }
       header {
-        display: flex;
-        align-items: center;
-        height: 64px;
         flex: 0 0 auto;
-        padding: 0 8px 0 4px;
-        background: var(--app-header-background-color, var(--primary-background-color));
-        color: var(--app-header-text-color, var(--primary-text-color));
+        box-sizing: border-box;
+        height: calc(var(--header-height, 56px) + var(--safe-area-inset-top, 0px));
+        padding-top: var(--safe-area-inset-top, 0px);
+        background-color: var(--sidebar-background-color);
+        color: var(--sidebar-text-color);
+        font-size: var(--ha-font-size-xl, 20px);
+        font-weight: var(--ha-font-weight-normal, 400);
         border-bottom: 1px solid var(--divider-color);
       }
-      header .title {
-        font-size: 20px;
-        font-weight: 400;
-        margin-left: 8px;
-        white-space: nowrap;
-      }
-      header .side {
+      .toolbar-content {
         display: flex;
         align-items: center;
+        height: 100%;
+        padding: 8px 12px;
+        box-sizing: border-box;
+      }
+      :host([narrow]) .toolbar-content {
+        padding: 4px;
+      }
+      ha-menu-button {
+        color: var(--sidebar-icon-color);
+        flex-shrink: 0;
+        display: flex;
+        margin-right: 24px;
+        margin-inline-end: 24px;
+        margin-inline-start: initial;
+      }
+      :host([narrow]) ha-menu-button {
+        margin-right: 0;
+        margin-inline-end: 0;
+      }
+      .main-title {
+        flex: 1;
         min-width: 0;
+        line-height: var(--ha-line-height-normal, 1.5);
+        margin-inline-start: var(--main-title-margin, var(--ha-space-2, 8px));
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       nav {
-        flex: 1;
         display: flex;
+        flex: 1;
         justify-content: center;
-        align-self: stretch;
-        gap: 4px;
-        overflow-x: auto;
+        overflow: hidden;
+        font-size: var(--ha-font-size-m, 14px);
+        height: 100%;
       }
-      /* Tab colours as HA: on a light header the active tab is the primary colour; on a
-         coloured header (older default theme) tabs use the header's text colour. */
       nav a {
         display: flex;
+        flex-direction: row;
         align-items: center;
-        gap: 12px;
-        padding: 0 20px;
-        color: var(--primary-text-color);
+        justify-content: center;
+        gap: var(--ha-space-2, 8px);
+        box-sizing: border-box;
+        height: var(--header-height, 56px);
+        max-width: 45%;
+        padding: 0 32px;
+        color: var(--sidebar-text-color);
         text-decoration: none;
-        font-size: 16px;
         white-space: nowrap;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+      }
+      nav a .name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
       }
       nav a ha-icon {
         --mdc-icon-size: 24px;
+        flex-shrink: 0;
       }
       nav a[aria-current="page"] {
         color: var(--primary-color);
-        border-bottom-color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
       }
-      :host([colored-header]) nav a {
-        color: var(--app-header-text-color, white);
-        opacity: 0.75;
+      nav a:focus-visible::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--secondary-text-color);
+        opacity: 0.08;
       }
-      :host([colored-header]) nav a[aria-current="page"] {
-        opacity: 1;
-        border-bottom-color: var(--app-header-selection-bar-color, var(--app-header-text-color, white));
-      }
-      /* Narrow: title in the header, tabs as an icon row below it. */
+      /* Narrow: the tabs become a bottom bar. */
       :host([narrow]) nav {
-        justify-content: flex-start;
-        border-bottom: 1px solid var(--divider-color);
-        background: var(--app-header-background-color, var(--primary-background-color));
-        height: 56px;
         flex: 0 0 auto;
+        height: auto;
+        justify-content: space-around;
+        box-sizing: border-box;
+        padding: 0 calc(16px + var(--safe-area-inset-right, 0px)) var(--safe-area-inset-bottom, 0px)
+          calc(16px + var(--safe-area-inset-left, 0px));
+        background-color: var(--sidebar-background-color);
+        border-top: 1px solid var(--divider-color);
+        font-size: var(--ha-font-size-s, 12px);
+        z-index: 2;
       }
       :host([narrow]) nav a {
         flex: 1;
-        justify-content: center;
-        padding: 0 12px;
-        gap: 8px;
+        max-width: none;
+        min-width: 0;
+        flex-direction: column;
+        gap: 0;
+        padding: 0 4px;
       }
-      :host([narrow]) nav a span {
-        display: none;
+      :host([narrow]) nav a ha-icon {
+        margin-bottom: var(--ha-space-1, 4px);
+      }
+      :host([narrow]) nav a[aria-current="page"] {
+        border-bottom: none;
       }
       main {
         flex: 1;
         overflow: auto;
         min-height: 0;
+        position: relative;
       }
       .members {
         display: flex;
@@ -159,18 +207,6 @@ export class ProBudgetPanel extends LitElement {
   protected updated(changed: Map<string, unknown>) {
     if (changed.has("hass") && this.hass && !this._unsubscribe) void this._start();
     if (changed.has("narrow")) this.toggleAttribute("narrow", this.narrow);
-    if (changed.has("hass")) this._updateHeaderMode();
-  }
-
-  /** Whether the theme paints the header in a colour (then tabs use the header text colour). */
-  private _updateHeaderMode() {
-    const style = getComputedStyle(this);
-    const header = style.getPropertyValue("--app-header-background-color").trim();
-    const page = style.getPropertyValue("--primary-background-color").trim();
-    const card = style.getPropertyValue("--card-background-color").trim();
-    const sidebar = style.getPropertyValue("--sidebar-background-color").trim();
-    const light = !header || [page, card, sidebar].includes(header);
-    this.toggleAttribute("colored-header", !light);
   }
 
   private async _start() {
@@ -207,7 +243,8 @@ export class ProBudgetPanel extends LitElement {
               title=${t(this.hass, `nav.${v.id}` as I18nKey)}
               @click=${(e: Event) => this._navigate(v.id, e)}
             >
-              <ha-icon .icon=${v.icon}></ha-icon><span>${t(this.hass, `nav.${v.id}` as I18nKey)}</span>
+              <ha-icon .icon=${v.icon}></ha-icon
+              ><span class="name">${t(this.hass, `nav.${v.id}` as I18nKey)}</span>
             </a>
           `,
         )}
@@ -220,13 +257,11 @@ export class ProBudgetPanel extends LitElement {
     const b = this._budget;
     return html`
       <header>
-        <div class="side">
+        <div class="toolbar-content">
           <ha-menu-button .hass=${h} .narrow=${this.narrow}></ha-menu-button>
-          ${this.narrow ? html`<div class="title">${t(h, "panel.title")}</div>` : nothing}
+          ${this.narrow ? html`<div class="main-title">${t(h, "panel.title")}</div>` : this._tabs()}
         </div>
-        ${this.narrow ? html`<div class="grow"></div>` : this._tabs()}
       </header>
-      ${this.narrow ? this._tabs() : nothing}
       <main>
         ${this._error ? html`<ha-alert alert-type="error">${this._error}</ha-alert>` : nothing}
         ${
@@ -243,6 +278,7 @@ export class ProBudgetPanel extends LitElement {
             `
         }
       </main>
+      ${this.narrow ? this._tabs() : nothing}
     `;
   }
 

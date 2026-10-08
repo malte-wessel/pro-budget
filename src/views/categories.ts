@@ -61,7 +61,7 @@ export class ProBudgetCategories extends LitElement {
         </label>
         <span class="spacer"></span>
         <ha-button @click=${() => this._dialog.open()}>
-          <ha-icon slot="icon" icon="mdi:plus"></ha-icon>${t(h, "categories.add")}
+          <ha-icon slot="start" icon="mdi:plus"></ha-icon>${t(h, "categories.add")}
         </ha-button>
       </div>
       ${renderTable<Category>({
