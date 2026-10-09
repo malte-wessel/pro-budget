@@ -12,7 +12,7 @@ from homeassistant.util.ulid import ulid
 import probatio as vol
 
 from .budget.model import CostKind, Item, ItemType, PaymentMethod, Recurrence
-from .const import COLOR_NAMES, STORAGE_KEY, STORAGE_VERSION
+from .const import COLOR_NAMES, STORAGE_KEY, STORAGE_MINOR_VERSION, STORAGE_VERSION
 
 
 class CategoryDict(TypedDict):
@@ -150,7 +150,7 @@ def item_from_dict(data: ItemDict) -> Item:
         due_month=data["due_month"],
         cost_kind=CostKind(data["cost_kind"]),
         shared=data["shared"],
-        shared_with=tuple(shared_with) if (shared_with := data.get("shared_with")) else None,
+        shared_with=tuple(data["shared_with"]) if data["shared_with"] else None,
         user_id=data["user_id"],
         payment_method=PaymentMethod(data["payment_method"]) if data["payment_method"] else None,
         start=date.fromisoformat(data["start"]) if data["start"] else None,
@@ -160,6 +160,32 @@ def item_from_dict(data: ItemDict) -> Item:
 
 def _empty() -> StoreData:
     return {"categories": [], "items": [], "paid": {}}
+
+
+class _BudgetStorage(Store[StoreData]):
+    """The HA store with the schema migrations.
+
+    Bump STORAGE_MINOR_VERSION for additive changes and fill the new keys here; bump
+    STORAGE_VERSION for breaking ones and convert the old shape. Home Assistant itself refuses
+    a store written by a newer major version (UnsupportedStorageVersionError), so a downgrade
+    cannot corrupt it.
+    """
+
+    async def _async_migrate_func(
+        self, old_major_version: int, old_minor_version: int, old_data: dict[str, Any]
+    ) -> StoreData:
+        data: StoreData = {
+            "categories": old_data.get("categories", []),
+            "items": old_data.get("items", []),
+            "paid": old_data.get("paid", {}),
+        }
+        if old_major_version == 1 and old_minor_version < 2:
+            # 1.2: categories gained a colour, items a list of participants.
+            for category in data["categories"]:
+                category.setdefault("color", None)
+            for item in data["items"]:
+                item.setdefault("shared_with", None)
+        return data
 
 
 @dataclass
@@ -172,7 +198,9 @@ class BudgetStore:
 
     def __post_init__(self) -> None:
         """Create the underlying store."""
-        self._store = Store(self.hass, STORAGE_VERSION, STORAGE_KEY)
+        self._store = _BudgetStorage(
+            self.hass, STORAGE_VERSION, STORAGE_KEY, minor_version=STORAGE_MINOR_VERSION
+        )
 
     async def async_load(self) -> None:
         """Load from disk; an empty store on first run."""
@@ -183,6 +211,11 @@ class BudgetStore:
     def save(self) -> None:
         """Schedule a write to disk."""
         self._store.async_delay_save(lambda: self.data, 1)
+
+    async def async_remove(self) -> None:
+        """Delete the data from disk (the integration was removed)."""
+        await self._store.async_remove()
+        self.data = _empty()
 
     # --- categories ---
 
@@ -212,7 +245,7 @@ class BudgetStore:
         base = {
             "name": category["name"],
             "icon": category["icon"],
-            "color": category.get("color"),  # stores from before colours have no key
+            "color": category["color"],
             "order": category["order"],
         }
         valid = CATEGORY_FIELDS({**base, **fields})

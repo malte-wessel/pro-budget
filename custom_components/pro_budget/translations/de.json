@@ -317,5 +317,11 @@
         "name": "Manuelle Zahlungen"
       }
     }
+  },
+  "issues": {
+    "orphaned_items": {
+      "title": "Budgetposten eines gelöschten Benutzers",
+      "description": "{count} Posten gehören zu einem Home-Assistant-Benutzer, den es nicht mehr gibt: {titles}. Weise sie unter Posten im Budget-Panel neu zu oder lösche sie."
+    }
   }
 }

@@ -20,6 +20,7 @@ from .const import (
     PANEL_ICON,
     PANEL_TITLE,
     PANEL_URL_PATH,
+    RUNTIME_KEY,
     STATIC_URL,
 )
 
@@ -39,9 +40,13 @@ async def async_register_panel(hass: HomeAssistant) -> None:
     integration = await async_get_integration(hass, DOMAIN)
     version = integration.version or "0"
     bundle_hash = await hass.async_add_executor_job(_bundle_hash)
-    await hass.http.async_register_static_paths(
-        [StaticPathConfig(STATIC_URL, str(_PACKAGE_DIR / FRONTEND_DIR), cache_headers=False)]
-    )
+    # A static path cannot be unregistered; register it once per run, not on every reload.
+    flags: dict[str, bool] = hass.data.setdefault(RUNTIME_KEY, {})
+    if not flags.get("static"):
+        await hass.http.async_register_static_paths(
+            [StaticPathConfig(STATIC_URL, str(_PACKAGE_DIR / FRONTEND_DIR), cache_headers=False)]
+        )
+        flags["static"] = True
     frontend.async_register_built_in_panel(
         hass,
         component_name="custom",

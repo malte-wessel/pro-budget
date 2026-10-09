@@ -15,7 +15,13 @@ FRONTEND_DIR: Final = "frontend"
 BUNDLE_FILE: Final = "pro-budget.js"
 
 STORAGE_KEY: Final = DOMAIN
+# Major: breaking shape changes; minor: additive ones. Both migrate in store.py.
 STORAGE_VERSION: Final = 1
+STORAGE_MINOR_VERSION: Final = 2
+
+# Per-run state that outlives a config entry (things HA cannot unregister).
+RUNTIME_KEY: Final = f"{DOMAIN}_runtime"
+ISSUE_ORPHANED_ITEMS: Final = "orphaned_items"
 
 # Options
 CONF_MEMBERS: Final = "members"

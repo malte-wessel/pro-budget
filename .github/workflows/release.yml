@@ -18,6 +18,7 @@ jobs:
           TAG="${GITHUB_REF_NAME#v}"
           test "$(jq -r .version custom_components/pro_budget/manifest.json)" = "$TAG"
           test "$(jq -r .version package.json)" = "$TAG"
+          test "$(grep -m1 '^version = ' pyproject.toml | cut -d'"' -f2)" = "$TAG"
       - uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true

@@ -40,6 +40,10 @@ and add the integration under Settings → Devices & services.
 
 Requires Home Assistant 2026.10 or newer.
 
+## Removing
+
+Removing the integration deletes the stored budget (categories, items, paid marks). Home Assistant's backups include it under `.storage/pro_budget`, so take one first if you may want it back.
+
 ## Development
 
 ```sh

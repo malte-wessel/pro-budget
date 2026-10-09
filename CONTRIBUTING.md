@@ -13,3 +13,8 @@ Thanks for helping with Pro Budget. The short version:
 Design rules: the panel uses Home Assistant's own elements and theme tokens, never hard-coded colours;
 the integration keeps no runtime requirements beyond Home Assistant; storage changes bump the store
 version and ship a migration.
+
+Lifecycle guarantees to keep: removing the integration deletes its storage; unloading and
+reloading leave no duplicate registrations; stored data and config entries carry versions and
+migrate forward, data from a newer version is refused; diagnostics redact user ids and names; items
+of a deleted Home Assistant user raise a repair issue until they are reassigned or removed.

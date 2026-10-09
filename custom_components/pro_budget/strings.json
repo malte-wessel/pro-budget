@@ -317,5 +317,11 @@
         "name": "Manual payments"
       }
     }
+  },
+  "issues": {
+    "orphaned_items": {
+      "title": "Budget items of a removed user",
+      "description": "{count} items belong to a Home Assistant user that no longer exists: {titles}. Reassign or delete them under Items in the Budget panel."
+    }
   }
 }

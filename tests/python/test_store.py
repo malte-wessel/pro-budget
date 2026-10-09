@@ -2,11 +2,16 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+from typing import Any
+
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import UnsupportedStorageVersionError
 import probatio as vol
 import pytest
 
-from custom_components.pro_budget.store import BudgetStore
+from custom_components.pro_budget.store import BudgetStore, item_from_dict
 
 NOW = "2026-10-08T07:00:00+00:00"
 
@@ -124,14 +129,6 @@ async def test_category_validation(store: BudgetStore) -> None:
     assert store.update_category(renamed["id"], {"name": "Home 2"})["color"] == "orange"
 
 
-async def test_category_without_color_key_still_updates(store: BudgetStore) -> None:
-    """Stores written before colours existed have no key."""
-    category = store.data["categories"][0]
-    del category["color"]  # type: ignore[misc]
-    updated = store.update_category(category["id"], {"name": "Legacy"})
-    assert updated["color"] is None
-
-
 async def test_persists_and_reloads(hass: HomeAssistant, store: BudgetStore) -> None:
     item = store.add_item(rent(store), NOW)
     await hass.async_block_till_done()
@@ -152,3 +149,34 @@ async def test_shared_with_participants(store: BudgetStore) -> None:
     assert whole["shared_with"] is None
     with pytest.raises(vol.Invalid):
         store.add_item(rent(store, shared=True, shared_with="u2"), NOW)
+
+
+def _fixture(name: str) -> dict[str, Any]:
+    with (Path(__file__).parents[1] / "fixtures" / "storage" / f"{name}.json").open(
+        encoding="utf-8"
+    ) as f:
+        data: dict[str, Any] = json.load(f)
+        return data
+
+
+async def test_store_migrates_from_1_1(hass: HomeAssistant, hass_storage: dict[str, Any]) -> None:
+    """A store from before colours and participants gets the new keys and the new version."""
+    hass_storage["pro_budget"] = _fixture("pro_budget_v1_1")
+    s = BudgetStore(hass)
+    await s.async_load()
+    assert s.data["categories"][0]["color"] is None
+    assert s.data["items"][0]["shared_with"] is None
+    assert s.data["paid"] == {"i1": ["2026-10-01"]}
+    # The migrated store is usable as is: the domain object and an update work.
+    assert item_from_dict(s.data["items"][0]).shared_with is None
+    s.update_category("c1", {"color": "orange"})
+    assert s.data["categories"][0]["color"] == "orange"
+
+
+async def test_store_refuses_a_newer_version(
+    hass: HomeAssistant, hass_storage: dict[str, Any]
+) -> None:
+    """Data written by a newer major version is not touched (Home Assistant refuses it)."""
+    hass_storage["pro_budget"] = {**_fixture("pro_budget_v1_1"), "version": 2, "minor_version": 1}
+    with pytest.raises(UnsupportedStorageVersionError):
+        await BudgetStore(hass).async_load()

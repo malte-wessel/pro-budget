@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "pro_budget",
+  "data": {
+    "categories": [{ "id": "c1", "name": "Housing", "icon": "mdi:home", "order": 0 }],
+    "items": [
+      {
+        "id": "i1",
+        "title": "Rent",
+        "type": "expense",
+        "amount": 120000,
+        "currency": null,
+        "category_id": "c1",
+        "recurrence": "monthly",
+        "due_day": 1,
+        "due_month": null,
+        "cost_kind": "fixed",
+        "shared": true,
+        "user_id": "u1",
+        "payment_method": null,
+        "start": null,
+        "end": null,
+        "created": "2026-10-08T07:00:00+00:00",
+        "updated": "2026-10-08T07:00:00+00:00"
+      }
+    ],
+    "paid": { "i1": ["2026-10-01"] }
+  }
+}

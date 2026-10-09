@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, TypedDict
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.util import dt as dt_util
 
 from .budget.cashflow import MonthFlow, compute_month_flow
@@ -26,6 +27,8 @@ from .const import (
     DEFAULT_CATEGORY_NAMES,
     DEFAULT_LEAD_DAYS,
     DEFAULT_SPLIT_RULE,
+    DOMAIN,
+    ISSUE_ORPHANED_ITEMS,
 )
 from .store import BudgetStore, CategoryDict, ItemDict, item_from_dict
 
@@ -56,6 +59,7 @@ class BudgetModel:
     async def async_load(self) -> None:
         """Load the store and seed default categories on first run."""
         await self.store.async_load()
+        await self._async_check_orphans()
         if not self.store.data["categories"] and not self.store.data["items"]:
             language = (self.hass.config.language or "en").split("-")[0]
             names = DEFAULT_CATEGORY_NAMES.get(language, DEFAULT_CATEGORY_NAMES["en"])
@@ -117,6 +121,34 @@ class BudgetModel:
     def _notify(self) -> None:
         for listener in list(self._listeners):
             listener()
+        self.hass.async_create_task(self._async_check_orphans())
+
+    # --- repairs ---
+
+    async def _async_check_orphans(self) -> None:
+        """Raise a repair issue while items belong to a Home Assistant user that is gone."""
+        known = {u.id for u in await self.hass.auth.async_get_users()}
+        orphaned = [i for i in self.item_dicts if i["user_id"] not in known]
+        if orphaned:
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                ISSUE_ORPHANED_ITEMS,
+                is_fixable=False,
+                severity=ir.IssueSeverity.WARNING,
+                translation_key=ISSUE_ORPHANED_ITEMS,
+                translation_placeholders={
+                    "count": str(len(orphaned)),
+                    "titles": ", ".join(sorted(i["title"] for i in orphaned)),
+                },
+            )
+        else:
+            ir.async_delete_issue(self.hass, DOMAIN, ISSUE_ORPHANED_ITEMS)
+
+    @callback
+    def async_clear_issues(self) -> None:
+        """Drop the repair issue when the integration unloads."""
+        ir.async_delete_issue(self.hass, DOMAIN, ISSUE_ORPHANED_ITEMS)
 
     # --- data ---
 

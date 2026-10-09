@@ -39,6 +39,7 @@ class ProBudgetConfigFlow(ConfigFlow, domain=DOMAIN):
     """Single-instance config flow: one household per Home Assistant."""
 
     VERSION = 1
+    MINOR_VERSION = 1
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Create the entry on confirmation."""
