@@ -106,6 +106,7 @@ async function ensureConfigEntry(token) {
 // A small demo household, so the panel, the entities and the e2e tests have something to show.
 // Seeded on first run (right after onboarding) or with `--seed`; the dev user owns every item.
 const SEED = [
+  // dev
   {
     title: "Salary",
     type: "earning",
@@ -120,6 +121,15 @@ const SEED = [
     amount: 1250,
     recurrence: "monthly",
     due_day: 1,
+    category: "Housing",
+    shared: true,
+  },
+  {
+    title: "Electricity",
+    type: "expense",
+    amount: 95,
+    recurrence: "monthly",
+    due_day: 15,
     category: "Housing",
     shared: true,
   },
@@ -143,14 +153,6 @@ const SEED = [
     payment_method: "manual",
   },
   {
-    title: "Streaming",
-    type: "expense",
-    amount: 15,
-    recurrence: "monthly",
-    due_day: 3,
-    category: "Subscriptions",
-  },
-  {
     title: "Car insurance",
     type: "expense",
     amount: 640,
@@ -158,6 +160,16 @@ const SEED = [
     due_day: 15,
     due_month: 3,
     category: "Insurance",
+  },
+  {
+    title: "Fuel",
+    type: "expense",
+    amount: 60,
+    recurrence: "biweekly",
+    due_day: 5,
+    category: "Mobility",
+    cost_kind: "variable",
+    payment_method: "credit_card",
   },
   {
     title: "Gym",
@@ -169,6 +181,24 @@ const SEED = [
     category: "Health",
   },
   {
+    title: "Streaming",
+    type: "expense",
+    amount: 15,
+    recurrence: "monthly",
+    due_day: 3,
+    category: "Subscriptions",
+    shared: true,
+  },
+  {
+    title: "Fibre internet",
+    type: "expense",
+    amount: 45,
+    recurrence: "monthly",
+    due_day: 12,
+    category: "Internet",
+    shared: true,
+  },
+  {
     title: "ETF savings plan",
     type: "saving",
     amount: 400,
@@ -176,10 +206,108 @@ const SEED = [
     due_day: 2,
     category: "Other",
   },
+  // Anna
+  {
+    user: "anna",
+    title: "Salary Anna",
+    type: "earning",
+    amount: 2600,
+    recurrence: "monthly",
+    due_day: 27,
+    category: "Salary",
+  },
+  {
+    user: "anna",
+    title: "Daycare",
+    type: "expense",
+    amount: 380,
+    recurrence: "monthly",
+    due_day: 1,
+    category: "Children",
+    shared: true,
+  },
+  {
+    user: "anna",
+    title: "Kids' clothes",
+    type: "expense",
+    amount: 60,
+    recurrence: "monthly",
+    due_day: 20,
+    category: "Children",
+    cost_kind: "variable",
+    shared: true,
+    payment_method: "manual",
+  },
+  {
+    user: "anna",
+    title: "Health insurance top-up",
+    type: "expense",
+    amount: 55,
+    recurrence: "monthly",
+    due_day: 1,
+    category: "Insurance",
+  },
+  {
+    user: "anna",
+    title: "Phone",
+    type: "expense",
+    amount: 25,
+    recurrence: "monthly",
+    due_day: 8,
+    category: "Internet",
+  },
+  {
+    user: "anna",
+    title: "Theatre subscription",
+    type: "expense",
+    amount: 240,
+    recurrence: "semi_annually",
+    due_day: 1,
+    due_month: 2,
+    category: "Leisure",
+  },
+  {
+    user: "anna",
+    title: "Bike service",
+    type: "expense",
+    amount: 120,
+    recurrence: "annually",
+    due_day: 10,
+    due_month: 4,
+    category: "Mobility",
+    payment_method: "manual",
+  },
+  {
+    user: "anna",
+    title: "Pocket money",
+    type: "expense",
+    amount: 10,
+    recurrence: "weekly",
+    due_day: 7,
+    category: "Children",
+  },
+  {
+    user: "anna",
+    title: "Emergency fund",
+    type: "saving",
+    amount: 250,
+    recurrence: "monthly",
+    due_day: 3,
+    category: "Other",
+  },
+  {
+    user: "anna",
+    title: "Holiday fund",
+    type: "saving",
+    amount: 150,
+    recurrence: "monthly",
+    due_day: 3,
+    category: "Leisure",
+  },
 ];
 
-/** Titles of the existing items, through the integration's websocket subscription. */
-async function existingTitles(token) {
+/** A websocket session: `send(message)` resolves with the result; `event()` with the next event. */
+async function connect(token) {
   const ws = new WebSocket(BASE.replace(/^http/, "ws") + "/api/websocket");
   const queue = [];
   const waiters = [];
@@ -194,19 +322,65 @@ async function existingTitles(token) {
   await next(); // auth_required
   ws.send(JSON.stringify({ type: "auth", access_token: token }));
   await next(); // auth_ok
-  ws.send(JSON.stringify({ id: 1, type: "pro_budget/subscribe" }));
-  await next(); // result
-  const state = (await next()).event;
-  ws.close();
-  return new Set(state.items.map((i) => i.title));
+  let id = 1;
+  return {
+    async send(message) {
+      ws.send(JSON.stringify({ id: id++, ...message }));
+      const res = await next();
+      if (res.success === false) throw new Error(`${message.type}: ${res.error?.message}`);
+      return res.result;
+    },
+    event: next,
+    close: () => ws.close(),
+  };
+}
+
+/** The current budget state (categories, items, users) through the integration's subscription. */
+async function budgetState(token) {
+  const c = await connect(token);
+  await c.send({ type: "pro_budget/subscribe" });
+  const state = (await c.event()).event;
+  c.close();
+  return state;
+}
+
+// A second household member, so the panel shows the member filter, fairness and per-member entities.
+const SECOND_USER = { name: "Anna", username: "anna", password: "anna" };
+
+async function ensureSecondUser(token) {
+  const c = await connect(token);
+  const users = await c.send({ type: "config/auth/list" });
+  let user = users.find((u) => u.username === SECOND_USER.username || u.name === SECOND_USER.name);
+  if (!user) {
+    user = await c.send({
+      type: "config/auth/create",
+      name: SECOND_USER.name,
+      group_ids: ["system-users"],
+      local_only: false,
+    });
+    user = user.user ?? user;
+    await c.send({
+      type: "config/auth_provider/homeassistant/create",
+      user_id: user.id,
+      username: SECOND_USER.username,
+      password: SECOND_USER.password,
+    });
+    console.log(
+      `created user ${SECOND_USER.name} (${SECOND_USER.username} / ${SECOND_USER.password})`,
+    );
+  }
+  c.close();
+  return user.id;
 }
 
 async function seed(token) {
-  const existing = await existingTitles(token);
+  const annaId = await ensureSecondUser(token);
+  const existing = new Set((await budgetState(token)).items.map((i) => i.title));
   let added = 0;
-  for (const item of SEED) {
+  for (const { user, ...item } of SEED) {
     if (existing.has(item.title)) continue;
-    await call("/api/services/pro_budget/add_item", { method: "POST", token, body: item });
+    const body = user === "anna" ? { ...item, user_id: annaId } : item;
+    await call("/api/services/pro_budget/add_item", { method: "POST", token, body });
     added += 1;
   }
   console.log(`seeded ${added} demo items (${SEED.length - added} already present)`);
