@@ -19,7 +19,7 @@ test("create, edit and delete an item through the dialog", async ({ page }) => {
   await dialog.locator("ha-button[data-action=primary]").click();
   await expect(dialog).toHaveCount(0);
   // The table virtualizes its rows: filter through HA's search so the new row is rendered.
-  await p.locator("hass-tabs-subpage-data-table ha-input-search input").fill(TITLE);
+  await p.locator("hass-tabs-subpage-data-table ha-input-search input").first().fill(TITLE);
   const row = rows.filter({ hasText: TITLE });
   await expect(row).toHaveCount(1);
   await expect(row).toContainText(/12[.,]50/);
