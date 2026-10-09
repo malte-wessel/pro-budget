@@ -1,4 +1,4 @@
-// The member filter chips of the card views (overview, calendar, insights).
+// The member filter chips of the card views (overview, calendar).
 import { html, nothing, type TemplateResult } from "lit";
 import { avatar, memberColor } from "./color.ts";
 import type { HomeAssistant } from "./ha/types.ts";

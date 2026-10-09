@@ -12,7 +12,6 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.util import dt as dt_util
 
 from .budget.cashflow import MonthFlow, compute_month_flow
-from .budget.insights import MemberInsights, compute_member_insights
 from .budget.model import Item
 from .budget.occurrences import group_occurrences_by_date
 from .budget.overview import Overview, compute_overview
@@ -223,11 +222,6 @@ class BudgetModel:
             self.items(user_id), self.store.is_paid, year, month, dt_util.now().date()
         )
         return stats, household, overview
-
-    def insights(self, user_id: str, year: int) -> MemberInsights:
-        """Insights for one member and calendar year."""
-        today = dt_util.now().date()
-        return compute_member_insights(self.items(user_id), year, today.year, today.month)
 
     def calendar_month(
         self, year: int, month: int, user_id: str | None = None

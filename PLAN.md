@@ -81,7 +81,7 @@ Config entry options: `members` (list of user ids), `currency` (override, option
 
 `pro_budget/subscribe` (pushes the full state on every change), `pro_budget/users`, `pro_budget/categories/{create,update,delete}`,
 `pro_budget/items/{create,update,delete}`, `pro_budget/paid/{set,clear}`, `pro_budget/stats` (month, user filter),
-`pro_budget/insights` (user, year), `pro_budget/occurrences` (range, user filter). Admin not required; a
+`pro_budget/occurrences` (range, user filter). Admin not required; a
 non-admin may only edit items whose `user_id` is their own (option to relax).
 
 ### Services
@@ -121,7 +121,6 @@ Lit elements, one file per view, shared `api.ts` (typed WS client), `i18n`, `for
 | Overview   | Month dashboard: free to spend, progress, income split, categories, members, year outlook, up next, settlement. Month switcher, user filter. |
 | Items      | `ha-data-table` with filters (type, user, category); item dialog on `ha-form` schema.                                                        |
 | Calendar   | Month page: tiles (out, in, lowest balance), grid or day list, cash-flow chart, selected day, next payments; paid marks inline.              |
-| Insights   | Per member: ratios, top expenses, groups, 12-month payment chart, unscheduled items.                                                         |
 | Categories | List with inline rename, icon picker, delete guard when in use.                                                                              |
 | Settings   | Link to the options flow; export / import JSON.                                                                                              |
 

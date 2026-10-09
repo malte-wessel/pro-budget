@@ -602,8 +602,8 @@ export class ProBudgetOverview extends LitElement {
           <span class="small muted">${t(h, "overview.income_expenses", { income: m(income), expenses: m(p.fixed + p.variable) })}</span>
         </div>
         <div class="kpis">
-          ${this._kpi(mdiPiggyBankOutline, "var(--light-blue-color)", t(h, "insights.savings_rate"), percent(h, p.savings_rate), p.savings_rate === null ? ["", ""] : p.savings_rate >= SAVINGS_TARGET ? [t(h, "overview.on_target"), "good"] : [t(h, "overview.below_target"), "warn"])}
-          ${this._kpi(mdiLockOutline, "var(--orange-color)", t(h, "insights.fixed_cost_rate"), percent(h, p.fixed_cost_rate), p.fixed_cost_rate === null ? ["", ""] : p.fixed_cost_rate > FIXED_LIMIT ? [t(h, "overview.fixed_high"), "warn"] : [t(h, "overview.fixed_ok"), "good"])}
+          ${this._kpi(mdiPiggyBankOutline, "var(--light-blue-color)", t(h, "overview.savings_rate"), percent(h, p.savings_rate), p.savings_rate === null ? ["", ""] : p.savings_rate >= SAVINGS_TARGET ? [t(h, "overview.on_target"), "good"] : [t(h, "overview.below_target"), "warn"])}
+          ${this._kpi(mdiLockOutline, "var(--orange-color)", t(h, "overview.fixed_cost_rate"), percent(h, p.fixed_cost_rate), p.fixed_cost_rate === null ? ["", ""] : p.fixed_cost_rate > FIXED_LIMIT ? [t(h, "overview.fixed_high"), "warn"] : [t(h, "overview.fixed_ok"), "good"])}
           ${this._settlementKpi(d.household)}
         </div>
       </ha-card>
@@ -819,7 +819,7 @@ export class ProBudgetOverview extends LitElement {
     }
     return html`
       <ha-card>
-        ${this._head(mdiChartBar, t(h, "overview.outflows_year", { year: y.year }), this._link("insights", `${t(h, "overview.insights_link")} →`))}
+        ${this._head(mdiChartBar, t(h, "overview.outflows_year", { year: y.year }))}
         <div class="chart">
           <div class="bars">
             <div class="plot">
@@ -837,7 +837,7 @@ export class ProBudgetOverview extends LitElement {
           </div>
           ${notes.length ? html`<div class="notes">${notes}</div>` : nothing}
         </div>
-        ${y.unscheduled.length ? html`<p class="small muted" style="margin:0">${t(h, "insights.unscheduled")} ${y.unscheduled.map((id) => this._item(id)?.title).join(", ")}</p>` : nothing}
+        ${y.unscheduled.length ? html`<p class="small muted" style="margin:0">${t(h, "overview.unscheduled")} ${y.unscheduled.map((id) => this._item(id)?.title).join(", ")}</p>` : nothing}
       </ha-card>
     `;
   }

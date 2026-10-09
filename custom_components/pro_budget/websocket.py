@@ -240,49 +240,6 @@ async def ws_overview(
 
 @websocket_command(
     {
-        vol.Required("type"): f"{DOMAIN}/insights",
-        vol.Required("user_id"): str,
-        vol.Required("year"): int,
-    }
-)
-@callback
-def ws_insights(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
-    """Insights of one member for a year. Items are referenced by id."""
-    o = _model(hass).insights(msg["user_id"], msg["year"])
-
-    def group(g: Any) -> dict[str, Any]:
-        return {
-            "items": [{"item_id": e.item.id, "monthly": e.monthly} for e in g.items],
-            "total": g.total,
-        }
-
-    connection.send_result(
-        msg["id"],
-        {
-            "earnings": group(o.earnings),
-            "expenses": group(o.expenses),
-            "savings": group(o.savings),
-            "savings_rate": o.savings_rate,
-            "fixed_cost_rate": o.fixed_cost_rate,
-            "top_expenses": [e.item.id for e in o.top_expenses],
-            "calendar": [
-                {
-                    "month": m.month,
-                    "total": m.total,
-                    "entries": [{"item_id": e.item.id, "due": e.due} for e in m.entries],
-                }
-                for m in o.calendar
-            ],
-            "unscheduled": [i.id for i in o.unscheduled],
-            "avg_month": o.avg_month,
-            "max_month": o.max_month,
-            "min_month": o.min_month,
-        },
-    )
-
-
-@websocket_command(
-    {
         vol.Required("type"): f"{DOMAIN}/calendar",
         vol.Required("year"): int,
         vol.Required("month"): vol.All(int, vol.Range(min=1, max=12)),
@@ -374,7 +331,6 @@ def async_register_websocket(hass: HomeAssistant) -> None:
         ws_paid_set,
         ws_stats,
         ws_overview,
-        ws_insights,
         ws_occurrences,
         ws_calendar,
         ws_config_update,

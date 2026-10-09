@@ -18,7 +18,7 @@ income is already spoken for, and every household member sees their own share.
 
 - **Items** per Home Assistant user: earnings, expenses and savings with a recurrence (daily to annually),
   a due day, fixed or variable, shared with the household or with some members only, optional start and end dates.
-- **Sidebar panel** with an overview dashboard (free to spend, month progress, where the income goes, categories, members, the year's outflows, what is due next, the settlement), the items, a payment calendar (month grid or list, cash flow through the month, the lowest balance before the first income, paid marks), per-member insights and a settings page (categories with Home Assistant's icons and named colours, household members, currency, lead days) (savings rate, fixed cost rate, top expenses, the 12-month payment curve).
+- **Sidebar panel** with an overview dashboard (free to spend, month progress, where the income goes, categories, members, the year's outflows, what is due next, the settlement), the items, a payment calendar (month grid or list, cash flow through the month, the lowest balance before the first income, paid marks), and a settings page (categories with Home Assistant's icons and named colours, household members, currency, lead days) (savings rate, fixed cost rate, top expenses, the 12-month payment curve).
 - **Settlement**: who pays whom how much so the shared costs are split fairly, proportionally to income or equally (configurable), on the overview and as a sensor.
 - **Entities**: household and per-member sensors (income, expenses, savings, remaining, next payment, settlement),
   a `calendar` of every payment and a `todo` list of manual payments to tick off.

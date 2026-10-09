@@ -84,7 +84,7 @@ async def test_errors_are_reported(
     assert msg["error"]["code"] == "invalid"
 
 
-async def test_stats_insights_occurrences(
+async def test_stats_and_occurrences(
     hass: HomeAssistant,
     hass_ws_client: WebSocketGenerator,
     setup: MockConfigEntry,
@@ -123,12 +123,6 @@ async def test_stats_insights_occurrences(
     member = next(m for m in stats[0]["members"] if m["user_id"] == uid)
     assert member["balance"] == 200000
     assert next(f for f in stats[0]["fairness"] if f["user_id"] == uid)["shared_cost_share"] == 1
-
-    await client.send_json_auto_id({"type": f"{DOMAIN}/insights", "user_id": uid, "year": 2026})
-    insights = (await client.receive_json())["result"]
-    assert insights["earnings"]["total"] == 300000
-    assert insights["calendar"][2]["total"] == 100001
-    assert insights["max_month"] == 3
 
     await client.send_json_auto_id(
         {"type": f"{DOMAIN}/occurrences", "start": "2026-08-01", "end": "2026-08-31"}

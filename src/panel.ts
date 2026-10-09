@@ -11,7 +11,6 @@ import "./dialogs/confirm.ts";
 import "./dialogs/item-dialog.ts";
 import "./views/calendar.ts";
 
-import "./views/insights.ts";
 import "./views/items.ts";
 import "./views/overview.ts";
 import "./views/settings.ts";
@@ -109,8 +108,6 @@ export class ProBudgetPanel extends LitElement {
         return html`<pro-budget-items .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b}></pro-budget-items>`;
       case "calendar":
         return html`<pro-budget-calendar .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .userId=${this._userId} @user-changed=${onUser}></pro-budget-calendar>`;
-      case "insights":
-        return html`<pro-budget-insights .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .userId=${this._userId} @user-changed=${onUser}></pro-budget-insights>`;
       case "settings":
         return html`<pro-budget-settings .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .version=${common.version}></pro-budget-settings>`;
       default:

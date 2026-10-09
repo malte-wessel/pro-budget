@@ -7,7 +7,7 @@ test("panel loads with HA's tabs and the overview", async ({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await openPanel(page);
   const p = panel(page);
-  await expect(p.locator("hass-tabs-subpage ha-tab")).toHaveCount(5);
+  await expect(p.locator("hass-tabs-subpage ha-tab")).toHaveCount(4);
   // `active` is a property; the tab's inner div carries it as aria-selected.
   await expect(p.locator("hass-tabs-subpage ha-tab div[aria-selected=true]")).toHaveCount(1);
   await expect(p.locator("pro-budget-overview ha-card").first()).toBeVisible();
@@ -73,7 +73,7 @@ test("editing an item round-trips through the dialog", async ({ page }) => {
   await dialog.locator("ha-button[data-action=secondary]").click();
 });
 
-test("calendar, insights and settings render", async ({ page }) => {
+test("calendar and settings render", async ({ page }) => {
   await openPanel(page, "calendar");
   const p = panel(page);
   const c = p.locator("pro-budget-calendar");
@@ -92,8 +92,6 @@ test("calendar, insights and settings render", async ({ page }) => {
   await c.locator(".segment button").nth(1).click();
   await expect(c.locator(".day").first()).toBeVisible();
   // The anchor has no box of its own; click the tab inside it.
-  await p.locator("hass-tabs-subpage a[href$='/insights'] ha-tab").click();
-  await expect(p.locator("pro-budget-insights .months")).toBeVisible();
   await p.locator("hass-tabs-subpage a[href$='/settings'] ha-tab").click();
   // 12 seeded categories plus one row per seeded user (dev, Anna, Ben)
   await expect(p.locator("pro-budget-settings ha-md-list-item")).toHaveCount(12 + 3);

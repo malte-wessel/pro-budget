@@ -1,7 +1,6 @@
 // The panel's views as Home Assistant page navigation entries (the `tabs` of hass-tabs-subpage).
 import {
   mdiCalendarMonthOutline,
-  mdiChartBoxOutline,
   mdiFormatListBulleted,
   mdiCog,
   mdiViewDashboardOutline,
@@ -13,7 +12,6 @@ export const VIEWS = [
   { id: "overview", iconPath: mdiViewDashboardOutline },
   { id: "items", iconPath: mdiFormatListBulleted },
   { id: "calendar", iconPath: mdiCalendarMonthOutline },
-  { id: "insights", iconPath: mdiChartBoxOutline },
   { id: "settings", iconPath: mdiCog },
 ] as const;
 export type View = (typeof VIEWS)[number]["id"];

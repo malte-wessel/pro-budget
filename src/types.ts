@@ -184,25 +184,6 @@ export interface Overview {
   };
 }
 
-export interface InsightGroup {
-  items: { item_id: string; monthly: number }[];
-  total: number;
-}
-
-export interface Insights {
-  earnings: InsightGroup;
-  expenses: InsightGroup;
-  savings: InsightGroup;
-  savings_rate: number | null;
-  fixed_cost_rate: number | null;
-  top_expenses: string[];
-  calendar: { month: number; total: number; entries: { item_id: string; due: number }[] }[];
-  unscheduled: string[];
-  avg_month: number;
-  max_month: number | null;
-  min_month: number | null;
-}
-
 /** One day of the running balance (`budget/cashflow.py`). */
 export interface DayFlow {
   day: number;

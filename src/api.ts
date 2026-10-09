@@ -4,7 +4,6 @@ import type {
   BudgetState,
   CalendarMonth,
   Category,
-  Insights,
   Item,
   ItemFields,
   MonthStats,
@@ -57,8 +56,6 @@ export const api = {
     call<MonthStats[]>(hass, { type: `${D}/stats`, year, month, ...(user_id ? { user_id } : {}) }),
   overview: (hass: HomeAssistant, year: number, month: number, user_id?: string) =>
     call<Overview>(hass, { type: `${D}/overview`, year, month, ...(user_id ? { user_id } : {}) }),
-  insights: (hass: HomeAssistant, user_id: string, year: number) =>
-    call<Insights>(hass, { type: `${D}/insights`, user_id, year }),
   updateConfig: (
     hass: HomeAssistant,
     fields: {
