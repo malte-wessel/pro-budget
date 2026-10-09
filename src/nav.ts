@@ -10,8 +10,8 @@ import { t, type I18nKey } from "./i18n.ts";
 
 export const VIEWS = [
   { id: "overview", iconPath: mdiViewDashboardOutline },
-  { id: "items", iconPath: mdiFormatListBulleted },
   { id: "calendar", iconPath: mdiCalendarMonthOutline },
+  { id: "items", iconPath: mdiFormatListBulleted },
   { id: "settings", iconPath: mdiCog },
 ] as const;
 export type View = (typeof VIEWS)[number]["id"];
