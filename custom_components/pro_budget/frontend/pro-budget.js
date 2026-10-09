@@ -17,7 +17,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           </ha-button>
         `)}
     </ha-dialog>
-  `}var c=s`
+  `}var h=s`
   * {
     box-sizing: border-box;
   }
@@ -188,7 +188,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
   ha-icon {
     --mdc-icon-size: 20px;
   }
-`;function q(M){return M?.locale?.language??M?.language??"en"}var l2=new Map;function h(M,H,C){let V=`${q(M)}|${C}`,L=l2.get(V);if(!L){try{L=new Intl.NumberFormat(q(M),{style:"currency",currency:C})}catch{L=new Intl.NumberFormat(q(M),{minimumFractionDigits:2})}l2.set(V,L)}return L.format(H/100)}function v2(M,H,C,V){let L=h(M,Math.abs(H),C);return V?`\u2212${L}`:`+${L}`}function C1(M,H){return H===null?"\u2014":new Intl.NumberFormat(q(M),{style:"percent",maximumFractionDigits:1}).format(H)}function _(M){let H=M.getFullYear(),C=String(M.getMonth()+1).padStart(2,"0"),V=String(M.getDate()).padStart(2,"0");return`${H}-${C}-${V}`}function $1(M){let[H,C,V]=M.split("-").map(Number);return new Date(H,C-1,V)}function N1(M,H,C){return new Intl.DateTimeFormat(q(M),C).format($1(H))}function D(M,H,C="long"){return new Intl.DateTimeFormat(q(M),{month:C}).format(new Date(2026,H-1,1))}function u1(M,H,C="long"){return new Intl.DateTimeFormat(q(M),{weekday:C}).format(new Date(2026,5,H))}function x2(M){let H=M.trim().replace(/\s/g,"");if(!H)return null;let C=H.lastIndexOf(","),V=H.lastIndexOf("."),L;return C>V?L=H.replace(/\./g,"").replace(",","."):V>C?L=H.replace(/,/g,""):L=H,/^\d+(\.\d{1,2})?$/.test(L)?Math.round(Number(L)*100):null}function Z2(M){return(M/100).toFixed(2)}var s2=["earning","expense","saving"],u2=["daily","weekly","biweekly","monthly","quarterly","semi_annually","annually"],S2=["fixed","variable"],c2=["direct_debit","standing_order","manual","credit_card","paypal"],I1=["quarterly","semi_annually","annually"];function Q2(M,H,C){return M?{title:M.title,type:M.type,amount:Z2(M.amount),currency:M.currency??"",category_id:M.category_id,user_id:M.user_id,recurrence:M.recurrence,due_day:M.due_day??void 0,due_month:M.due_month??void 0,cost_kind:M.cost_kind,shared:M.shared,payment_method:M.payment_method??"",start:M.start??void 0,end:M.end??void 0}:{type:"expense",recurrence:"monthly",due_day:1,cost_kind:"fixed",shared:!1,category_id:H.categories[0]?.id,user_id:C??H.users[0]?.id,amount:""}}var f=class extends x{constructor(){super(...arguments);this._open=!1;this._data={};this._error="";this._saving=!1;this._label=C=>{if(C.name==="user_id")return e(this.hass,this._data.type==="earning"?"item.user_earning":"item.user");if(C.name==="due_day"){let V=this._data.recurrence;return e(this.hass,V==="weekly"||V==="biweekly"?"item.due_weekday":"item.due_day")}return C.name==="category_id"?e(this.hass,"item.category"):e(this.hass,`item.${C.name}`)};this._onClosed=C=>{C.target===this.renderRoot.querySelector("ha-dialog")&&this._close()}}open(C){this.budget&&(this._item=C,this._data=Q2(C,this.budget,this.hass?.user?.id),this._error="",this._open=!0)}_close(){this._open=!1}get _schema(){let C=this.budget,V=this._data.recurrence,L=V==="weekly"||V==="biweekly",t=I1.includes(V),r=(m,Z)=>m.map(n=>({value:n,label:Z(n)})),i=[{name:"title",required:!0,selector:{text:{}}},{name:"",type:"grid",schema:[{name:"type",required:!0,selector:{select:{mode:"dropdown",options:r(s2,m=>e(this.hass,`type.${m}`))}}},{name:"cost_kind",selector:{select:{mode:"dropdown",options:r(S2,m=>e(this.hass,`cost_kind.${m}`))}}},{name:"amount",required:!0,selector:{text:{type:"text",suffix:C.config.currency}}},{name:"category_id",required:!0,selector:{select:{mode:"dropdown",options:C.categories.map(m=>({value:m.id,label:m.name}))}}},{name:"user_id",required:!0,selector:{select:{mode:"dropdown",options:C.users.map(m=>({value:m.id,label:m.name}))}}},{name:"recurrence",required:!0,selector:{select:{mode:"dropdown",options:r(u2,m=>e(this.hass,`recurrence.${m}`))}}}]}],A=[];return L?A.push({name:"due_day",required:!0,selector:{select:{mode:"dropdown",options:[1,2,3,4,5,6,7].map(m=>({value:String(m),label:u1(this.hass,m)}))}}}):V!=="daily"&&A.push({name:"due_day",required:!0,selector:{number:{min:1,max:31,mode:"box"}}}),t&&A.push({name:"due_month",required:!0,selector:{select:{mode:"dropdown",options:Array.from({length:12},(m,Z)=>({value:String(Z+1),label:D(this.hass,Z+1)}))}}}),A.length&&i.push({name:"",type:"grid",schema:A}),i.push({name:"shared",selector:{boolean:{}}}),i.push({name:"advanced",type:"expandable",schema:[{name:"payment_method",selector:{select:{mode:"dropdown",options:[{value:"",label:e(this.hass,"common.none")},...r(c2,m=>e(this.hass,`payment.${m}`))]}}},{name:"currency",selector:{text:{}}},{name:"",type:"grid",schema:[{name:"start",selector:{date:{}}},{name:"end",selector:{date:{}}}]}]}),i}_fields(){let C=this._data,V=x2(String(C.amount??""));if(V===null)return e(this.hass,"item.amount_invalid");let L=C.recurrence,t=I1.includes(L);return{title:String(C.title??""),type:C.type,amount:V,currency:C.currency?String(C.currency).toUpperCase():null,category_id:String(C.category_id??""),user_id:String(C.user_id??""),recurrence:L,due_day:L==="daily"||C.due_day==null?null:Number(C.due_day),due_month:t&&C.due_month!=null?Number(C.due_month):null,cost_kind:C.cost_kind??"fixed",shared:!!C.shared,payment_method:C.payment_method?C.payment_method:null,start:C.start?String(C.start):null,end:C.end?String(C.end):null}}async _save(){let C=this._fields();if(typeof C=="string"){this._error=C;return}this._saving=!0,this._error="";try{this._item?await u.updateItem(this.hass,this._item.id,C):await u.createItem(this.hass,C),this._close()}catch(V){this._error=W1(this.hass,V)}finally{this._saving=!1}}render(){return!this._open||!this.budget?d:J({heading:e(this.hass,this._item?"item.edit":"item.new"),sticky:!0,onClosed:this._onClosed,content:o`
+`;function q(M){return M?.locale?.language??M?.language??"en"}var l2=new Map;function c(M,H,C){let V=`${q(M)}|${C}`,L=l2.get(V);if(!L){try{L=new Intl.NumberFormat(q(M),{style:"currency",currency:C})}catch{L=new Intl.NumberFormat(q(M),{minimumFractionDigits:2})}l2.set(V,L)}return L.format(H/100)}function v2(M,H,C,V){let L=c(M,Math.abs(H),C);return V?`\u2212${L}`:`+${L}`}function C1(M,H){return H===null?"\u2014":new Intl.NumberFormat(q(M),{style:"percent",maximumFractionDigits:1}).format(H)}function _(M){let H=M.getFullYear(),C=String(M.getMonth()+1).padStart(2,"0"),V=String(M.getDate()).padStart(2,"0");return`${H}-${C}-${V}`}function $1(M){let[H,C,V]=M.split("-").map(Number);return new Date(H,C-1,V)}function N1(M,H,C){return new Intl.DateTimeFormat(q(M),C).format($1(H))}function D(M,H,C="long"){return new Intl.DateTimeFormat(q(M),{month:C}).format(new Date(2026,H-1,1))}function u1(M,H,C="long"){return new Intl.DateTimeFormat(q(M),{weekday:C}).format(new Date(2026,5,H))}function x2(M){let H=M.trim().replace(/\s/g,"");if(!H)return null;let C=H.lastIndexOf(","),V=H.lastIndexOf("."),L;return C>V?L=H.replace(/\./g,"").replace(",","."):V>C?L=H.replace(/,/g,""):L=H,/^\d+(\.\d{1,2})?$/.test(L)?Math.round(Number(L)*100):null}function Z2(M){return(M/100).toFixed(2)}var s2=["earning","expense","saving"],u2=["daily","weekly","biweekly","monthly","quarterly","semi_annually","annually"],S2=["fixed","variable"],c2=["direct_debit","standing_order","manual","credit_card","paypal"],I1=["quarterly","semi_annually","annually"];function Q2(M,H,C){return M?{title:M.title,type:M.type,amount:Z2(M.amount),currency:M.currency??"",category_id:M.category_id,user_id:M.user_id,recurrence:M.recurrence,due_day:M.due_day??void 0,due_month:M.due_month??void 0,cost_kind:M.cost_kind,shared:M.shared,payment_method:M.payment_method??"",start:M.start??void 0,end:M.end??void 0}:{type:"expense",recurrence:"monthly",due_day:1,cost_kind:"fixed",shared:!1,category_id:H.categories[0]?.id,user_id:C??H.users[0]?.id,amount:""}}var f=class extends x{constructor(){super(...arguments);this._open=!1;this._data={};this._error="";this._saving=!1;this._label=C=>{if(C.name==="user_id")return e(this.hass,this._data.type==="earning"?"item.user_earning":"item.user");if(C.name==="due_day"){let V=this._data.recurrence;return e(this.hass,V==="weekly"||V==="biweekly"?"item.due_weekday":"item.due_day")}return C.name==="category_id"?e(this.hass,"item.category"):e(this.hass,`item.${C.name}`)};this._onClosed=C=>{C.target===this.renderRoot.querySelector("ha-dialog")&&this._close()}}open(C){this.budget&&(this._item=C,this._data=Q2(C,this.budget,this.hass?.user?.id),this._error="",this._open=!0)}_close(){this._open=!1}get _schema(){let C=this.budget,V=this._data.recurrence,L=V==="weekly"||V==="biweekly",t=I1.includes(V),r=(m,Z)=>m.map(n=>({value:n,label:Z(n)})),i=[{name:"title",required:!0,selector:{text:{}}},{name:"",type:"grid",schema:[{name:"type",required:!0,selector:{select:{mode:"dropdown",options:r(s2,m=>e(this.hass,`type.${m}`))}}},{name:"cost_kind",selector:{select:{mode:"dropdown",options:r(S2,m=>e(this.hass,`cost_kind.${m}`))}}},{name:"amount",required:!0,selector:{text:{type:"text",suffix:C.config.currency}}},{name:"category_id",required:!0,selector:{select:{mode:"dropdown",options:C.categories.map(m=>({value:m.id,label:m.name}))}}},{name:"user_id",required:!0,selector:{select:{mode:"dropdown",options:C.users.map(m=>({value:m.id,label:m.name}))}}},{name:"recurrence",required:!0,selector:{select:{mode:"dropdown",options:r(u2,m=>e(this.hass,`recurrence.${m}`))}}}]}],A=[];return L?A.push({name:"due_day",required:!0,selector:{select:{mode:"dropdown",options:[1,2,3,4,5,6,7].map(m=>({value:String(m),label:u1(this.hass,m)}))}}}):V!=="daily"&&A.push({name:"due_day",required:!0,selector:{number:{min:1,max:31,mode:"box"}}}),t&&A.push({name:"due_month",required:!0,selector:{select:{mode:"dropdown",options:Array.from({length:12},(m,Z)=>({value:String(Z+1),label:D(this.hass,Z+1)}))}}}),A.length&&i.push({name:"",type:"grid",schema:A}),i.push({name:"shared",selector:{boolean:{}}}),i.push({name:"advanced",type:"expandable",schema:[{name:"payment_method",selector:{select:{mode:"dropdown",options:[{value:"",label:e(this.hass,"common.none")},...r(c2,m=>e(this.hass,`payment.${m}`))]}}},{name:"currency",selector:{text:{}}},{name:"",type:"grid",schema:[{name:"start",selector:{date:{}}},{name:"end",selector:{date:{}}}]}]}),i}_fields(){let C=this._data,V=x2(String(C.amount??""));if(V===null)return e(this.hass,"item.amount_invalid");let L=C.recurrence,t=I1.includes(L);return{title:String(C.title??""),type:C.type,amount:V,currency:C.currency?String(C.currency).toUpperCase():null,category_id:String(C.category_id??""),user_id:String(C.user_id??""),recurrence:L,due_day:L==="daily"||C.due_day==null?null:Number(C.due_day),due_month:t&&C.due_month!=null?Number(C.due_month):null,cost_kind:C.cost_kind??"fixed",shared:!!C.shared,payment_method:C.payment_method?C.payment_method:null,start:C.start?String(C.start):null,end:C.end?String(C.end):null}}async _save(){let C=this._fields();if(typeof C=="string"){this._error=C;return}this._saving=!0,this._error="";try{this._item?await u.updateItem(this.hass,this._item.id,C):await u.createItem(this.hass,C),this._close()}catch(V){this._error=W1(this.hass,V)}finally{this._saving=!1}}render(){return!this._open||!this.budget?d:J({heading:e(this.hass,this._item?"item.edit":"item.new"),sticky:!0,onClosed:this._onClosed,content:o`
         ${this._error?o`<ha-alert alert-type="error">${this._error}</ha-alert>`:d}
         <ha-form
           .hass=${this.hass}
@@ -197,7 +197,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           .computeLabel=${this._label}
           @value-changed=${C=>this._data=C.detail.value}
         ></ha-form>
-      `,actions:[{label:e(this.hass,"common.cancel"),onClick:()=>this._close()},{label:e(this.hass,"common.save"),primary:!0,disabled:this._saving,onClick:()=>this._save()}]})}};f.styles=[c,s`
+      `,actions:[{label:e(this.hass,"common.cancel"),onClick:()=>this._close()},{label:e(this.hass,"common.save"),primary:!0,disabled:this._saving,onClick:()=>this._save()}]})}};f.styles=[h,s`
       ha-dialog {
         --mdc-dialog-min-width: min(560px, 95vw);
       }
@@ -214,7 +214,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           .computeLabel=${C=>e(this.hass,`categories.${C.name}`)}
           @value-changed=${C=>this._data=C.detail.value}
         ></ha-form>
-      `,actions:[{label:e(this.hass,"common.cancel"),onClick:()=>this._close()},{label:e(this.hass,"common.save"),primary:!0,onClick:()=>this._save()}]}):d}};E.styles=[c,s`
+      `,actions:[{label:e(this.hass,"common.cancel"),onClick:()=>this._close()},{label:e(this.hass,"common.save"),primary:!0,onClick:()=>this._save()}]}):d}};E.styles=[h,s`
       ha-alert {
         display: block;
         margin-bottom: 12px;
@@ -303,7 +303,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
             <div class="cell ${v===Z?"today":""}">
               <div class="num">${$1(v).getDate()}</div>
               ${T.length?o`
-                    <div class="sum ${c1<0?"expense":"earning"}">${h(C,c1,n)}</div>
+                    <div class="sum ${c1<0?"expense":"earning"}">${c(C,c1,n)}</div>
                     ${T.slice(0,3).map(h1=>o`<div class="item">${this._item(h1.item_id)?.title}</div>`)}
                     ${T.length>3?o`<div class="item muted">+${T.length-3}</div>`:d}
                   `:d}
@@ -311,7 +311,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           `})}
       </div>
       <p class="muted small" style="margin:8px 0 0">${D(C,L)} ${V}</p>
-    `}};O.styles=[c,s`
+    `}};O.styles=[h,s`
       :host {
         display: block;
         height: 100%;
@@ -431,7 +431,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
       </hass-tabs-subpage-data-table>
       <pro-budget-category-dialog .hass=${C}></pro-budget-category-dialog>
       <pro-budget-confirm .hass=${C}></pro-budget-confirm>
-    `}};B.styles=[c,s`
+    `}};B.styles=[h,s`
       :host {
         display: block;
         height: 100%;
@@ -440,7 +440,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
       <hass-tabs-subpage .hass=${this.hass} .narrow=${this.narrow} .route=${this.route} .tabs=${R(this.hass,this.route)} main-page>
         ${V} ${C}
       </hass-tabs-subpage>
-    `}render(){if(!this.budget)return d;let C=this.hass,V=this._insights,L=this.budget.config.currency,t=i=>h(C,i,L),r=this.budget.users.find(i=>i.id===this._effectiveUser);return r?this._frame(o`
+    `}render(){if(!this.budget)return d;let C=this.hass,V=this._insights,L=this.budget.config.currency,t=i=>c(C,i,L),r=this.budget.users.find(i=>i.id===this._effectiveUser);return r?this._frame(o`
       <div class="toolbar">
         <strong>${r.name}</strong>
         <span class="spacer"></span>
@@ -472,8 +472,8 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
     `):this._frame(o`<div class="cards"><ha-card><div class="empty">${e(C,"insights.no_member")}</div></ha-card></div>`)}_renderMonths(C){let V=Math.max(1,...C.calendar.map(L=>L.total));return o`
       <div class="months">
         ${C.calendar.map(L=>o`
-            <div class="month ${L.month===C.max_month?"max":L.month===C.min_month?"min":""}" title=${h(this.hass,L.total,this.budget.config.currency)}>
-              <span class="total">${L.total?h(this.hass,L.total,this.budget.config.currency):""}</span>
+            <div class="month ${L.month===C.max_month?"max":L.month===C.min_month?"min":""}" title=${c(this.hass,L.total,this.budget.config.currency)}>
+              <span class="total">${L.total?c(this.hass,L.total,this.budget.config.currency):""}</span>
               <div class="col" style="height:${Math.round(L.total/V*100)}%"></div>
               <span class="name">${D(this.hass,L.month,"short")}</span>
             </div>
@@ -488,15 +488,15 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
                   ${V.items.map(i=>{let A=this._item(i.item_id);return o`
                       <tr>
                         <td>${this._categoryIcon(A?.category_id)} ${A?.title??i.item_id}<br /><span class="muted small">${A?`${e(r,`recurrence.${A.recurrence}`)} \xB7 ${S1(r,A)}`:""}</span></td>
-                        <td class="num">${h(r,i.monthly,L)}<span class="muted small"> ${e(r,"common.per_month")}</span></td>
+                        <td class="num">${c(r,i.monthly,L)}<span class="muted small"> ${e(r,"common.per_month")}</span></td>
                       </tr>
                     `})}
-                  ${t?o`<tr><td><strong>Σ</strong></td><td class="num"><strong>${h(r,V.total,L)}</strong></td></tr>`:d}
+                  ${t?o`<tr><td><strong>Σ</strong></td><td class="num"><strong>${c(r,V.total,L)}</strong></td></tr>`:d}
                 </tbody>
               </table>
             `}
       </ha-card>
-    `}};y.styles=[c,s`
+    `}};y.styles=[h,s`
       :host {
         display: block;
         height: 100%;
@@ -542,7 +542,12 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           display: none;
         }
       }
-    `],a([p({attribute:!1})],y.prototype,"hass",2),a([p({attribute:!1})],y.prototype,"budget",2),a([p()],y.prototype,"userId",2),a([p({attribute:!1})],y.prototype,"route",2),a([p({type:Boolean})],y.prototype,"narrow",2),a([l()],y.prototype,"_year",2),a([l()],y.prototype,"_insights",2),y=a([S("pro-budget-insights")],y);var Y2={earning:"mdi:cash-plus",expense:"mdi:cash-minus",saving:"mdi:piggy-bank-outline"},P=class extends x{constructor(){super(...arguments);this.narrow=!1}get _rows(){let C=this.budget,V=this.hass,L=new Date,t=r=>C.users.find(i=>i.id===r)?.name??e(V,"common.unknown_user");return C.items.map(r=>{let i=C.categories.find(A=>A.id===r.category_id);return{id:r.id,item:r,category_icon:{icon:i?.icon??Y2[r.type],color:i?.color??null},title:r.title,type:e(V,`type.${r.type}`),amount:r.amount,monthly:O2(r.amount,r.recurrence),category:i?.name??"",member:t(r.user_id),currency:r.currency??C.config.currency,recurrence:e(V,`recurrence.${r.recurrence}`),due:S1(V,r),cost:e(V,`cost_kind.${r.cost_kind}`),shared:r.shared?e(V,"overview.shared"):e(V,"overview.personal"),status:g2(r,L.getFullYear(),L.getMonth()+1)?e(V,"items.active"):e(V,"items.inactive")}})}get _columns(){let C=this.hass;return{icon:{title:"",type:"icon",showNarrow:!0,moveable:!1,template:V=>$(V.category_icon)},title:{title:e(C,"items.col_title"),main:!0,sortable:!0,filterable:!0,direction:"asc",flex:2},amount:{title:e(C,"items.col_amount"),type:"numeric",sortable:!0,minWidth:"120px",template:V=>h(C,V.amount,V.currency)},monthly:{title:e(C,"items.col_monthly"),type:"numeric",sortable:!0,minWidth:"120px",template:V=>o`<span class=${V.item.type}>${h(C,V.monthly,V.currency)}</span>`},recurrence:{title:e(C,"items.col_recurrence"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},due:{title:e(C,"items.col_due"),filterable:!0,minWidth:"120px"},type:{title:e(C,"items.filter_type"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px"},category:{title:e(C,"items.col_category"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},member:{title:e(C,"items.col_user"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},status:{title:e(C,"items.col_status"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},cost:{title:e(C,"item.cost_kind"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},shared:{title:e(C,"item.shared"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},actions:{title:"",type:"overflow-menu",showNarrow:!0,moveable:!1,template:V=>o`
+    `],a([p({attribute:!1})],y.prototype,"hass",2),a([p({attribute:!1})],y.prototype,"budget",2),a([p()],y.prototype,"userId",2),a([p({attribute:!1})],y.prototype,"route",2),a([p({type:Boolean})],y.prototype,"narrow",2),a([l()],y.prototype,"_year",2),a([l()],y.prototype,"_insights",2),y=a([S("pro-budget-insights")],y);var Y2={earning:"mdi:cash-plus",expense:"mdi:cash-minus",saving:"mdi:piggy-bank-outline"},P=class extends x{constructor(){super(...arguments);this.narrow=!1}get _rows(){let C=this.budget,V=this.hass,L=new Date,t=r=>C.users.find(i=>i.id===r)?.name??e(V,"common.unknown_user");return C.items.map(r=>{let i=C.categories.find(A=>A.id===r.category_id);return{id:r.id,item:r,category_icon:{icon:i?.icon??Y2[r.type],color:i?.color??null},title:r.title,type:e(V,`type.${r.type}`),amount:r.amount,monthly:O2(r.amount,r.recurrence),category:i?.name??"",member:t(r.user_id),currency:r.currency??C.config.currency,recurrence:e(V,`recurrence.${r.recurrence}`),due:S1(V,r),cost:e(V,`cost_kind.${r.cost_kind}`),shared:r.shared?e(V,"overview.shared"):e(V,"overview.personal"),status:g2(r,L.getFullYear(),L.getMonth()+1)?e(V,"items.active"):e(V,"items.inactive")}})}get _columns(){let C=this.hass;return{icon:{title:"",type:"icon",showNarrow:!0,moveable:!1,template:V=>$(V.category_icon)},title:{title:e(C,"items.col_title"),main:!0,sortable:!0,filterable:!0,direction:"asc",flex:2,template:V=>o`
+          <div style="font-weight: var(--ha-font-weight-medium, 500)">${V.title}</div>
+          ${this.narrow?o`<div class="secondary">
+                ${[c(C,V.amount,V.currency),c(C,V.monthly,V.currency),V.recurrence,V.due,V.type,V.category,V.member].join(" \xB7 ")}
+              </div>`:d}
+        `},amount:{title:e(C,"items.col_amount"),type:"numeric",sortable:!0,minWidth:"120px",template:V=>c(C,V.amount,V.currency)},monthly:{title:e(C,"items.col_monthly"),type:"numeric",sortable:!0,minWidth:"120px",template:V=>o`<span class=${V.item.type}>${c(C,V.monthly,V.currency)}</span>`},recurrence:{title:e(C,"items.col_recurrence"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},due:{title:e(C,"items.col_due"),filterable:!0,minWidth:"120px"},type:{title:e(C,"items.filter_type"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px"},category:{title:e(C,"items.col_category"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},member:{title:e(C,"items.col_user"),sortable:!0,groupable:!0,filterable:!0,minWidth:"120px"},status:{title:e(C,"items.col_status"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},cost:{title:e(C,"item.cost_kind"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},shared:{title:e(C,"item.shared"),sortable:!0,groupable:!0,filterable:!0,minWidth:"100px",defaultHidden:!0},actions:{title:"",type:"overflow-menu",showNarrow:!0,moveable:!1,template:V=>o`
           <ha-icon-overflow-menu .hass=${C} .narrow=${this.narrow} .items=${this._menu(V.item)}></ha-icon-overflow-menu>
         `}}}_menu(C){return[{path:Z1,label:e(this.hass,"common.edit"),action:()=>this._dialog.open(C)},{path:x1,label:e(this.hass,"common.delete"),warning:!0,action:()=>{this._delete(C)}}]}async _delete(C){await this._confirm.open(e(this.hass,"item.delete_confirm",{title:C.title}))&&await u.deleteItem(this.hass,C.id)}_rowClicked(C){let V=this.budget?.items.find(L=>L.id===C.detail.id);V&&this._dialog.open(V)}render(){if(!this.budget)return d;let C=this.hass,V={column:"monthly",direction:"desc"};return o`
       <hass-tabs-subpage-data-table
@@ -569,7 +574,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
       </hass-tabs-subpage-data-table>
       <pro-budget-item-dialog .hass=${C} .budget=${this.budget}></pro-budget-item-dialog>
       <pro-budget-confirm .hass=${C}></pro-budget-confirm>
-    `}};P.styles=[c,s`
+    `}};P.styles=[h,s`
       :host {
         display: block;
         height: 100%;
@@ -591,7 +596,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
         ${this._stats.map((C,V)=>this._renderCurrency(C,V>0))}
         <div class="version">Pro Budget v${this.version}</div>
       </div>
-    `):d}_renderCurrency(C,V){let L=this.hass,t=i=>h(L,i,C.currency),r=[["overview.income",C.totals.income,"earning"],["overview.expenses",C.totals.expenses,"expense"],["overview.savings",C.totals.savings,"saving"],["overview.remaining",C.totals.remaining,C.totals.remaining<0?"expense":""]];return o`
+    `):d}_renderCurrency(C,V){let L=this.hass,t=i=>c(L,i,C.currency),r=[["overview.income",C.totals.income,"earning"],["overview.expenses",C.totals.expenses,"expense"],["overview.savings",C.totals.savings,"saving"],["overview.remaining",C.totals.remaining,C.totals.remaining<0?"expense":""]];return o`
       ${V?o`<p class="muted small">${e(L,"overview.other_currencies")} (${C.currency})</p>`:d}
       <div class="grid">
         ${r.map(([i,A,m])=>o`
@@ -683,7 +688,7 @@ var f2=Object.defineProperty;var y2=Object.getOwnPropertyDescriptor;var a=(M,H,C
           </table>
         </ha-card>
       </div>
-    `}};k.styles=[c,s`
+    `}};k.styles=[h,s`
       :host {
         display: block;
         height: 100%;

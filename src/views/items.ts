@@ -113,11 +113,23 @@ export class ProBudgetItems extends LitElement {
       },
       title: {
         title: t(h, "items.col_title"),
-        main: true, // no template: on narrow screens HA shows the other columns under it
+        main: true,
         sortable: true,
         filterable: true,
         direction: "asc",
         flex: 2,
+        // A template drops HA's automatic second line on narrow screens, so it is rebuilt here
+        // from the same values; `.secondary` is the table's own class.
+        template: (r) => html`
+          <div style="font-weight: var(--ha-font-weight-medium, 500)">${r.title}</div>
+          ${
+            this.narrow
+              ? html`<div class="secondary">
+                ${[money(h, r.amount, r.currency), money(h, r.monthly, r.currency), r.recurrence, r.due, r.type, r.category, r.member].join(" · ")}
+              </div>`
+              : nothing
+          }
+        `,
       },
       amount: {
         title: t(h, "items.col_amount"),
