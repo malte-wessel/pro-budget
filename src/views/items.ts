@@ -2,7 +2,7 @@ import { mdiDelete, mdiPencil, mdiPlus } from "@mdi/js";
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { api } from "../api.ts";
-import { dueLabel, isActiveInMonth, monthlyEquivalent } from "../budget.ts";
+import { dueLabel, isActiveInMonth } from "../budget.ts";
 import { categoryIcon } from "../color.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
 import type { ProBudgetItemDialog } from "../dialogs/item-dialog.ts";
@@ -40,7 +40,6 @@ interface Row {
   title: string;
   type: string;
   amount: number;
-  monthly: number;
   recurrence: string;
   due: string;
   cost: string;
@@ -108,7 +107,6 @@ export class ProBudgetItems extends LitElement {
         title: item.title,
         type: t(h, `type.${item.type}` as I18nKey),
         amount: item.amount,
-        monthly: monthlyEquivalent(item.amount, item.recurrence),
         category: category?.name ?? "",
         member: name(item.user_id),
         currency: item.currency ?? b.config.currency,
@@ -147,7 +145,14 @@ export class ProBudgetItems extends LitElement {
           ${
             this.narrow
               ? html`<div class="secondary">
-                ${[money(h, r.amount, r.currency), money(h, r.monthly, r.currency), r.recurrence, r.due, r.type, r.category, r.member].join(" · ")}
+                ${[
+                  money(h, r.amount, r.currency),
+                  r.recurrence,
+                  r.due,
+                  r.type,
+                  r.category,
+                  r.member,
+                ].join(" · ")}
               </div>`
               : nothing
           }
@@ -160,14 +165,6 @@ export class ProBudgetItems extends LitElement {
         minWidth: "120px",
         template: (r) =>
           html`<span style="color: ${TYPE_COLORS[r.item.type]}">${money(h, r.amount, r.currency)}</span>`,
-      },
-      monthly: {
-        title: t(h, "items.col_monthly"),
-        type: "numeric",
-        sortable: true,
-        minWidth: "120px",
-        template: (r) =>
-          html`<span style="color: ${TYPE_COLORS[r.item.type]}">${money(h, r.monthly, r.currency)}</span>`,
       },
       recurrence: {
         title: t(h, "items.col_recurrence"),
@@ -264,7 +261,7 @@ export class ProBudgetItems extends LitElement {
   render() {
     if (!this.budget) return nothing;
     const h = this.hass;
-    const sorting: DataTableSorting = { column: "monthly", direction: "desc" };
+    const sorting: DataTableSorting = { column: "amount", direction: "desc" };
     return html`
       <hass-tabs-subpage-data-table
         .hass=${h}
