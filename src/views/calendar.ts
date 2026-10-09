@@ -27,7 +27,7 @@ import {
 } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
 import { renderMemberChips } from "../members.ts";
-import { navigateTo, tabs } from "../nav.ts";
+import { navigateTo, tabs, viewTitle } from "../nav.ts";
 import { t, type I18nKey } from "../i18n.ts";
 import { dashboardStyles, sharedStyles } from "../styles.ts";
 import type { BudgetState, CalendarMonth, Item, OccurrenceDay } from "../types.ts";
@@ -550,6 +550,7 @@ export class ProBudgetCalendar extends LitElement {
     ] as const;
     return html`
       <hass-tabs-subpage .hass=${h} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(h, this.route)} main-page>
+        <span slot="header">${viewTitle(h, this.route)}</span>
         <div class="toolbar">
           <div class="period">
             <ha-icon-button .label=${t(h, "calendar.nav_previous")} .path=${mdiChevronLeft} @click=${() => this._shift(-1)}></ha-icon-button>

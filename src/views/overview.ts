@@ -23,7 +23,7 @@ import { avatar, categoryIcon } from "../color.ts";
 import { formatDate, money, monthName, percent, signedMoney, toIso } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
 import { colorOf, renderMemberChips } from "../members.ts";
-import { navigate, tabs, type View, viewPath } from "../nav.ts";
+import { navigate, tabs, type View, viewPath, viewTitle } from "../nav.ts";
 import { t, type I18nKey } from "../i18n.ts";
 import { dashboardStyles, sharedStyles } from "../styles.ts";
 import type { BudgetState, Item, MonthStats, Occurrence, Overview } from "../types.ts";
@@ -472,6 +472,7 @@ export class ProBudgetOverview extends LitElement {
     });
     return html`
       <hass-tabs-subpage .hass=${h} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(h, this.route)} main-page>
+        <span slot="header">${viewTitle(h, this.route)}</span>
         <div class="toolbar">
           <div class="period">
             <ha-icon-button .label=${t(h, "overview.nav_previous")} .path=${mdiChevronLeft} @click=${() => this._shift(-1)}></ha-icon-button>

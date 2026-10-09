@@ -9,7 +9,7 @@ import { fieldStyles, selectField, textField } from "../dialogs/fields.ts";
 import { errorText } from "../dialogs/item-dialog.ts";
 import type { HomeAssistant, OverflowMenuItem, Route } from "../ha/types.ts";
 import { t } from "../i18n.ts";
-import { tabs } from "../nav.ts";
+import { tabs, viewTitle } from "../nav.ts";
 import { sharedStyles } from "../styles.ts";
 import { SPLIT_RULES, type BudgetState, type Category } from "../types.ts";
 
@@ -336,6 +336,7 @@ export class ProBudgetSettings extends LitElement {
     const h = this.hass;
     return html`
       <hass-tabs-subpage .hass=${h} .narrow=${this.narrow} .route=${this.route} .tabs=${tabs(h, this.route)} main-page>
+        <span slot="header">${viewTitle(h, this.route)}</span>
         <div class="content">
           ${this._error ? html`<ha-alert alert-type="error">${this._error}</ha-alert>` : nothing}
           ${this._message ? html`<ha-alert alert-type="success">${this._message}</ha-alert>` : nothing}

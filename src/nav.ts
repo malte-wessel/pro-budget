@@ -39,6 +39,11 @@ export function viewPath(route: Route | undefined, view: View): string {
   return `${route?.prefix ?? DEFAULT_PREFIX}/${view}`;
 }
 
+/** The name of the current view, for the header on narrow screens. */
+export function viewTitle(hass: HomeAssistant | undefined, route: Route | undefined): string {
+  return t(hass, `nav.${currentView(route)}` as I18nKey);
+}
+
 export function tabs(hass: HomeAssistant | undefined, route: Route | undefined): PageNavigation[] {
   const prefix = route?.prefix ?? DEFAULT_PREFIX;
   return VIEWS.map((v) => ({

@@ -59,6 +59,9 @@ async def async_register_panel(hass: HomeAssistant) -> None:
                 "module_url": f"{STATIC_URL}/{BUNDLE_FILE}?v={version}-{bundle_hash}",
                 "embed_iframe": False,
                 "trust_external": False,
+                # hass-tabs-subpage pads for the phone's safe area itself; without this flag
+                # the custom-panel wrapper pads too and the header and bottom bar double up.
+                "handle_safe_area": True,
             }
         },
         require_admin=False,
