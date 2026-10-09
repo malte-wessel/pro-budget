@@ -203,6 +203,33 @@ export interface Insights {
   min_month: number | null;
 }
 
+/** One day of the running balance (`budget/cashflow.py`). */
+export interface DayFlow {
+  day: number;
+  net: number;
+  balance: number;
+}
+
+export interface MonthFlow {
+  /** What the previous month's income left over once it had arrived. */
+  opening: number;
+  days: DayFlow[];
+  income: number;
+  outflow: number;
+  outflow_count: number;
+  first_day_outflow: number;
+  first_income_day: number | null;
+  low_day: number;
+  low_balance: number;
+  end_balance: number;
+}
+
+/** What `pro_budget/calendar` returns for one month. */
+export interface CalendarMonth {
+  days: OccurrenceDay[];
+  flow: MonthFlow;
+}
+
 export interface OccurrenceDay {
   date: string | null; // null: unscheduled items
   entries: { item_id: string; paid: boolean }[];

@@ -2,6 +2,7 @@
 import type { HomeAssistant } from "./ha/types.ts";
 import type {
   BudgetState,
+  CalendarMonth,
   Category,
   Insights,
   Item,
@@ -67,6 +68,13 @@ export const api = {
       split_rule?: string;
     },
   ) => call<Record<string, unknown>>(hass, { type: `${D}/config/update`, ...fields }),
+  calendar: (hass: HomeAssistant, year: number, month: number, user_id?: string) =>
+    call<CalendarMonth>(hass, {
+      type: `${D}/calendar`,
+      year,
+      month,
+      ...(user_id ? { user_id } : {}),
+    }),
   occurrences: (hass: HomeAssistant, start: string, end: string, user_id?: string) =>
     call<OccurrenceDay[]>(hass, {
       type: `${D}/occurrences`,

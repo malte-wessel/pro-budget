@@ -76,7 +76,21 @@ test("editing an item round-trips through the dialog", async ({ page }) => {
 test("calendar, insights and settings render", async ({ page }) => {
   await openPanel(page, "calendar");
   const p = panel(page);
-  await expect(p.locator("pro-budget-calendar ha-card")).toBeVisible();
+  const c = p.locator("pro-budget-calendar");
+  await expect(c.locator(".tiles ha-card")).toHaveCount(3);
+  await expect(c.locator(".grid button")).toHaveCount(await c.locator(".grid button").count());
+  expect(await c.locator(".grid button").count()).toBeGreaterThanOrEqual(28);
+  await expect(c.locator(".flow button").first()).toBeVisible();
+  // Selecting a day with payments puts them in the selected-day card.
+  const title = c.locator("ha-card.selected-day h2");
+  const before = await title.textContent();
+  const other = c.locator(".grid button.has[aria-pressed=false]").first();
+  await other.click();
+  await expect(title).not.toHaveText(before ?? "");
+  await expect(c.locator("ha-card.selected-day .entry").first()).toBeVisible();
+  // The list view groups the month by day.
+  await c.locator(".segment button").nth(1).click();
+  await expect(c.locator(".day").first()).toBeVisible();
   // The anchor has no box of its own; click the tab inside it.
   await p.locator("hass-tabs-subpage a[href$='/insights'] ha-tab").click();
   await expect(p.locator("pro-budget-insights .months")).toBeVisible();

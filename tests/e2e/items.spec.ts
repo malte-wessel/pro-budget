@@ -55,6 +55,8 @@ test("create, edit and delete an item through the dialog", async ({ page }) => {
 test("the calendar marks an occurrence paid and unpaid", async ({ page }) => {
   await openPanel(page, "calendar");
   const p = panel(page);
+  // The list view holds every entry of the month, whatever today holds.
+  await p.locator("pro-budget-calendar .segment button").nth(1).click();
   const first = p.locator("pro-budget-calendar .entry").first();
   await expect(first).toBeVisible();
   const button = first.locator("ha-icon-button");

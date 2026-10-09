@@ -283,6 +283,21 @@ def ws_insights(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str
 
 @websocket_command(
     {
+        vol.Required("type"): f"{DOMAIN}/calendar",
+        vol.Required("year"): int,
+        vol.Required("month"): vol.All(int, vol.Range(min=1, max=12)),
+        vol.Optional("user_id"): str,
+    }
+)
+@callback
+def ws_calendar(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
+    """Send a month's occurrences (with paid marks) and its running balance."""
+    days, flow = _model(hass).calendar_month(msg["year"], msg["month"], msg.get("user_id"))
+    connection.send_result(msg["id"], {"days": days, "flow": _plain(flow)})
+
+
+@websocket_command(
+    {
         vol.Required("type"): f"{DOMAIN}/occurrences",
         vol.Required("start"): str,
         vol.Required("end"): str,
@@ -361,6 +376,7 @@ def async_register_websocket(hass: HomeAssistant) -> None:
         ws_overview,
         ws_insights,
         ws_occurrences,
+        ws_calendar,
         ws_config_update,
     ):
         websocket_api.async_register_command(hass, command)

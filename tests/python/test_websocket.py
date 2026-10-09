@@ -227,3 +227,30 @@ async def test_overview(
     assert o["year"]["next_month"]["delta"] == 0
     assert o["next_income"]["item_id"]
     assert isinstance(o["upcoming"], list)
+
+
+async def test_calendar_month(
+    hass: HomeAssistant,
+    hass_ws_client: WebSocketGenerator,
+    setup: MockConfigEntry,
+    hass_admin_user: MockUser,
+) -> None:
+    """The calendar page gets the month's days and the running balance in one call."""
+    model = setup.runtime_data
+    base = {
+        "category_id": model.categories[0]["id"],
+        "recurrence": "monthly",
+        "user_id": hass_admin_user.id,
+    }
+    model.add_item({**base, "title": "Rent", "type": "expense", "amount": 100000, "due_day": 1})
+    model.add_item({**base, "title": "Pay", "type": "earning", "amount": 300000, "due_day": 25})
+    client = await hass_ws_client(hass)
+    await client.send_json_auto_id({"type": f"{DOMAIN}/calendar", "year": 2026, "month": 2})
+    result = (await client.receive_json())["result"]
+    assert [d["date"] for d in result["days"]] == ["2026-02-01", "2026-02-25"]
+    # January's pay on the 25th opens February.
+    assert result["flow"]["opening"] == 300000
+    assert result["flow"]["low_balance"] == 200000
+    assert result["flow"]["first_income_day"] == 25
+    assert len(result["flow"]["days"]) == 28
+    assert result["flow"]["end_balance"] == 500000

@@ -28,6 +28,19 @@ export function signedMoney(hass: L, cents: number, currency: string, negative: 
   return negative ? `−${s}` : `+${s}`;
 }
 
+/** A compact signed amount for tight spaces: "+2.1k", "−1,250", no currency symbol. */
+export function compactMoney(hass: L, cents: number): string {
+  const value = Math.abs(cents) / 100;
+  const text =
+    value >= 10_000
+      ? new Intl.NumberFormat(locale(hass), {
+          notation: "compact",
+          maximumFractionDigits: 1,
+        }).format(value)
+      : new Intl.NumberFormat(locale(hass), { maximumFractionDigits: 0 }).format(value);
+  return (cents < 0 ? "−" : "+") + text;
+}
+
 export function percent(hass: L, ratio: number | null): string {
   if (ratio === null) return "—";
   return new Intl.NumberFormat(locale(hass), { style: "percent", maximumFractionDigits: 1 }).format(

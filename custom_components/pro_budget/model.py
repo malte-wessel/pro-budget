@@ -11,10 +11,12 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util import dt as dt_util
 
+from .budget.cashflow import MonthFlow, compute_month_flow
 from .budget.insights import MemberInsights, compute_member_insights
 from .budget.model import Item
 from .budget.occurrences import group_occurrences_by_date
 from .budget.overview import Overview, compute_overview
+from .budget.recurrence import last_day_of_month
 from .budget.stats import MonthStats, SplitRule, compute_month_stats
 from .const import (
     CONF_CURRENCY,
@@ -226,6 +228,14 @@ class BudgetModel:
         """Insights for one member and calendar year."""
         today = dt_util.now().date()
         return compute_member_insights(self.items(user_id), year, today.year, today.month)
+
+    def calendar_month(
+        self, year: int, month: int, user_id: str | None = None
+    ) -> tuple[list[dict[str, Any]], MonthFlow]:
+        """Return the month's occurrences by date and its running balance for the calendar."""
+        first, last = date(year, month, 1), date(year, month, last_day_of_month(year, month))
+        items = self.items(user_id)
+        return self.occurrences(first, last, user_id), compute_month_flow(items, year, month)
 
     def occurrences(
         self, start: date, end: date, user_id: str | None = None

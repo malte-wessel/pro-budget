@@ -25,7 +25,7 @@ import type { HomeAssistant, Route } from "../ha/types.ts";
 import { colorOf, renderMemberChips } from "../members.ts";
 import { navigate, tabs, type View, viewPath } from "../nav.ts";
 import { t, type I18nKey } from "../i18n.ts";
-import { sharedStyles } from "../styles.ts";
+import { dashboardStyles, sharedStyles } from "../styles.ts";
 import type { BudgetState, Item, MonthStats, Occurrence, Overview } from "../types.ts";
 
 const TOP_CATEGORIES = 5;
@@ -50,106 +50,11 @@ export class ProBudgetOverview extends LitElement {
 
   static styles = [
     sharedStyles,
+    dashboardStyles,
     css`
       :host {
         display: block;
         height: 100%;
-      }
-      .toolbar {
-        max-width: 1240px;
-        margin: 0 auto;
-        padding: 16px 16px 0;
-        gap: 12px;
-      }
-      .toolbar .members {
-        padding: 0;
-        margin-left: auto;
-      }
-      .period {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .period .title {
-        display: flex;
-        flex-direction: column;
-        min-width: 150px;
-        text-align: center;
-      }
-      .period .month {
-        font-size: 20px;
-        line-height: 26px;
-        font-weight: 500;
-      }
-      .cards {
-        max-width: 1240px;
-      }
-      .dashboard {
-        display: grid;
-        grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
-        gap: 16px;
-        align-items: start;
-      }
-      .col {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        min-width: 0;
-      }
-      .pair {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 16px;
-      }
-      @media (max-width: 1000px) {
-        .dashboard {
-          grid-template-columns: minmax(0, 1fr);
-        }
-      }
-      @media (max-width: 600px) {
-        .plot .label {
-          display: none;
-        }
-      }
-      ha-card {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        /* A light tile grey on any theme: a faint tint of the text colour on the card. */
-        --tile-background: color-mix(in srgb, var(--primary-text-color) 6%, transparent);
-      }
-      .head {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .head ha-svg-icon {
-        color: var(--secondary-text-color);
-      }
-      .head h2 {
-        flex: 1;
-        margin: 0;
-        font-size: 16px;
-      }
-      .head .hint {
-        font-size: 12px;
-        color: var(--secondary-text-color);
-      }
-      .num {
-        font-variant-numeric: tabular-nums;
-      }
-      .link {
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--primary-color);
-        text-decoration: none;
-        cursor: pointer;
-      }
-      .link:hover {
-        text-decoration: underline;
-      }
-      .indent {
-        padding-left: 52px;
       }
       /* hero */
       .hero-top {
@@ -283,52 +188,6 @@ export class ProBudgetOverview extends LitElement {
       .kpi .value {
         font-size: 16px;
         font-weight: 500;
-      }
-      .col-text {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-      }
-      .good {
-        color: var(--success-color);
-      }
-      .bad {
-        color: var(--error-color);
-      }
-      .warn {
-        color: var(--warning-color);
-      }
-      /* rows with an icon, text and an amount */
-      .row {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-      }
-      .row .grow {
-        min-width: 0;
-      }
-      .row .name {
-        font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .row.paid > :not(.paid-toggle) {
-        opacity: 0.55;
-      }
-      .paid-toggle {
-        --mdc-icon-button-size: 36px;
-        margin-right: -8px;
-        color: var(--secondary-text-color);
-      }
-      .row.paid .paid-toggle {
-        color: var(--success-color);
-      }
-      .row.paid .name {
-        text-decoration: line-through;
-      }
-      .row.dim {
-        opacity: 0.45;
       }
       .member-row {
         all: unset;
@@ -536,17 +395,6 @@ export class ProBudgetOverview extends LitElement {
         gap: 8px;
         color: var(--success-color);
         margin: 0;
-      }
-      .small {
-        font-size: 12px;
-        line-height: 16px;
-      }
-      .muted {
-        color: var(--secondary-text-color);
-      }
-      .divider {
-        border-top: 1px solid var(--divider-color);
-        margin: 4px 0;
       }
     `,
   ];

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { amountInput, money, parseAmount, percent, signedMoney } from "../../src/format.ts";
+import {
+  amountInput,
+  compactMoney,
+  money,
+  parseAmount,
+  percent,
+  signedMoney,
+} from "../../src/format.ts";
 
 const de = {
   language: "de",
@@ -19,6 +26,12 @@ describe("money", () => {
   it("signs amounts", () => {
     expect(signedMoney(en, 500, "EUR", true)).toBe("−€5.00");
     expect(signedMoney(en, 500, "EUR", false)).toBe("+€5.00");
+  });
+
+  it("compacts amounts for calendar cells", () => {
+    expect(compactMoney(en, -125000)).toBe("−1,250");
+    expect(compactMoney(en, 1234567)).toBe("+12.3K");
+    expect(compactMoney(de, 210000)).toBe("+2.100");
   });
 
   it("formats ratios as percentages", () => {
