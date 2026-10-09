@@ -284,7 +284,8 @@ export class ProBudgetCalendar extends LitElement {
         text-decoration: line-through;
       }
       .paid-toggle {
-        --mdc-icon-button-size: 36px;
+        --ha-icon-button-size: 36px;
+        --ha-icon-button-padding-inline: 0;
         margin-right: -8px;
         color: var(--secondary-text-color);
       }
@@ -330,25 +331,17 @@ export class ProBudgetCalendar extends LitElement {
       }
       .flow .pos span {
         width: 100%;
-        background: var(--success-color);
         border-radius: 3px 3px 0 0;
       }
       .flow .neg span {
         width: 100%;
-        background: color-mix(in srgb, var(--orange-color) 70%, transparent);
         border-radius: 0 0 3px 3px;
       }
-      .flow .past .pos span {
-        background: color-mix(in srgb, var(--success-color) 40%, transparent);
+      .flow .past span span {
+        opacity: 0.5;
       }
-      .flow .past .neg span {
-        background: color-mix(in srgb, var(--orange-color) 35%, transparent);
-      }
-      .flow .low .neg span {
-        background: var(--orange-color);
-      }
-      .flow .low .pos span {
-        background: color-mix(in srgb, var(--success-color) 60%, var(--primary-text-color));
+      .flow .low span span {
+        box-shadow: inset 0 0 0 2px var(--primary-text-color);
       }
       .flow-labels {
         display: flex;
@@ -764,6 +757,18 @@ export class ProBudgetCalendar extends LitElement {
     const k = FLOW_HEIGHT / (high - low || 1);
     const posArea = `${(high * k).toFixed(1)}px`;
     const negArea = `${(-low * k).toFixed(1)}px`;
+    // Shade by how much is left: green at the month's high, orange as the balance nears
+    // zero, red the deeper it goes below.
+    const shade = (v: number) => {
+      // Full green from a quarter of the month's high upwards, orange only when it gets thin;
+      // oklch keeps the hues clean in between.
+      if (v >= 0) {
+        const pct = Math.min(100, Math.round(high ? (v / high) * 400 : 0));
+        return `color-mix(in oklch, var(--success-color) ${pct}%, var(--warning-color))`;
+      }
+      const pct = Math.round(40 + 60 * (low ? v / low : 0));
+      return `color-mix(in oklch, var(--error-color) ${pct}%, var(--warning-color))`;
+    };
     const last = f.days.length;
     // Every 5th day, the first, today, and the last unless the day before is already labelled.
     const show = (day: number) =>
@@ -798,8 +803,8 @@ export class ProBudgetCalendar extends LitElement {
             ].join(" ");
             return html`
               <button class=${cls} title="${x.day}.: ${m(x.balance)}" @click=${() => this._select(iso)}>
-                <span class="pos" style="height:${posArea}"><span style="height:${(Math.max(0, x.balance) * k).toFixed(1)}px"></span></span>
-                <span class="neg" style="height:${negArea}"><span style="height:${(Math.max(0, -x.balance) * k).toFixed(1)}px"></span></span>
+                <span class="pos" style="height:${posArea}"><span style="height:${(Math.max(0, x.balance) * k).toFixed(1)}px; background:${shade(x.balance)}"></span></span>
+                <span class="neg" style="height:${negArea}"><span style="height:${(Math.max(0, -x.balance) * k).toFixed(1)}px; background:${shade(x.balance)}"></span></span>
               </button>
             `;
           })}

@@ -194,21 +194,36 @@ export const dashboardStyles = css`
         padding: 0;
         margin-left: auto;
       }
+      /* The month switcher: a pill with the chevrons and the month inside, like a segmented control. */
       .period {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 4px;
+        height: 36px;
+        padding: 0 2px;
+        border-radius: 18px;
+        border: 1px solid var(--divider-color);
+        background: var(--card-background-color);
+        box-sizing: border-box;
+      }
+      .period ha-icon-button {
+        --ha-icon-button-size: 32px;
+        --ha-icon-button-padding-inline: 0;
+        --mdc-icon-size: 20px;
+        color: var(--secondary-text-color);
       }
       .period .title {
-        display: flex;
-        flex-direction: column;
-        min-width: 150px;
+        min-width: 130px;
+        padding: 0 4px;
         text-align: center;
       }
       .period .month {
-        font-size: 20px;
-        line-height: 26px;
+        font-size: 14px;
+        line-height: 20px;
         font-weight: 500;
+      }
+      .toolbar .today-hint {
+        color: var(--secondary-text-color);
+        font-size: 13px;
       }
       .cards {
         max-width: 1240px;
@@ -250,7 +265,11 @@ export const dashboardStyles = css`
       .head {
         display: flex;
         align-items: center;
-        gap: 10px;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+      }
+      .head h2 {
+        white-space: nowrap;
       }
       .head ha-svg-icon {
         color: var(--secondary-text-color);
@@ -313,7 +332,8 @@ export const dashboardStyles = css`
         opacity: 0.55;
       }
       .paid-toggle {
-        --mdc-icon-button-size: 36px;
+        --ha-icon-button-size: 36px;
+        --ha-icon-button-padding-inline: 0;
         margin-right: -8px;
         color: var(--secondary-text-color);
       }

@@ -475,16 +475,14 @@ export class ProBudgetOverview extends LitElement {
         <div class="toolbar">
           <div class="period">
             <ha-icon-button .label=${t(h, "overview.nav_previous")} .path=${mdiChevronLeft} @click=${() => this._shift(-1)}></ha-icon-button>
-            <div class="title">
-              <span class="month">${monthLabel}</span>
-              ${
-                this._isCurrentMonth
-                  ? html`<span class="small muted">${t(h, "common.today")} · ${formatDate(h, toIso(new Date()), { weekday: "short", day: "numeric", month: "short" })}</span>`
-                  : nothing
-              }
-            </div>
+            <div class="title"><span class="month">${monthLabel}</span></div>
             <ha-icon-button .label=${t(h, "overview.nav_next")} .path=${mdiChevronRight} @click=${() => this._shift(1)}></ha-icon-button>
           </div>
+          ${
+            this._isCurrentMonth
+              ? html`<span class="today-hint">${t(h, "common.today")} · ${formatDate(h, toIso(new Date()), { weekday: "short", day: "numeric", month: "short" })}</span>`
+              : nothing
+          }
           ${chips}
         </div>
         ${content}
