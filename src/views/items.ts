@@ -3,7 +3,7 @@ import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { dueLabel, isActiveInMonth, monthlyEquivalent } from "../budget.ts";
-import { cssColor } from "../color.ts";
+import { categoryIcon } from "../color.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
 import type { ProBudgetItemDialog } from "../dialogs/item-dialog.ts";
 import { money } from "../format.ts";
@@ -29,8 +29,7 @@ const TYPE_ICONS: Record<Item["type"], string> = {
 interface Row {
   id: string;
   item: Item;
-  icon: string;
-  color: string;
+  category_icon: { icon: string; color: string | null };
   title: string;
   type: string;
   amount: number;
@@ -80,8 +79,10 @@ export class ProBudgetItems extends LitElement {
       return {
         id: item.id,
         item,
-        icon: category?.icon ?? TYPE_ICONS[item.type],
-        color: cssColor(category?.color),
+        category_icon: {
+          icon: category?.icon ?? TYPE_ICONS[item.type],
+          color: category?.color ?? null,
+        },
         title: item.title,
         type: t(h, `type.${item.type}` as I18nKey),
         amount: item.amount,
@@ -108,7 +109,7 @@ export class ProBudgetItems extends LitElement {
         type: "icon",
         showNarrow: true,
         moveable: false,
-        template: (r) => html`<ha-icon .icon=${r.icon} style="color: ${r.color}"></ha-icon>`,
+        template: (r) => categoryIcon(r.category_icon),
       },
       title: {
         title: t(h, "items.col_title"),

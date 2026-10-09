@@ -1,7 +1,7 @@
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
-import { cssColor } from "../color.ts";
+import { categoryIcon } from "../color.ts";
 import { dueLabel } from "../budget.ts";
 import { money, monthName, percent } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
@@ -91,9 +91,7 @@ export class ProBudgetInsights extends LitElement {
 
   private _categoryIcon(categoryId: string | undefined) {
     const c = this.budget?.categories.find((c) => c.id === categoryId);
-    return c?.icon
-      ? html`<ha-icon .icon=${c.icon} style="color: ${cssColor(c.color)}"></ha-icon>`
-      : nothing;
+    return categoryIcon(c, "s");
   }
 
   private _frame(content: unknown) {
