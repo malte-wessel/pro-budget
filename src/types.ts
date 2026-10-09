@@ -156,7 +156,18 @@ export interface Overview {
   stats: MonthStats[];
   /** Stats of the whole household in its currency, for the members and settlement cards. */
   household: MonthStats;
-  progress: { due: number; paid: number; days_in_month: number; today_day: number | null };
+  progress: {
+    income: number;
+    due: number;
+    fixed: number;
+    variable: number;
+    savings: number;
+    paid: number;
+    savings_rate: number | null;
+    fixed_cost_rate: number | null;
+    days_in_month: number;
+    today_day: number | null;
+  };
   /** Outflows of the next days from today. */
   upcoming: Occurrence[];
   next_income: Occurrence | null;

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 
 from .insights import MemberInsights, compute_member_insights
-from .model import LONG_RECURRENCES, Item, ItemType
+from .model import LONG_RECURRENCES, CostKind, Item, ItemType
 from .occurrences import entry_key, occurrences_in_range
 from .recurrence import due_in_month, last_day_of_month
 
@@ -23,10 +23,18 @@ PaidLookup = Callable[[str, str], bool]
 
 @dataclass(slots=True)
 class MonthProgress:
-    """Actual outflows of the month: what is due and what is marked paid."""
+    """The actual money of the month, not normalized: what is received, due and paid."""
 
+    income: int
+    # Outflows due: fixed and variable expenses plus savings.
     due: int
+    fixed: int
+    variable: int
+    savings: int
     paid: int
+    # savings / income and fixed / income (0-1); None without income.
+    savings_rate: float | None
+    fixed_cost_rate: float | None
     days_in_month: int
     # Day of month today, when the month is the current one.
     today_day: int | None
@@ -126,9 +134,26 @@ def _progress(
         for day in occurrences_in_range(item, start, end)
         if is_paid(item.id, day.isoformat())
     )
+
+    def total(kind: ItemType, cost_kind: CostKind | None = None) -> int:
+        return sum(
+            due_in_month(i, year, month) or 0
+            for i in items
+            if i.kind is kind and (cost_kind is None or i.cost_kind is cost_kind)
+        )
+
+    income = total(ItemType.EARNING)
+    fixed = total(ItemType.EXPENSE, CostKind.FIXED)
+    savings = total(ItemType.SAVING)
     return MonthProgress(
+        income=income,
         due=due_this_month(items, year, month),
+        fixed=fixed,
+        variable=total(ItemType.EXPENSE, CostKind.VARIABLE),
+        savings=savings,
         paid=paid,
+        savings_rate=savings / income if income > 0 else None,
+        fixed_cost_rate=fixed / income if income > 0 else None,
         days_in_month=days,
         today_day=today.day if (today.year, today.month) == (year, month) else None,
     )

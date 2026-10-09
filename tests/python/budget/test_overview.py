@@ -17,7 +17,9 @@ GYM = make_item(
 INSURANCE = make_item(
     {"id": "ins", "recurrence": "annually", "due_day": 15, "due_month": 3, "amount": 64000}
 )
-FUEL = make_item({"id": "fuel", "recurrence": "weekly", "due_day": 5, "amount": 6000})
+FUEL = make_item(
+    {"id": "fuel", "recurrence": "weekly", "due_day": 5, "amount": 6000, "cost_kind": "variable"}
+)
 SALARY = make_item(
     {"id": "salary", "type": "earning", "recurrence": "monthly", "due_day": 28, "amount": 300000}
 )
@@ -38,6 +40,10 @@ def test_progress_counts_due_and_paid_of_the_month() -> None:
     # rent + 5 Fridays of fuel + savings; the quarterly and annual items are not due in October
     assert o.progress.due == 100000 + 5 * 6000 + 20000
     assert o.progress.paid == 100000 + 6000  # September's rent does not count
+    assert o.progress.income == 300000
+    assert (o.progress.fixed, o.progress.variable, o.progress.savings) == (100000, 30000, 20000)
+    assert o.progress.savings_rate == 20000 / 300000
+    assert o.progress.fixed_cost_rate == 100000 / 300000
     assert o.progress.days_in_month == 31
     assert o.progress.today_day == 9
     assert due_this_month(ITEMS, 2026, 10) == o.progress.due

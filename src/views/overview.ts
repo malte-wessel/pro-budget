@@ -693,33 +693,34 @@ export class ProBudgetOverview extends LitElement {
     const title = this.userId
       ? t(h, "overview.scope_member", { name: this._user(this.userId), month: monthLabel })
       : t(h, "overview.scope_household", { month: monthLabel });
-    const income = s.totals.income;
     const remaining = s.totals.remaining;
     const p = d.progress;
+    // The hero shows the actual month, not monthly equivalents: what comes in and goes out.
+    const income = p.income;
+    const free = income - p.due;
     const paidW = p.due > 0 ? Math.min(100, (p.paid / p.due) * 100) : 0;
-    const fixed = s.members.reduce((a, r) => a + r.expenses.fixed, 0);
-    const variable = s.members.reduce((a, r) => a + r.expenses.variable, 0);
     const segments = [
-      { key: "overview.seg_fixed", value: fixed, color: "var(--orange-color)" },
-      { key: "overview.seg_variable", value: variable, color: "var(--amber-color)" },
-      { key: "overview.seg_savings", value: s.totals.savings, color: "var(--light-blue-color)" },
+      { key: "overview.seg_fixed", value: p.fixed, color: "var(--orange-color)" },
+      { key: "overview.seg_variable", value: p.variable, color: "var(--amber-color)" },
+      { key: "overview.seg_savings", value: p.savings, color: "var(--light-blue-color)" },
       {
         key: "overview.seg_free",
-        value: Math.max(0, remaining),
+        value: Math.max(0, free),
         color: "color-mix(in srgb, var(--success-color) 45%, transparent)",
       },
     ] as const;
     const share = (v: number) => (income > 0 ? v / income : 0);
     return html`
       <ha-card class="hero">
-        ${this._head(mdiWalletOutline, title, html`<span class="hint">${t(h, "overview.monthly_equivalent")}</span>`)}
+        ${this._head(mdiWalletOutline, title, html`<span class="hint">${t(h, "overview.actual_month")}</span>`)}
         <div class="hero-top">
           <div class="free">
             <span class="disc"><ha-svg-icon .path=${mdiWalletOutline}></ha-svg-icon></span>
             <div class="col-text">
               <span style="font-weight:500">${t(h, "overview.free")}</span>
-              <span class="num big ${remaining < 0 ? "negative" : ""}">${m(remaining)}</span>
-              ${income > 0 ? html`<span class="pct ${remaining < 0 ? "bad" : ""}">${t(h, "overview.free_pct", { pct: percent(h, remaining / income) })}</span>` : nothing}
+              <span class="num big ${free < 0 ? "negative" : ""}">${m(free)}</span>
+              ${p.income > 0 ? html`<span class="pct ${free < 0 ? "bad" : ""}">${t(h, "overview.free_pct", { pct: percent(h, free / p.income) })}</span>` : nothing}
+              <span class="small muted num">${t(h, "overview.free_equivalent", { amount: m(remaining) })}</span>
             </div>
           </div>
           <div class="progress">
@@ -754,11 +755,11 @@ export class ProBudgetOverview extends LitElement {
               `,
             )}
           </div>
-          <span class="small muted">${t(h, "overview.income_expenses", { income: m(income), expenses: m(s.totals.expenses) })}</span>
+          <span class="small muted">${t(h, "overview.income_expenses", { income: m(income), expenses: m(p.fixed + p.variable) })}</span>
         </div>
         <div class="kpis">
-          ${this._kpi(mdiPiggyBankOutline, "var(--light-blue-color)", t(h, "insights.savings_rate"), percent(h, s.savings_rate), s.savings_rate === null ? ["", ""] : s.savings_rate >= SAVINGS_TARGET ? [t(h, "overview.on_target"), "good"] : [t(h, "overview.below_target"), "warn"])}
-          ${this._kpi(mdiLockOutline, "var(--orange-color)", t(h, "insights.fixed_cost_rate"), percent(h, s.fixed_cost_rate), s.fixed_cost_rate === null ? ["", ""] : s.fixed_cost_rate > FIXED_LIMIT ? [t(h, "overview.fixed_high"), "warn"] : [t(h, "overview.fixed_ok"), "good"])}
+          ${this._kpi(mdiPiggyBankOutline, "var(--light-blue-color)", t(h, "insights.savings_rate"), percent(h, p.savings_rate), p.savings_rate === null ? ["", ""] : p.savings_rate >= SAVINGS_TARGET ? [t(h, "overview.on_target"), "good"] : [t(h, "overview.below_target"), "warn"])}
+          ${this._kpi(mdiLockOutline, "var(--orange-color)", t(h, "insights.fixed_cost_rate"), percent(h, p.fixed_cost_rate), p.fixed_cost_rate === null ? ["", ""] : p.fixed_cost_rate > FIXED_LIMIT ? [t(h, "overview.fixed_high"), "warn"] : [t(h, "overview.fixed_ok"), "good"])}
           ${this._settlementKpi(d.household)}
         </div>
       </ha-card>

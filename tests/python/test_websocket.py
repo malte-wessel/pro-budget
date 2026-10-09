@@ -219,7 +219,10 @@ async def test_overview(
     assert o["stats"][0]["savings_rate"] == 0.1
     assert o["stats"][0]["members"][0]["fixed_cost_rate"] == 100000 / 300000
     assert o["household"]["totals"]["income"] == 300000
-    assert o["progress"] == {"due": 130000, "paid": 100000, "days_in_month": 31, "today_day": None}
+    assert o["progress"]["due"] == 130000
+    assert o["progress"]["paid"] == 100000
+    assert o["progress"]["savings_rate"] == 0.1
+    assert o["progress"]["today_day"] is None
     assert o["year"]["months"][7] == {"month": 8, "total": 130000}
     assert o["year"]["next_month"]["delta"] == 0
     assert o["next_income"]["item_id"]
