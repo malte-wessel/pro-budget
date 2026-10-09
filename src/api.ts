@@ -57,7 +57,12 @@ export const api = {
     call<Insights>(hass, { type: `${D}/insights`, user_id, year }),
   updateConfig: (
     hass: HomeAssistant,
-    fields: { members?: string[]; lead_days?: number; currency?: string | null },
+    fields: {
+      members?: string[];
+      lead_days?: number;
+      currency?: string | null;
+      split_rule?: string;
+    },
   ) => call<Record<string, unknown>>(hass, { type: `${D}/config/update`, ...fields }),
   occurrences: (hass: HomeAssistant, start: string, end: string, user_id?: string) =>
     call<OccurrenceDay[]>(hass, {

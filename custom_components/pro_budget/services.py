@@ -32,6 +32,7 @@ _ITEM_FIELDS = {
     vol.Optional("due_month"): vol.All(vol.Coerce(int), vol.Range(min=1, max=12)),
     vol.Optional("cost_kind"): vol.Coerce(CostKind),
     vol.Optional("shared"): cv.boolean,
+    vol.Optional("shared_with"): [cv.string],
     vol.Optional("user_id"): cv.string,
     vol.Optional("payment_method"): vol.Coerce(PaymentMethod),
     vol.Optional("start"): cv.date,

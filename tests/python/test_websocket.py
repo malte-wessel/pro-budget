@@ -152,13 +152,21 @@ async def test_config_update(
             "members": [hass_admin_user.id],
             "lead_days": 7,
             "currency": "chf",
+            "split_rule": "equal",
         }
     )
     msg = await client.receive_json()
     assert msg["success"]
-    assert msg["result"] == {"members": [hass_admin_user.id], "lead_days": 7, "currency": "CHF"}
+    expected = {
+        "members": [hass_admin_user.id],
+        "lead_days": 7,
+        "currency": "CHF",
+        "split_rule": "equal",
+    }
+    assert msg["result"] == expected
     await hass.async_block_till_done()
-    assert setup.options == {"members": [hass_admin_user.id], "lead_days": 7, "currency": "CHF"}
+    assert setup.options == expected
+    assert setup.runtime_data.split_rule == "equal"
     assert setup.runtime_data.currency == "CHF"
 
     await client.send_json_auto_id({"type": f"{DOMAIN}/config/update", "currency": "euro"})

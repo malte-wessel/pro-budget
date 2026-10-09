@@ -44,6 +44,7 @@ def make_item(data: dict[str, Any], **overrides: Any) -> Item:
         due_month=merged.get("due_month"),
         cost_kind=CostKind(merged.get("cost_kind", "fixed")),
         shared=merged.get("shared", False),
+        shared_with=tuple(merged["shared_with"]) if merged.get("shared_with") else None,
         user_id=merged.get("user_id", "u1"),
         start=iso(merged.get("start")),
         end=iso(merged.get("end")),

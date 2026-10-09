@@ -122,6 +122,26 @@ HOUSEHOLD: tuple[HouseholdSensorDescription, ...] = (
         value=lambda d: money(d.due_this_month),
     ),
     HouseholdSensorDescription(
+        key="settlement",
+        translation_key="settlement",
+        icon="mdi:swap-horizontal",
+        monetary=True,
+        value=lambda d: money(sum(tr.amount for tr in d.stats.transfers)),
+        attributes=lambda d: {
+            "split_rule": d.split_rule,
+            "transfers": [
+                {
+                    "from": _user_name(d, tr.from_user_id),
+                    "to": _user_name(d, tr.to_user_id),
+                    "from_user_id": tr.from_user_id,
+                    "to_user_id": tr.to_user_id,
+                    "amount": money(tr.amount),
+                }
+                for tr in d.stats.transfers
+            ],
+        },
+    ),
+    HouseholdSensorDescription(
         key="next_payment",
         translation_key="next_payment",
         icon="mdi:calendar-clock",
@@ -145,6 +165,8 @@ MEMBER: tuple[MemberSensorDescription, ...] = (
             "shared_costs_paid": money(_member_stats(d, m).expenses.shared),
             "shared_cost_share": _rate(_fairness(d, m)["shared_cost_share"]),
             "income_share": _rate(_fairness(d, m)["income_share"]),
+            "fair_share": money(_fairness(d, m)["fair_share"]),
+            "fairness_balance": money(_fairness(d, m)["balance"]),
             "due_this_month": money(m.due_this_month),
             "user_id": m.user["id"],
         },
@@ -166,10 +188,19 @@ def _member_stats(d: BudgetData, m: MemberData) -> Any:
 
 def _fairness(d: BudgetData, m: MemberData) -> Any:
     return next(
-        {"shared_cost_share": f.shared_cost_share, "income_share": f.income_share}
+        {
+            "shared_cost_share": f.shared_cost_share,
+            "income_share": f.income_share,
+            "fair_share": f.fair_share,
+            "balance": f.balance,
+        }
         for f in d.stats.fairness
         if f.user_id == m.user["id"]
     )
+
+
+def _user_name(d: BudgetData, user_id: str) -> str:
+    return next((u["name"] for u in d.users if u["id"] == user_id), user_id)
 
 
 async def async_setup_entry(

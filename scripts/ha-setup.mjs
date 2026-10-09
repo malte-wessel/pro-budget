@@ -304,6 +304,36 @@ const SEED = [
     due_day: 3,
     category: "Savings",
   },
+  // Ben
+  {
+    user: "ben",
+    title: "Salary Ben",
+    type: "earning",
+    amount: 2100,
+    recurrence: "monthly",
+    due_day: 25,
+    category: "Salary",
+  },
+  {
+    user: "ben",
+    title: "Car",
+    type: "expense",
+    amount: 320,
+    recurrence: "monthly",
+    due_day: 5,
+    category: "Mobility",
+    shared: true,
+    shared_with: ["dev", "ben"],
+  },
+  {
+    user: "ben",
+    title: "Bus pass",
+    type: "expense",
+    amount: 49,
+    recurrence: "monthly",
+    due_day: 1,
+    category: "Mobility",
+  },
 ];
 
 /** A websocket session: `send(message)` resolves with the result; `event()` with the next event. */
@@ -344,42 +374,53 @@ async function budgetState(token) {
   return state;
 }
 
-// A second household member, so the panel shows the member filter, fairness and per-member entities.
-const SECOND_USER = { name: "Anna", username: "anna", password: "anna" };
+// More household members, so the panel shows the member filter, the settlement and items shared
+// with some members only.
+const EXTRA_USERS = {
+  anna: { name: "Anna", username: "anna", password: "anna" },
+  ben: { name: "Ben", username: "ben", password: "ben" },
+};
 
-async function ensureSecondUser(token) {
+/** Creates the extra users that do not exist yet; returns their ids by key. */
+async function ensureUsers(token) {
   const c = await connect(token);
   const users = await c.send({ type: "config/auth/list" });
-  let user = users.find((u) => u.username === SECOND_USER.username || u.name === SECOND_USER.name);
-  if (!user) {
-    user = await c.send({
-      type: "config/auth/create",
-      name: SECOND_USER.name,
-      group_ids: ["system-users"],
-      local_only: false,
-    });
-    user = user.user ?? user;
-    await c.send({
-      type: "config/auth_provider/homeassistant/create",
-      user_id: user.id,
-      username: SECOND_USER.username,
-      password: SECOND_USER.password,
-    });
-    console.log(
-      `created user ${SECOND_USER.name} (${SECOND_USER.username} / ${SECOND_USER.password})`,
-    );
+  const ids = {};
+  for (const [key, spec] of Object.entries(EXTRA_USERS)) {
+    let user = users.find((u) => u.username === spec.username || u.name === spec.name);
+    if (!user) {
+      user = await c.send({
+        type: "config/auth/create",
+        name: spec.name,
+        group_ids: ["system-users"],
+        local_only: false,
+      });
+      user = user.user ?? user;
+      await c.send({
+        type: "config/auth_provider/homeassistant/create",
+        user_id: user.id,
+        username: spec.username,
+        password: spec.password,
+      });
+      console.log(`created user ${spec.name} (${spec.username} / ${spec.password})`);
+    }
+    ids[key] = user.id;
   }
   c.close();
-  return user.id;
+  return ids;
 }
 
 async function seed(token) {
-  const annaId = await ensureSecondUser(token);
-  const existing = new Set((await budgetState(token)).items.map((i) => i.title));
+  const ids = await ensureUsers(token);
+  const state = await budgetState(token);
+  ids.dev = state.all_users.find((u) => u.name === USERNAME)?.id;
+  const existing = new Set(state.items.map((i) => i.title));
   let added = 0;
-  for (const { user, ...item } of SEED) {
+  for (const { user, shared_with, ...item } of SEED) {
     if (existing.has(item.title)) continue;
-    const body = user === "anna" ? { ...item, user_id: annaId } : item;
+    const body = { ...item };
+    if (user) body.user_id = ids[user];
+    if (shared_with) body.shared_with = shared_with.map((key) => ids[key]);
     await call("/api/services/pro_budget/add_item", { method: "POST", token, body });
     added += 1;
   }

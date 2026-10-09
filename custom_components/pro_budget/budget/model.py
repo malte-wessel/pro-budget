@@ -71,6 +71,8 @@ class Item:
     due_month: int | None = None
     cost_kind: CostKind = CostKind.FIXED
     shared: bool = False
+    # Participants of a shared item (user ids); None means the whole household.
+    shared_with: tuple[str, ...] | None = None
     user_id: str
     payment_method: PaymentMethod | None = None
     start: date | None = None

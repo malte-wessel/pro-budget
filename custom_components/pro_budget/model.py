@@ -14,14 +14,16 @@ from homeassistant.util import dt as dt_util
 from .budget.insights import MemberInsights, compute_member_insights
 from .budget.model import Item
 from .budget.occurrences import group_occurrences_by_date
-from .budget.stats import MonthStats, compute_month_stats
+from .budget.stats import MonthStats, SplitRule, compute_month_stats
 from .const import (
     CONF_CURRENCY,
     CONF_LEAD_DAYS,
     CONF_MEMBERS,
+    CONF_SPLIT_RULE,
     DEFAULT_CATEGORIES,
     DEFAULT_CATEGORY_NAMES,
     DEFAULT_LEAD_DAYS,
+    DEFAULT_SPLIT_RULE,
 )
 from .store import BudgetStore, CategoryDict, ItemDict, item_from_dict
 
@@ -71,6 +73,12 @@ class BudgetModel:
     def lead_days(self) -> int:
         """Days ahead a payment counts as upcoming."""
         return int(self.entry.options.get(CONF_LEAD_DAYS, DEFAULT_LEAD_DAYS))
+
+    @property
+    def split_rule(self) -> SplitRule:
+        """How shared costs are split to count as fair."""
+        rule = self.entry.options.get(CONF_SPLIT_RULE, DEFAULT_SPLIT_RULE)
+        return "equal" if rule == "equal" else "income"
 
     async def async_all_users(self) -> list[UserInfo]:
         """Every active human user (the candidates for membership)."""
@@ -196,7 +204,7 @@ class BudgetModel:
         """Monthly-normalized stats for every household member (or one)."""
         users = await self.async_users()
         user_ids = [u["id"] for u in users if user_id is None or u["id"] == user_id]
-        return compute_month_stats(self.items(user_id), user_ids, year, month)
+        return compute_month_stats(self.items(user_id), user_ids, year, month, self.split_rule)
 
     def insights(self, user_id: str, year: int) -> MemberInsights:
         """Insights for one member and calendar year."""

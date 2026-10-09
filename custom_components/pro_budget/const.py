@@ -21,6 +21,9 @@ STORAGE_VERSION: Final = 1
 CONF_MEMBERS: Final = "members"
 CONF_CURRENCY: Final = "currency"
 CONF_LEAD_DAYS: Final = "lead_days"
+CONF_SPLIT_RULE: Final = "split_rule"
+SPLIT_RULES: Final = ("income", "equal")
+DEFAULT_SPLIT_RULE: Final = "income"
 DEFAULT_LEAD_DAYS: Final = 3
 
 SIGNAL_UPDATED: Final = f"{DOMAIN}_updated"

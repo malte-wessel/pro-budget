@@ -49,6 +49,7 @@ class BudgetData:
 
     today: date
     currency: str
+    split_rule: str
     users: list[UserInfo]
     stats: MonthStats
     due_this_month: int
@@ -98,6 +99,7 @@ class BudgetCoordinator(DataUpdateCoordinator[BudgetData]):
         return BudgetData(
             today=today,
             currency=model.currency,
+            split_rule=model.split_rule,
             users=users,
             stats=stats,
             due_this_month=_due_this_month(items, today),

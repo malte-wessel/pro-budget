@@ -17,7 +17,8 @@
         "data": {
           "members": "Household members",
           "lead_days": "Days ahead a payment counts as upcoming",
-          "currency": "Currency (leave empty to use Home Assistant's)"
+          "currency": "Currency (leave empty to use Home Assistant's)",
+          "split_rule": "Fair split of shared costs"
         },
         "data_description": {
           "members": "Users who appear in the budget. Leave empty for every active user."
@@ -57,6 +58,12 @@
         "manual": "Manual / bank transfer",
         "credit_card": "Credit card",
         "paypal": "PayPal"
+      }
+    },
+    "split_rule": {
+      "options": {
+        "income": "Proportional to income",
+        "equal": "Equal shares"
       }
     }
   },
@@ -124,6 +131,10 @@
         "end": {
           "name": "End",
           "description": "Last day the item counts."
+        },
+        "shared_with": {
+          "name": "Shared with",
+          "description": "User ids of the members a shared item is split between; empty means the whole household."
         }
       }
     },
@@ -194,6 +205,10 @@
         "end": {
           "name": "End",
           "description": "Last day the item counts."
+        },
+        "shared_with": {
+          "name": "Shared with",
+          "description": "User ids of the members a shared item is split between; empty means the whole household."
         }
       }
     },
@@ -284,6 +299,9 @@
       },
       "member_next_payment": {
         "name": "{name} next payment"
+      },
+      "settlement": {
+        "name": "Settlement"
       }
     },
     "calendar": {

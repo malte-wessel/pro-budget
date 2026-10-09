@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Literal
 
 from .model import CostKind, Item, ItemType
 from .recurrence import is_active_in_month, monthly_equivalent
 
 DEFAULT_CURRENCY = "EUR"
+
+# How shared costs are split to count as fair: proportionally to income, or equally.
+SplitRule = Literal["income", "equal"]
 
 
 @dataclass(slots=True)
@@ -61,6 +65,19 @@ class FairnessEntry:
     income: int
     # Fraction of household income this member earns (0-1); None without income.
     income_share: float | None
+    # What the member should carry of the shared costs under the split rule.
+    fair_share: int = 0
+    # shared_costs_paid - fair_share: positive is owed money, negative owes.
+    balance: int = 0
+
+
+@dataclass(slots=True)
+class Transfer:
+    """One payment that settles the shared costs."""
+
+    from_user_id: str
+    to_user_id: str
+    amount: int
 
 
 @dataclass(slots=True)
@@ -81,6 +98,8 @@ class MonthStats:
     members: list[MemberMonthStats]
     totals: HouseholdTotals
     fairness: list[FairnessEntry]
+    # Payments between members that settle the shared costs with the fewest transfers.
+    transfers: list[Transfer]
     categories: list[CategoryRow]
 
 
@@ -89,20 +108,27 @@ def _currency_order(currency: str) -> tuple[int, str]:
 
 
 def compute_month_stats(
-    items: list[Item], user_ids: list[str], year: int, month: int
+    items: list[Item],
+    user_ids: list[str],
+    year: int,
+    month: int,
+    rule: SplitRule = "income",
 ) -> list[MonthStats]:
     """Stats for the month (1-based), one group per currency, EUR first.
 
-    Amounts of different currencies are never summed together.
+    Amounts of different currencies are never summed together. `rule` decides what a fair
+    share of the shared costs is.
     """
     active = [item for item in items if is_active_in_month(item.start, item.end, year, month)]
     currencies = sorted({item.currency for item in active}, key=_currency_order)
     if not currencies:
         currencies.append(DEFAULT_CURRENCY)
-    return [_stats_for_currency(active, user_ids, currency) for currency in currencies]
+    return [_stats_for_currency(active, user_ids, currency, rule) for currency in currencies]
 
 
-def _stats_for_currency(active: list[Item], user_ids: list[str], currency: str) -> MonthStats:
+def _stats_for_currency(
+    active: list[Item], user_ids: list[str], currency: str, rule: SplitRule
+) -> MonthStats:
     items = [item for item in active if item.currency == currency]
 
     members = [_member_stats(user_id, items) for user_id in user_ids]
@@ -114,6 +140,7 @@ def _stats_for_currency(active: list[Item], user_ids: list[str], currency: str) 
     )
 
     total_shared = sum(m.expenses.shared for m in members)
+    shares = member_fair_shares(items, members, rule)
     fairness = [
         FairnessEntry(
             user_id=m.user_id,
@@ -121,9 +148,12 @@ def _stats_for_currency(active: list[Item], user_ids: list[str], currency: str) 
             shared_cost_share=m.expenses.shared / total_shared if total_shared > 0 else None,
             income=m.earnings,
             income_share=m.earnings / totals.income if totals.income > 0 else None,
+            fair_share=share,
+            balance=m.expenses.shared - share,
         )
-        for m in members
+        for m, share in zip(members, shares, strict=True)
     ]
+    transfers = settle([(f.user_id, f.balance) for f in fairness])
 
     by_category: dict[str, CategoryRow] = {}
     for item in items:
@@ -142,6 +172,7 @@ def _stats_for_currency(active: list[Item], user_ids: list[str], currency: str) 
         members=members,
         totals=totals,
         fairness=fairness,
+        transfers=transfers,
         categories=categories,
     )
 
@@ -168,3 +199,71 @@ def _member_stats(user_id: str, items: list[Item]) -> MemberMonthStats:
             else:
                 split.variable += monthly
     return stats
+
+
+def member_fair_shares(
+    items: list[Item], members: list[MemberMonthStats], rule: SplitRule
+) -> list[int]:
+    """Each member's fair share of the shared costs, summed over the items they take part in.
+
+    An item is split between its participants (`shared_with`, else every member) by the rule.
+    """
+    index = {m.user_id: i for i, m in enumerate(members)}
+    totals = [0] * len(members)
+    for item in items:
+        if item.kind is not ItemType.EXPENSE or not item.shared:
+            continue
+        if item.shared_with:
+            participants = [index[u] for u in item.shared_with if u in index]
+        else:
+            participants = list(range(len(members)))
+        if not participants:
+            continue
+        amount = monthly_equivalent(item.amount, item.recurrence)
+        incomes = [members[i].earnings for i in participants]
+        for i, share in zip(participants, fair_shares(amount, incomes, rule), strict=True):
+            totals[i] += share
+    return totals
+
+
+def fair_shares(total: int, incomes: list[int], rule: SplitRule) -> list[int]:
+    """Split `total` cents between members by the rule; the shares sum to `total` exactly.
+
+    "income": proportional to each member's income (equal shares when nobody has income);
+    "equal": the same for everyone. Rounding remainders go to the first members.
+    """
+    n = len(incomes)
+    if n == 0 or total == 0:
+        return [0] * n
+    total_income = sum(incomes)
+    if rule == "income" and total_income > 0:
+        weights = [income / total_income for income in incomes]
+    else:
+        weights = [1 / n] * n
+    shares = [int(total * w) for w in weights]
+    for i in range(total - sum(shares)):
+        shares[i % n] += 1
+    return shares
+
+
+def settle(balances: list[tuple[str, int]]) -> list[Transfer]:
+    """Payments that bring every balance to zero, greedy: largest debtor pays largest creditor.
+
+    Deterministic: ties are broken by user id. Balances must sum to zero.
+    """
+    debtors = sorted(((u, -b) for u, b in balances if b < 0), key=lambda x: (-x[1], x[0]))
+    creditors = sorted(((u, b) for u, b in balances if b > 0), key=lambda x: (-x[1], x[0]))
+    transfers: list[Transfer] = []
+    i = j = 0
+    while i < len(debtors) and j < len(creditors):
+        debtor, owes = debtors[i]
+        creditor, owed = creditors[j]
+        amount = min(owes, owed)
+        transfers.append(Transfer(from_user_id=debtor, to_user_id=creditor, amount=amount))
+        debtors[i] = (debtor, owes - amount)
+        creditors[j] = (creditor, owed - amount)
+        if debtors[i][1] == 0:
+            i += 1
+        if creditors[j][1] == 0:
+            j += 1
+    return transfers

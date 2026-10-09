@@ -40,6 +40,8 @@ class ItemDict(TypedDict):
     due_month: int | None
     cost_kind: str
     shared: bool
+    # Participants of a shared item; None means the whole household.
+    shared_with: list[str] | None
     user_id: str
     payment_method: str | None
     start: str | None
@@ -94,6 +96,7 @@ ITEM_FIELDS = vol.Schema(
         vol.Optional("due_month"): vol.Any(None, vol.All(int, vol.Range(min=1, max=12))),
         vol.Optional("cost_kind"): vol.Coerce(CostKind),
         vol.Optional("shared"): bool,
+        vol.Optional("shared_with"): vol.Any(None, [str]),
         vol.Required("user_id"): str,
         vol.Optional("payment_method"): vol.Any(None, vol.Coerce(PaymentMethod)),
         vol.Optional("start"): vol.Any(None, _iso_date),
@@ -123,6 +126,13 @@ def validate_item_fields(data: dict[str, Any]) -> dict[str, Any]:
     start, end = data.get("start"), data.get("end")
     if start and end and start > end:
         raise vol.Invalid("start must not be after end")
+    # Participants only matter for shared items; the payer always takes part.
+    shared_with = data.get("shared_with") if data.get("shared") else None
+    if shared_with:
+        ids = list(dict.fromkeys([*shared_with, data["user_id"]]))
+        data["shared_with"] = ids
+    else:
+        data["shared_with"] = None
     return data
 
 
@@ -140,6 +150,7 @@ def item_from_dict(data: ItemDict) -> Item:
         due_month=data["due_month"],
         cost_kind=CostKind(data["cost_kind"]),
         shared=data["shared"],
+        shared_with=tuple(shared_with) if (shared_with := data.get("shared_with")) else None,
         user_id=data["user_id"],
         payment_method=PaymentMethod(data["payment_method"]) if data["payment_method"] else None,
         start=date.fromisoformat(data["start"]) if data["start"] else None,
@@ -297,6 +308,7 @@ def _to_item_dict(item_id: str, valid: dict[str, Any], *, created: str, updated:
         "due_month": valid.get("due_month"),
         "cost_kind": str(valid.get("cost_kind", CostKind.FIXED)),
         "shared": valid.get("shared", False),
+        "shared_with": valid.get("shared_with"),
         "user_id": valid["user_id"],
         "payment_method": str(valid["payment_method"]) if valid.get("payment_method") else None,
         "start": valid.get("start"),

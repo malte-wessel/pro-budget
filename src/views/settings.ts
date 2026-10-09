@@ -5,13 +5,13 @@ import { api } from "../api.ts";
 import { categoryIcon } from "../color.ts";
 import type { ProBudgetCategoryDialog } from "../dialogs/category-dialog.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
-import { fieldStyles, textField } from "../dialogs/fields.ts";
+import { fieldStyles, selectField, textField } from "../dialogs/fields.ts";
 import { errorText } from "../dialogs/item-dialog.ts";
 import type { HomeAssistant, OverflowMenuItem, Route } from "../ha/types.ts";
 import { t } from "../i18n.ts";
 import { tabs } from "../nav.ts";
 import { sharedStyles } from "../styles.ts";
-import type { BudgetState, Category } from "../types.ts";
+import { SPLIT_RULES, type BudgetState, type Category } from "../types.ts";
 
 /**
  * Settings, in the layout of Home Assistant's settings pages (a centred column of cards with a
@@ -27,6 +27,7 @@ export class ProBudgetSettings extends LitElement {
   @state() private _members?: Set<string>;
   @state() private _currency?: string;
   @state() private _leadDays?: string;
+  @state() private _splitRule?: string;
   @state() private _touched = new Set<string>();
   @state() private _saving = "";
   @state() private _message = "";
@@ -218,11 +219,16 @@ export class ProBudgetSettings extends LitElement {
       : t(this.hass, "validation.lead_days");
   }
 
+  private get _splitRuleValue(): string {
+    return this._splitRule ?? this.budget!.config.split_rule;
+  }
+
   private get _householdChanged(): boolean {
     const b = this.budget!;
     return (
       this._currencyValue.trim().toUpperCase() !== (b.config.currency_override ?? "") ||
-      Number(this._leadDaysValue) !== b.config.lead_days
+      Number(this._leadDaysValue) !== b.config.lead_days ||
+      this._splitRuleValue !== b.config.split_rule
     );
   }
 
@@ -230,9 +236,11 @@ export class ProBudgetSettings extends LitElement {
     await this._save("household", {
       currency: this._currencyValue.trim().toUpperCase() || null,
       lead_days: Number(this._leadDaysValue),
+      split_rule: this._splitRuleValue,
     });
     this._currency = undefined;
     this._leadDays = undefined;
+    this._splitRule = undefined;
   }
 
   private _renderHousehold() {
@@ -244,6 +252,19 @@ export class ProBudgetSettings extends LitElement {
         <div class="card-content">
           ${this._isAdmin ? nothing : html`<ha-alert alert-type="info">${t(h, "settings.members_admin")}</ha-alert>`}
           <div class="fields">
+            <div>
+              ${selectField(h, {
+                label: t(h, "settings.split_rule"),
+                value: this._splitRuleValue,
+                required: true,
+                options: SPLIT_RULES.map((r) => ({
+                  value: r,
+                  label: t(h, `settings.split_rule.${r}` as never),
+                })),
+                onChange: (v) => (this._splitRule = v),
+              })}
+              <p class="hint small" style="margin: 4px 0 0">${t(h, "settings.split_rule_hint")}</p>
+            </div>
             <div>
               ${textField(h, {
                 label: t(h, "settings.currency"),

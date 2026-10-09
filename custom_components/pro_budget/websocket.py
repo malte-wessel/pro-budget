@@ -16,7 +16,7 @@ from homeassistant.components.websocket_api.decorators import (
 from homeassistant.core import HomeAssistant, callback
 import probatio as vol
 
-from .const import CONF_CURRENCY, CONF_LEAD_DAYS, CONF_MEMBERS, DOMAIN
+from .const import CONF_CURRENCY, CONF_LEAD_DAYS, CONF_MEMBERS, CONF_SPLIT_RULE, DOMAIN, SPLIT_RULES
 from .model import BudgetModel
 
 ERR_NOT_FOUND = "not_found"
@@ -54,6 +54,7 @@ async def _state(model: BudgetModel) -> dict[str, Any]:
             "currency_override": model.entry.options.get(CONF_CURRENCY),
             "lead_days": model.lead_days,
             "members": model.member_ids,
+            "split_rule": model.split_rule,
             "language": model.hass.config.language,
         },
     }
@@ -193,6 +194,7 @@ async def ws_stats(hass: HomeAssistant, connection: ActiveConnection, msg: dict[
             {
                 **_plain(s),
                 "members": [{**_plain(m), "balance": m.balance} for m in s.members],
+                "transfers": [_plain(tr) for tr in s.transfers],
                 "totals": {**_plain(s.totals), "remaining": s.totals.remaining},
             }
             for s in stats
@@ -276,6 +278,7 @@ def _currency_option(value: Any) -> str | None:
         vol.Optional("members"): [str],
         vol.Optional("lead_days"): vol.All(int, vol.Range(min=0, max=60)),
         vol.Optional("currency"): vol.Any(None, str),
+        vol.Optional("split_rule"): vol.In(SPLIT_RULES),
     }
 )
 @require_admin
@@ -290,6 +293,8 @@ def ws_config_update(
         options[CONF_MEMBERS] = msg["members"]
     if "lead_days" in msg:
         options[CONF_LEAD_DAYS] = msg["lead_days"]
+    if "split_rule" in msg:
+        options[CONF_SPLIT_RULE] = msg["split_rule"]
     if "currency" in msg:
         try:
             currency = _currency_option(msg["currency"])

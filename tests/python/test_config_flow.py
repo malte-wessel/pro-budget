@@ -47,7 +47,12 @@ async def test_options_flow(hass: HomeAssistant, hass_admin_user: MockUser) -> N
         result["flow_id"], {"members": [hass_admin_user.id], "lead_days": 5, "currency": "chf"}
     )
     assert result["type"] is FlowResultType.CREATE_ENTRY
-    assert entry.options == {"members": [hass_admin_user.id], "lead_days": 5, "currency": "chf"}
+    assert entry.options == {
+        "members": [hass_admin_user.id],
+        "lead_days": 5,
+        "currency": "chf",
+        "split_rule": "income",
+    }
     await hass.async_block_till_done()
     model = entry.runtime_data
     assert model.lead_days == 5
@@ -59,3 +64,4 @@ async def test_options_flow(hass: HomeAssistant, hass_admin_user: MockUser) -> N
         result["flow_id"], {"members": [], "lead_days": 3, "currency": ""}
     )
     assert "currency" not in entry.options
+    await hass.async_block_till_done()  # the reload the options change scheduled

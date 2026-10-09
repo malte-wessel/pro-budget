@@ -57,6 +57,9 @@ add_item:
       default: false
       selector:
         boolean:
+    shared_with:
+      selector:
+        object:
     user_id:
       selector:
         text:
@@ -126,6 +129,9 @@ update_item:
     shared:
       selector:
         boolean:
+    shared_with:
+      selector:
+        object:
     user_id:
       selector:
         text:

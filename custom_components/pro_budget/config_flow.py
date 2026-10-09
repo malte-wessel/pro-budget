@@ -23,7 +23,16 @@ from homeassistant.helpers.selector import (
 )
 import probatio as vol
 
-from .const import CONF_CURRENCY, CONF_LEAD_DAYS, CONF_MEMBERS, DEFAULT_LEAD_DAYS, DOMAIN
+from .const import (
+    CONF_CURRENCY,
+    CONF_LEAD_DAYS,
+    CONF_MEMBERS,
+    CONF_SPLIT_RULE,
+    DEFAULT_LEAD_DAYS,
+    DEFAULT_SPLIT_RULE,
+    DOMAIN,
+    SPLIT_RULES,
+)
 
 
 class ProBudgetConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -68,6 +77,15 @@ class ProBudgetOptionsFlow(OptionsFlow):
                 vol.Optional(
                     CONF_LEAD_DAYS, default=options.get(CONF_LEAD_DAYS, DEFAULT_LEAD_DAYS)
                 ): NumberSelector(NumberSelectorConfig(min=0, max=60, mode=NumberSelectorMode.BOX)),
+                vol.Optional(
+                    CONF_SPLIT_RULE, default=options.get(CONF_SPLIT_RULE, DEFAULT_SPLIT_RULE)
+                ): SelectSelector(
+                    SelectSelectorConfig(
+                        options=list(SPLIT_RULES),
+                        translation_key="split_rule",
+                        mode=SelectSelectorMode.DROPDOWN,
+                    )
+                ),
                 vol.Optional(CONF_CURRENCY, default=options.get(CONF_CURRENCY, "")): TextSelector(),
             }
         )

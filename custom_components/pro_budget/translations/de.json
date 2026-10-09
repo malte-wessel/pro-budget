@@ -17,7 +17,8 @@
         "data": {
           "members": "Haushaltsmitglieder",
           "lead_days": "Tage im Voraus, ab denen eine Zahlung als anstehend gilt",
-          "currency": "Währung (leer lassen für die von Home Assistant)"
+          "currency": "Währung (leer lassen für die von Home Assistant)",
+          "split_rule": "Faire Aufteilung der gemeinsamen Kosten"
         },
         "data_description": {
           "members": "Benutzer, die im Budget erscheinen. Leer lassen für alle aktiven Benutzer."
@@ -57,6 +58,12 @@
         "manual": "Manuell / Überweisung",
         "credit_card": "Kreditkarte",
         "paypal": "PayPal"
+      }
+    },
+    "split_rule": {
+      "options": {
+        "income": "Anteilig zum Einkommen",
+        "equal": "Zu gleichen Teilen"
       }
     }
   },
@@ -124,6 +131,10 @@
         "end": {
           "name": "Ende",
           "description": "Letzter Tag, an dem der Posten zählt."
+        },
+        "shared_with": {
+          "name": "Geteilt mit",
+          "description": "Benutzer-IDs der Mitglieder, die sich einen gemeinsamen Posten teilen; leer bedeutet der ganze Haushalt."
         }
       }
     },
@@ -194,6 +205,10 @@
         "end": {
           "name": "Ende",
           "description": "Letzter Tag, an dem der Posten zählt."
+        },
+        "shared_with": {
+          "name": "Geteilt mit",
+          "description": "Benutzer-IDs der Mitglieder, die sich einen gemeinsamen Posten teilen; leer bedeutet der ganze Haushalt."
         }
       }
     },
@@ -284,6 +299,9 @@
       },
       "member_next_payment": {
         "name": "{name} nächste Zahlung"
+      },
+      "settlement": {
+        "name": "Ausgleich"
       }
     },
     "calendar": {

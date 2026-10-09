@@ -47,6 +47,8 @@ export interface Item {
   due_month: number | null;
   cost_kind: CostKind;
   shared: boolean;
+  /** Participants of a shared item (user ids); null means the whole household. */
+  shared_with: string[] | null;
   user_id: string;
   payment_method: PaymentMethod | null;
   start: string | null;
@@ -77,6 +79,7 @@ export interface BudgetState {
     lead_days: number;
     /** Configured member ids; empty means everyone. */
     members: string[];
+    split_rule: SplitRule;
     language: string;
   };
 }
@@ -103,7 +106,20 @@ export interface Fairness {
   shared_cost_share: number | null;
   income: number;
   income_share: number | null;
+  /** What the member should carry of the shared costs under the split rule. */
+  fair_share: number;
+  /** shared_costs_paid − fair_share: positive is owed money, negative owes. */
+  balance: number;
 }
+
+export interface Transfer {
+  from_user_id: string;
+  to_user_id: string;
+  amount: number;
+}
+
+export type SplitRule = "income" | "equal";
+export const SPLIT_RULES: SplitRule[] = ["income", "equal"];
 
 export interface CategoryRow {
   category_id: string;
@@ -117,6 +133,7 @@ export interface MonthStats {
   members: MemberStats[];
   totals: { income: number; expenses: number; savings: number; remaining: number };
   fairness: Fairness[];
+  transfers: Transfer[];
   categories: CategoryRow[];
 }
 

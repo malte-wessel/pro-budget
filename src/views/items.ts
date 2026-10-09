@@ -113,7 +113,11 @@ export class ProBudgetItems extends LitElement {
         recurrence: t(h, `recurrence.${item.recurrence}` as I18nKey),
         due: dueLabel(h, item),
         cost: t(h, `cost_kind.${item.cost_kind}` as I18nKey),
-        shared: item.shared ? t(h, "overview.shared") : t(h, "overview.personal"),
+        shared: !item.shared
+          ? t(h, "overview.personal")
+          : item.shared_with
+            ? item.shared_with.map(name).join(", ")
+            : t(h, "item.shared_everyone"),
         status: isActiveInMonth(item, now.getFullYear(), now.getMonth() + 1)
           ? t(h, "items.active")
           : t(h, "items.inactive"),

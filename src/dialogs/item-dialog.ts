@@ -28,6 +28,7 @@ function toForm(item: Item | undefined, state: BudgetState, userId: string | und
       due_day: 1,
       cost_kind: "fixed",
       shared: false,
+      shared_with: [],
       category_id: state.categories[0]?.id,
       user_id: userId ?? state.users[0]?.id,
       amount: "",
@@ -45,6 +46,8 @@ function toForm(item: Item | undefined, state: BudgetState, userId: string | und
     due_month: item.due_month ?? undefined,
     cost_kind: item.cost_kind,
     shared: item.shared,
+    // Empty = everyone (the stored null); a list = those members.
+    shared_with: item.shared_with ?? [],
     payment_method: item.payment_method ?? "",
     start: item.start ?? undefined,
     end: item.end ?? undefined,
@@ -140,10 +143,21 @@ export class ProBudgetItemDialog extends LitElement {
       due_month: long && d.due_month ? Number(d.due_month) : null,
       cost_kind: (d.cost_kind as ItemFields["cost_kind"]) ?? "fixed",
       shared: Boolean(d.shared),
+      shared_with: this._participants(),
       payment_method: d.payment_method ? (d.payment_method as ItemFields["payment_method"]) : null,
       start: d.start ? String(d.start) : null,
       end: d.end ? String(d.end) : null,
     };
+  }
+
+  /** The participants to store: null for everyone (none or all selected), else the list. */
+  private _participants(): string[] | null {
+    const d = this._data;
+    if (!d.shared) return null;
+    const selected = (d.shared_with as string[] | undefined) ?? [];
+    const all = this.budget!.users.map((u) => u.id);
+    if (selected.length === 0 || all.every((id) => selected.includes(id))) return null;
+    return selected;
   }
 
   private async _save() {
@@ -272,6 +286,33 @@ export class ProBudgetItemDialog extends LitElement {
           selector: { boolean: {} },
           onChange: (v) => this._set("shared", Boolean(v)),
         })}
+        ${
+          d.shared && b.users.length > 2
+            ? html`
+              <div>
+                ${selectorField(h, {
+                  label: t(h, "item.shared_with"),
+                  value: ((d.shared_with as string[] | undefined) ?? []).length
+                    ? d.shared_with
+                    : b.users.map((u) => u.id),
+                  selector: {
+                    select: {
+                      multiple: true,
+                      mode: "list",
+                      options: b.users.map((u) => ({ value: u.id, label: u.name })),
+                    },
+                  },
+                  onChange: (v) => this._set("shared_with", Array.isArray(v) ? v : []),
+                })}
+                ${
+                  errors.shared_with && touched("shared_with")
+                    ? html`<ha-alert alert-type="error">${errors.shared_with}</ha-alert>`
+                    : nothing
+                }
+              </div>
+            `
+            : nothing
+        }
         <ha-expansion-panel outlined .header=${t(h, "item.advanced")}>
           <div class="fields">
             ${selectField(h, {

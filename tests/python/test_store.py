@@ -140,3 +140,15 @@ async def test_persists_and_reloads(hass: HomeAssistant, store: BudgetStore) -> 
     fresh = BudgetStore(hass)
     await fresh.async_load()
     assert fresh.item(item["id"]) == item
+
+
+async def test_shared_with_participants(store: BudgetStore) -> None:
+    """Participants are kept only for shared items and always include the payer."""
+    item = store.add_item(rent(store, shared=True, shared_with=["u2", "u3"]), NOW)
+    assert item["shared_with"] == ["u2", "u3", "u1"]
+    personal = store.add_item(rent(store, shared=False, shared_with=["u2"]), NOW)
+    assert personal["shared_with"] is None
+    whole = store.add_item(rent(store, shared=True), NOW)
+    assert whole["shared_with"] is None
+    with pytest.raises(vol.Invalid):
+        store.add_item(rent(store, shared=True, shared_with="u2"), NOW)

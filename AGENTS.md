@@ -46,6 +46,7 @@ Then update `CHANGELOG.md` and, for panel changes, check the result in the real 
 ## Conventions
 
 - English for docs, comments and commit messages. Commit messages: imperative subject, body explains why.
+- The settlement (`budget/stats.py`: `fair_shares`, `settle`) is exact in cents (rounding remainders go to the first members) and deterministic (ties by user id); the split rule is the `split_rule` option.
 - Amounts are integers in minor units (cents) everywhere; formatting happens once, in the panel, with the HA locale and currency.
 - Dates are ISO strings (`YYYY-MM-DD`) in storage and over the websocket.
 - Category colours are Home Assistant colour token names (`COLOR_NAMES` in `const.py`, picked with HA's `ui_color` selector) rendered through the theme by `src/color.ts`, never hex, so custom themes recolour them.

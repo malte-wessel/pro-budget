@@ -2,7 +2,7 @@ import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { categoryIcon } from "../color.ts";
-import { money, percent } from "../format.ts";
+import { money } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
 import { renderMemberChips } from "../members.ts";
 import { tabs } from "../nav.ts";
@@ -26,6 +26,30 @@ export class ProBudgetOverview extends LitElement {
       :host {
         display: block;
         height: 100%;
+      }
+      .transfers {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px;
+      }
+      .transfers li {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--divider-color);
+      }
+      .transfers .amount {
+        margin-left: auto;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+      .settled {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--success-color, #43a047);
+        margin: 0 0 16px;
       }
     `,
   ];
@@ -143,15 +167,36 @@ export class ProBudgetOverview extends LitElement {
       </ha-card>
       <div class="grid" style="margin-top:16px">
         <ha-card>
-          <h2>${t(h, "overview.fairness")}</h2>
-          <p class="muted small">${t(h, "overview.fairness_hint")}</p>
+          <h2>${t(h, "overview.settlement")}</h2>
+          <p class="muted small">
+            ${t(h, this.budget?.config.split_rule === "equal" ? "overview.rule_equal" : "overview.rule_income")}
+            ${t(h, "overview.rule_subset")}
+          </p>
+          ${
+            s.transfers.length === 0
+              ? html`<p class="settled"><ha-icon icon="mdi:check-circle"></ha-icon> ${t(h, "overview.settled")}</p>`
+              : html`
+                <ul class="transfers">
+                  ${s.transfers.map(
+                    (tr) => html`
+                      <li>
+                        <strong>${this._user(tr.from_user_id)}</strong>
+                        ${t(h, "overview.pays")}
+                        <strong>${this._user(tr.to_user_id)}</strong>
+                        <span class="amount">${m(tr.amount)}</span>
+                      </li>
+                    `,
+                  )}
+                </ul>
+              `
+          }
           <table class="plain">
             <thead>
               <tr>
                 <th>${t(h, "overview.member")}</th>
                 <th class="num">${t(h, "overview.shared_costs_paid")}</th>
-                <th class="num">${t(h, "overview.shared_cost_share")}</th>
-                <th class="num">${t(h, "overview.income_share")}</th>
+                <th class="num">${t(h, "overview.fair_share")}</th>
+                <th class="num">${t(h, "overview.fairness_balance")}</th>
               </tr>
             </thead>
             <tbody>
@@ -160,8 +205,10 @@ export class ProBudgetOverview extends LitElement {
                   <tr>
                     <td>${this._user(f.user_id)}</td>
                     <td class="num">${m(f.shared_costs_paid)}</td>
-                    <td class="num">${percent(h, f.shared_cost_share)}</td>
-                    <td class="num">${percent(h, f.income_share)}</td>
+                    <td class="num">${m(f.fair_share)}</td>
+                    <td class="num ${f.balance > 0 ? "earning" : f.balance < 0 ? "expense" : ""}">
+                      ${f.balance > 0 ? "+" : ""}${m(f.balance)}
+                    </td>
                   </tr>
                 `,
               )}

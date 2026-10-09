@@ -206,3 +206,34 @@ async def test_options_reload_changes_member_entities(
     assert hass.states.get("sensor.pro_budget_income").state == "0.0"
     assert all(hass.states.get(e).state == "unavailable" for e in before if "balance" in e)
     assert before == after
+
+
+async def test_settlement_sensor(
+    hass: HomeAssistant, entry: MockConfigEntry, hass_admin_user: MockUser
+) -> None:
+    """A second member who paid less than their fair share owes the difference."""
+    anna = MockUser(name="Anna").add_to_hass(hass)
+    # Options change → reload, so Anna's entities exist.
+    hass.config_entries.async_update_entry(
+        entry, options={"members": [hass_admin_user.id, anna.id]}
+    )
+    await hass.async_block_till_done()
+    add(entry, hass_admin_user.id, title="Salary", type="earning", amount=300000)
+    add(entry, anna.id, title="Salary Anna", type="earning", amount=100000)
+    add(entry, hass_admin_user.id, title="Rent", amount=120000, shared=True)
+    await hass.async_block_till_done()
+    s = hass.states.get("sensor.pro_budget_settlement")
+    assert s.state == "300.0"
+    assert s.attributes["split_rule"] == "income"
+    assert s.attributes["transfers"] == [
+        {
+            "from": "Anna",
+            "to": hass_admin_user.name,
+            "from_user_id": anna.id,
+            "to_user_id": hass_admin_user.id,
+            "amount": 300.0,
+        }
+    ]
+    balance = hass.states.get("sensor.pro_budget_anna_balance")
+    assert balance.attributes["fair_share"] == 300.0
+    assert balance.attributes["fairness_balance"] == -300.0

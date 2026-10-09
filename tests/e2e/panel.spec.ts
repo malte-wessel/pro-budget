@@ -51,5 +51,6 @@ test("calendar, insights and settings render", async ({ page }) => {
   await p.locator("hass-tabs-subpage a[href$='/insights'] ha-tab").click();
   await expect(p.locator("pro-budget-insights .months")).toBeVisible();
   await p.locator("hass-tabs-subpage a[href$='/settings'] ha-tab").click();
-  await expect(p.locator("pro-budget-settings ha-md-list-item")).toHaveCount(12 + 2); // categories + users
+  // 12 seeded categories plus one row per seeded user (dev, Anna, Ben)
+  await expect(p.locator("pro-budget-settings ha-md-list-item")).toHaveCount(12 + 3);
 });
