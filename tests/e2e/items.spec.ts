@@ -1,8 +1,13 @@
 // Creates, edits and deletes an item through the real dialog, leaving the household as it was.
 import { expect, test } from "@playwright/test";
-import { openPanel, panel } from "./util.ts";
+import { deleteItemsByPrefix, openPanel, panel } from "./util.ts";
 
 const TITLE = `E2E ${Date.now()}`;
+
+// A failed run must not leave its item behind in the dev household.
+test.afterEach(async ({ page }) => {
+  await deleteItemsByPrefix(page, "E2E ").catch(() => undefined);
+});
 
 test("create, edit and delete an item through the dialog", async ({ page }) => {
   await openPanel(page, "items");

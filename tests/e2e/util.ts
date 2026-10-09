@@ -30,3 +30,27 @@ export async function openPanel(page: Page, view = ""): Promise<void> {
 export function panel(page: Page) {
   return page.locator("pro-budget-panel");
 }
+
+/** Delete every item whose title starts with `prefix`, through the integration's websocket. */
+export async function deleteItemsByPrefix(page: Page, prefix: string): Promise<void> {
+  await page.evaluate(async (prefix) => {
+    const connection = (
+      document.querySelector("home-assistant") as unknown as { hass: { connection: unknown } }
+    ).hass.connection as {
+      sendMessagePromise: <T>(m: Record<string, unknown>) => Promise<T>;
+      subscribeMessage: <T>(
+        cb: (s: T) => void,
+        m: Record<string, unknown>,
+      ) => Promise<() => Promise<void>>;
+    };
+    const state = await new Promise<{ items: { id: string; title: string }[] }>((resolve) => {
+      void connection.subscribeMessage<{ items: { id: string; title: string }[] }>(
+        (s) => resolve(s),
+        { type: "pro_budget/subscribe" },
+      );
+    });
+    for (const item of state.items.filter((i) => i.title.startsWith(prefix))) {
+      await connection.sendMessagePromise({ type: "pro_budget/items/delete", item_id: item.id });
+    }
+  }, prefix);
+}
