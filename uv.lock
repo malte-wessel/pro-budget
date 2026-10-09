@@ -1769,7 +1769,7 @@ wheels = [
 
 [[package]]
 name = "pro-budget"
-version = "0.1.0"
+version = "0.1.0b1"
 source = { virtual = "." }
 
 [package.dev-dependencies]
