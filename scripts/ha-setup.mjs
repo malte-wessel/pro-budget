@@ -29,7 +29,11 @@ async function tokenFromCode(code) {
 }
 
 async function onboard() {
-  const steps = await call("/api/onboarding");
+  // Home Assistant removes the onboarding endpoint once onboarding is complete.
+  const steps = await call("/api/onboarding").catch((err) => {
+    if (String(err.message).includes("404")) return [];
+    throw err;
+  });
   const pending = new Set(steps.filter((s) => !s.done).map((s) => s.step));
   if (pending.size === 0) return null;
   let token;
