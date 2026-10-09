@@ -11,8 +11,8 @@ from .model import LONG_RECURRENCES, CostKind, Item, ItemType
 from .occurrences import entry_key, occurrences_in_range
 from .recurrence import due_in_month, last_day_of_month
 
-# Days from today that count as "up next".
-UPCOMING_DAYS = 7
+# How many of the next outflow occurrences the overview lists.
+UPCOMING_COUNT = 5
 # How far ahead to look for the next income and the next special payment.
 LOOKAHEAD = timedelta(days=400)
 DECEMBER = 12
@@ -96,6 +96,7 @@ class Overview:
     """Everything `compute_overview` returns."""
 
     progress: MonthProgress
+    # The next few outflow occurrences from today, whatever the month shown.
     upcoming: list[Occurrence]
     next_income: Occurrence | None
     year: YearOutlook
@@ -160,15 +161,15 @@ def _progress(
 
 
 def _upcoming(items: list[Item], is_paid: PaidLookup, today: date) -> list[Occurrence]:
-    end = today + timedelta(days=UPCOMING_DAYS - 1)
+    """Return the next UPCOMING_COUNT outflow occurrences from today on, by date."""
     found = [
         (day, entry_key(item), item)
         for item in outflows(items)
-        for day in occurrences_in_range(item, today, end)
+        for day in occurrences_in_range(item, today, today + LOOKAHEAD)
     ]
     return [
         Occurrence(date=day, item_id=item.id, paid=is_paid(item.id, day.isoformat()))
-        for day, _key, item in sorted(found, key=lambda x: (x[0], x[1]))
+        for day, _key, item in sorted(found, key=lambda x: (x[0], x[1]))[:UPCOMING_COUNT]
     ]
 
 

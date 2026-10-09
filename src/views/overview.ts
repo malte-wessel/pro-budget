@@ -28,8 +28,6 @@ import { t, type I18nKey } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { BudgetState, Item, MonthStats, Occurrence, Overview } from "../types.ts";
 
-const UPCOMING_DAYS = 7; // as budget/overview.py
-const UPCOMING_ROWS = 6;
 const TOP_CATEGORIES = 5;
 const SAVINGS_TARGET = 0.1;
 const FIXED_LIMIT = 0.45;
@@ -1054,12 +1052,12 @@ export class ProBudgetOverview extends LitElement {
 
   private _upNext(d: Overview, cur: string) {
     const h = this.hass;
-    const rows = d.upcoming.slice(0, UPCOMING_ROWS);
+    const rows = d.upcoming;
     const income = d.next_income ? this._item(d.next_income.item_id) : undefined;
     return html`
       <ha-card>
-        ${this._head(mdiCalendarClock, t(h, "overview.up_next"), html`<span class="hint">${t(h, "overview.next_days", { days: UPCOMING_DAYS })}</span>`)}
-        ${rows.length ? rows.map((o) => this._occurrence(o, cur)) : html`<div class="small muted">${t(h, "overview.nothing_due", { days: UPCOMING_DAYS })}</div>`}
+        ${this._head(mdiCalendarClock, t(h, "overview.up_next"), html`<span class="hint">${t(h, "overview.next_payments")}</span>`)}
+        ${rows.length ? rows.map((o) => this._occurrence(o, cur)) : html`<div class="small muted">${t(h, "overview.nothing_due")}</div>`}
         ${
           income && d.next_income
             ? html`

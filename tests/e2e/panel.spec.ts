@@ -24,9 +24,10 @@ test("overview is a dashboard with a month switcher and a member filter", async 
   const before = await title.textContent();
   await o.locator(".period ha-icon-button").last().click();
   await expect(title).not.toHaveText(before ?? "");
-  // Picking a member (dev, Anna, Ben are seeded) dims the other member rows.
+  // The signed-in user (dev) is selected by default; dev, Anna and Ben are seeded.
   const chips = o.locator(".toolbar .chip");
   await expect(chips).toHaveCount(4);
+  await expect(chips.last()).toHaveAttribute("aria-pressed", "true");
   await chips.nth(1).click();
   await expect(o.locator(".member-row.dim")).toHaveCount(2);
   await expect(o.locator(".member-row[aria-pressed=true]")).toHaveCount(1);

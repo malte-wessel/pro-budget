@@ -56,12 +56,15 @@ def test_progress_of_another_month_has_no_today() -> None:
     assert o.progress.paid == 0
 
 
-def test_upcoming_covers_seven_days_in_day_order() -> None:
+def test_upcoming_lists_the_next_five_occurrences_in_day_order() -> None:
     o = compute_overview(ITEMS, _is_paid, 2026, 10, TODAY)
-    # 9 Oct (Fri): fuel + savings, same day: expense before saving; 15 Oct is outside the window
+    # 9 Oct (Fri): fuel + savings, same day: expense before saving; then the Fridays
     assert [(u.date.isoformat(), u.item_id, u.paid) for u in o.upcoming] == [
         ("2026-10-09", "fuel", False),
         ("2026-10-09", "etf", False),
+        ("2026-10-16", "fuel", False),
+        ("2026-10-23", "fuel", False),
+        ("2026-10-30", "fuel", False),
     ]
 
 

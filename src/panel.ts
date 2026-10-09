@@ -33,6 +33,8 @@ export class ProBudgetPanel extends LitElement {
   @state() private _ready = false;
   @state() private _error = "";
   @state() private _userId = "";
+  // The member filter starts on the signed-in user (when they are a member) until it is changed.
+  private _userChosen = false;
   private _unsubscribe?: () => Promise<void>;
 
   static styles = css`
@@ -75,7 +77,11 @@ export class ProBudgetPanel extends LitElement {
     if (!this.hass || this._unsubscribe) return;
     try {
       await loadHaElements();
-      this._unsubscribe = await api.subscribe(this.hass, (state) => (this._budget = state));
+      this._unsubscribe = await api.subscribe(this.hass, (state) => {
+        this._budget = state;
+        const me = this.hass?.user?.id;
+        if (!this._userChosen && me && state.users.some((u) => u.id === me)) this._userId = me;
+      });
       this._ready = true;
     } catch (err) {
       this._error = String((err as Error)?.message ?? err);
@@ -94,7 +100,10 @@ export class ProBudgetPanel extends LitElement {
       budget: b,
       version: __VERSION__,
     };
-    const onUser = (e: CustomEvent<{ userId: string }>) => (this._userId = e.detail.userId);
+    const onUser = (e: CustomEvent<{ userId: string }>) => {
+      this._userChosen = true;
+      this._userId = e.detail.userId;
+    };
     switch (currentView(this.route)) {
       case "items":
         return html`<pro-budget-items .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b}></pro-budget-items>`;
