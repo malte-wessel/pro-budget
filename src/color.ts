@@ -13,6 +13,38 @@ export function cssColor(
   return `var(--${name}-color)`;
 }
 
+// Colours for the household members, by their index in the member list (HA users have none).
+const MEMBER_COLORS = [
+  "purple",
+  "blue",
+  "teal",
+  "orange",
+  "pink",
+  "indigo",
+  "green",
+  "deep-orange",
+] as const;
+
+/** The theme colour of the member at `index` in the member list. */
+export function memberColor(index: number): string {
+  return cssColor(
+    MEMBER_COLORS[((index % MEMBER_COLORS.length) + MEMBER_COLORS.length) % MEMBER_COLORS.length],
+  );
+}
+
+/** A round avatar with the first letter of the name on a disc of the colour. */
+export function avatar(label: string, color: string, size = 32, filled = false): TemplateResult {
+  const fg = filled ? "var(--text-primary-color, #fff)" : color;
+  const bg = filled ? color : `color-mix(in srgb, ${color} 20%, transparent)`;
+  return html`
+    <span
+      class="avatar"
+      style="display: inline-flex; align-items: center; justify-content: center; flex: none; width: ${size}px; height: ${size}px; border-radius: 50%; font-size: ${Math.round(size * 0.42)}px; font-weight: 600; line-height: 1; color: ${fg}; background: ${bg}"
+      >${label.slice(0, 1).toUpperCase()}</span
+    >
+  `;
+}
+
 /**
  * A category icon in Home Assistant's tile style: the icon in its colour on a disc of the same
  * colour at 20 %. Inline styles, because the data table renders templates in its own shadow root.

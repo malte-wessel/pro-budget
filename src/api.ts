@@ -8,6 +8,7 @@ import type {
   ItemFields,
   MonthStats,
   OccurrenceDay,
+  Overview,
 } from "./types.ts";
 
 const D = "pro_budget";
@@ -53,6 +54,8 @@ export const api = {
     call<null>(hass, { type: `${D}/paid/set`, item_id, date, paid }),
   stats: (hass: HomeAssistant, year: number, month: number, user_id?: string) =>
     call<MonthStats[]>(hass, { type: `${D}/stats`, year, month, ...(user_id ? { user_id } : {}) }),
+  overview: (hass: HomeAssistant, year: number, month: number, user_id?: string) =>
+    call<Overview>(hass, { type: `${D}/overview`, year, month, ...(user_id ? { user_id } : {}) }),
   insights: (hass: HomeAssistant, user_id: string, year: number) =>
     call<Insights>(hass, { type: `${D}/insights`, user_id, year }),
   updateConfig: (

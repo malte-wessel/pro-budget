@@ -14,6 +14,7 @@ from homeassistant.util import dt as dt_util
 from .budget.insights import MemberInsights, compute_member_insights
 from .budget.model import Item
 from .budget.occurrences import group_occurrences_by_date
+from .budget.overview import Overview, compute_overview
 from .budget.stats import MonthStats, SplitRule, compute_month_stats
 from .const import (
     CONF_CURRENCY,
@@ -205,6 +206,21 @@ class BudgetModel:
         users = await self.async_users()
         user_ids = [u["id"] for u in users if user_id is None or u["id"] == user_id]
         return compute_month_stats(self.items(user_id), user_ids, year, month, self.split_rule)
+
+    async def async_overview(
+        self, year: int, month: int, user_id: str | None = None
+    ) -> tuple[list[MonthStats], MonthStats, Overview]:
+        """Stats for the scope, the household's stats and the overview figures for a month."""
+        users = await self.async_users()
+        all_ids = [u["id"] for u in users]
+        scope_ids = [i for i in all_ids if user_id is None or i == user_id]
+        rule = self.split_rule
+        stats = compute_month_stats(self.items(user_id), scope_ids, year, month, rule)
+        household = compute_month_stats(self.items(), all_ids, year, month, rule)[0]
+        overview = compute_overview(
+            self.items(user_id), self.store.is_paid, year, month, dt_util.now().date()
+        )
+        return stats, household, overview
 
     def insights(self, user_id: str, year: int) -> MemberInsights:
         """Insights for one member and calendar year."""

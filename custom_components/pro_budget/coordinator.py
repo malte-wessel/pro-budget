@@ -12,9 +12,9 @@ from homeassistant.helpers.event import async_track_time_change
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt as dt_util
 
-from .budget.model import Item, ItemType
+from .budget.model import Item
 from .budget.occurrences import occurrences_in_range
-from .budget.recurrence import due_in_month
+from .budget.overview import due_this_month, outflows
 from .budget.stats import MonthStats
 from .const import DOMAIN
 from .model import BudgetModel, UserInfo
@@ -89,7 +89,9 @@ class BudgetCoordinator(DataUpdateCoordinator[BudgetData]):
         members = {
             u["id"]: MemberData(
                 user=u,
-                due_this_month=_due_this_month([i for i in items if i.user_id == u["id"]], today),
+                due_this_month=due_this_month(
+                    [i for i in items if i.user_id == u["id"]], today.year, today.month
+                ),
                 next_payment=_next_payment(
                     model, [i for i in items if i.user_id == u["id"]], today
                 ),
@@ -102,25 +104,17 @@ class BudgetCoordinator(DataUpdateCoordinator[BudgetData]):
             split_rule=model.split_rule,
             users=users,
             stats=stats,
-            due_this_month=_due_this_month(items, today),
+            due_this_month=due_this_month(items, today.year, today.month),
             next_payment=_next_payment(model, items, today),
             members=members,
         )
-
-
-def _outflows(items: list[Item]) -> list[Item]:
-    return [i for i in items if i.kind is not ItemType.EARNING]
-
-
-def _due_this_month(items: list[Item], today: date) -> int:
-    return sum(due_in_month(i, today.year, today.month) or 0 for i in _outflows(items))
 
 
 def _next_payment(model: BudgetModel, items: list[Item], today: date) -> NextPayment | None:
     """Find the earliest unpaid outflow from today on; the largest amount on a tie."""
     best: NextPayment | None = None
     end = today + _LOOKAHEAD
-    for item in _outflows(items):
+    for item in outflows(items):
         for day in occurrences_in_range(item, today, end):
             if model.store.is_paid(item.id, day.isoformat()):
                 continue

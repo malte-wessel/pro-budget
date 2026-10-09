@@ -26,6 +26,16 @@ export function currentView(route: Route | undefined): View {
   return VIEWS.some((v) => v.id === path) ? (path as View) : "overview";
 }
 
+/** Go to a view of the panel the way HA does (no page load). */
+export function navigate(route: Route | undefined, view: View): void {
+  history.pushState(null, "", viewPath(route, view));
+  window.dispatchEvent(new CustomEvent("location-changed"));
+}
+
+export function viewPath(route: Route | undefined, view: View): string {
+  return `${route?.prefix ?? DEFAULT_PREFIX}/${view}`;
+}
+
 export function tabs(hass: HomeAssistant | undefined, route: Route | undefined): PageNavigation[] {
   const prefix = route?.prefix ?? DEFAULT_PREFIX;
   return VIEWS.map((v) => ({

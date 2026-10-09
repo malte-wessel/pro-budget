@@ -14,6 +14,35 @@ test("panel loads with HA's tabs and the overview", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("overview is a dashboard with a month switcher and a member filter", async ({ page }) => {
+  await openPanel(page);
+  const o = panel(page).locator("pro-budget-overview");
+  await expect(o.locator("ha-card.hero")).toBeVisible();
+  // hero, categories, members, year outlook, up next, settlement
+  await expect(o.locator(".dashboard ha-card")).toHaveCount(6);
+  const title = o.locator(".period .month");
+  const before = await title.textContent();
+  await o.locator(".period ha-icon-button").last().click();
+  await expect(title).not.toHaveText(before ?? "");
+  // Picking a member (dev, Anna, Ben are seeded) dims the other member rows.
+  const chips = o.locator(".toolbar .chip");
+  await expect(chips).toHaveCount(4);
+  await chips.nth(1).click();
+  await expect(o.locator(".member-row.dim")).toHaveCount(2);
+  await expect(o.locator(".member-row[aria-pressed=true]")).toHaveCount(1);
+  // Marking the first upcoming payment as paid, and back, from the overview.
+  await chips.first().click();
+  const first = o.locator(".row:has(.paid-toggle)").first();
+  await first.locator(".paid-toggle").click();
+  await expect(first).toHaveClass(/paid/);
+  await first.locator(".paid-toggle").click();
+  await expect(first).not.toHaveClass(/paid/);
+  // The "All items" link lands on the items view without a page load.
+  await o.locator("a.link[href$='/items']").click();
+  await expect(page).toHaveURL(/\/pro-budget\/items/);
+  await expect(panel(page).locator("hass-tabs-subpage-data-table")).toBeVisible();
+});
+
 test("items view shows HA's data table and opens the dialog with a real form", async ({ page }) => {
   await openPanel(page, "items");
   const p = panel(page);

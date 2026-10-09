@@ -16,6 +16,7 @@ from homeassistant.components.websocket_api.decorators import (
 from homeassistant.core import HomeAssistant, callback
 import probatio as vol
 
+from .budget.stats import MonthStats
 from .const import CONF_CURRENCY, CONF_LEAD_DAYS, CONF_MEMBERS, CONF_SPLIT_RULE, DOMAIN, SPLIT_RULES
 from .model import BudgetModel
 
@@ -188,17 +189,52 @@ def ws_paid_set(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str
 async def ws_stats(hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]) -> None:
     """Monthly stats, one group per currency."""
     stats = await _model(hass).async_stats(msg["year"], msg["month"], msg.get("user_id"))
+    connection.send_result(msg["id"], [_stats_json(s) for s in stats])
+
+
+def _stats_json(s: MonthStats) -> dict[str, Any]:
+    """Serialise stats with the computed properties the dataclass does not carry."""
+    return {
+        **_plain(s),
+        "members": [
+            {
+                **_plain(m),
+                "balance": m.balance,
+                "savings_rate": m.savings_rate,
+                "fixed_cost_rate": m.fixed_cost_rate,
+            }
+            for m in s.members
+        ],
+        "transfers": [_plain(tr) for tr in s.transfers],
+        "totals": {**_plain(s.totals), "remaining": s.totals.remaining},
+        "savings_rate": s.savings_rate,
+        "fixed_cost_rate": s.fixed_cost_rate,
+    }
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/overview",
+        vol.Required("year"): int,
+        vol.Required("month"): vol.All(int, vol.Range(min=1, max=12)),
+        vol.Optional("user_id"): str,
+    }
+)
+@async_response
+async def ws_overview(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Everything the overview page shows for a month, in one call."""
+    stats, household, overview = await _model(hass).async_overview(
+        msg["year"], msg["month"], msg.get("user_id")
+    )
     connection.send_result(
         msg["id"],
-        [
-            {
-                **_plain(s),
-                "members": [{**_plain(m), "balance": m.balance} for m in s.members],
-                "transfers": [_plain(tr) for tr in s.transfers],
-                "totals": {**_plain(s.totals), "remaining": s.totals.remaining},
-            }
-            for s in stats
-        ],
+        {
+            "stats": [_stats_json(s) for s in stats],
+            "household": _stats_json(household),
+            **_plain(overview),
+        },
     )
 
 
@@ -322,6 +358,7 @@ def async_register_websocket(hass: HomeAssistant) -> None:
         ws_item_delete,
         ws_paid_set,
         ws_stats,
+        ws_overview,
         ws_insights,
         ws_occurrences,
         ws_config_update,

@@ -98,6 +98,10 @@ export interface MemberStats {
   expenses: ExpenseSplit;
   savings: number;
   balance: number;
+  /** savings / earnings (0-1); null without earnings. */
+  savings_rate: number | null;
+  /** fixed expenses / earnings (0-1); null without earnings. */
+  fixed_cost_rate: number | null;
 }
 
 export interface Fairness {
@@ -135,6 +139,38 @@ export interface MonthStats {
   fairness: Fairness[];
   transfers: Transfer[];
   categories: CategoryRow[];
+  savings_rate: number | null;
+  fixed_cost_rate: number | null;
+}
+
+/** One dated occurrence of an item. */
+export interface Occurrence {
+  date: string;
+  item_id: string;
+  paid: boolean;
+}
+
+/** What `pro_budget/overview` returns: stats for the scope plus the overview figures. */
+export interface Overview {
+  /** Stats of the scope (the filtered member or the household), one group per currency. */
+  stats: MonthStats[];
+  /** Stats of the whole household in its currency, for the members and settlement cards. */
+  household: MonthStats;
+  progress: { due: number; paid: number; days_in_month: number; today_day: number | null };
+  /** Outflows of the next days from today. */
+  upcoming: Occurrence[];
+  next_income: Occurrence | null;
+  year: {
+    year: number;
+    months: { month: number; total: number }[];
+    avg_month: number;
+    max_month: number | null;
+    min_month: number | null;
+    max_entry: { item_id: string; due: number } | null;
+    next_special: Occurrence | null;
+    next_month: { year: number; month: number; total: number; delta: number } | null;
+    unscheduled: string[];
+  };
 }
 
 export interface InsightGroup {

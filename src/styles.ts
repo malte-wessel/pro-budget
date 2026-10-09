@@ -136,25 +136,32 @@ export const sharedStyles = css`
     flex-wrap: wrap;
   }
   .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     border: 1px solid var(--divider-color);
     background: var(--card-background-color);
     color: var(--primary-text-color);
-    border-radius: 16px;
-    height: 32px;
-    padding: 0 12px;
+    border-radius: 18px;
+    height: 36px;
+    padding: 0 14px;
     cursor: pointer;
     font: inherit;
     font-size: 14px;
+    font-weight: 500;
+    --chip-color: var(--primary-color);
+  }
+  .chip .avatar {
+    margin-left: -8px;
   }
   .chip[aria-pressed="true"] {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: var(--text-primary-color);
+    background: color-mix(in srgb, var(--chip-color) 16%, transparent);
+    border-color: transparent;
   }
   .bar {
     height: 6px;
     border-radius: 3px;
-    background: var(--divider-color);
+    background: color-mix(in srgb, var(--primary-text-color) 6%, transparent);
     overflow: hidden;
   }
   .bar > div {

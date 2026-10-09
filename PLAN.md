@@ -116,14 +116,14 @@ Entities update on store changes and once a day at midnight (dates move).
 Lit elements, one file per view, shared `api.ts` (typed WS client), `i18n`, `format` (money via
 `Intl.NumberFormat` with HA locale and currency).
 
-| View       | Content                                                                               |
-| ---------- | ------------------------------------------------------------------------------------- |
-| Overview   | Household totals, per-member table, fairness, category breakdown. User filter.        |
-| Items      | `ha-data-table` with filters (type, user, category); item dialog on `ha-form` schema. |
-| Calendar   | Agenda (next 8 weeks) and month grid; mark paid inline.                               |
-| Insights   | Per member: ratios, top expenses, groups, 12-month payment chart, unscheduled items.  |
-| Categories | List with inline rename, icon picker, delete guard when in use.                       |
-| Settings   | Link to the options flow; export / import JSON.                                       |
+| View       | Content                                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Overview   | Month dashboard: free to spend, progress, income split, categories, members, year outlook, up next, settlement. Month switcher, user filter. |
+| Items      | `ha-data-table` with filters (type, user, category); item dialog on `ha-form` schema.                                                        |
+| Calendar   | Agenda (next 8 weeks) and month grid; mark paid inline.                                                                                      |
+| Insights   | Per member: ratios, top expenses, groups, 12-month payment chart, unscheduled items.                                                         |
+| Categories | List with inline rename, icon picker, delete guard when in use.                                                                              |
+| Settings   | Link to the options flow; export / import JSON.                                                                                              |
 
 Boot: `loadCardHelpers()` and create a throwaway card so `ha-form`, `ha-dialog`, `ha-data-table` are
 defined before first render. All HA element usage goes through `src/ha/elements.ts` so renames touch one file.

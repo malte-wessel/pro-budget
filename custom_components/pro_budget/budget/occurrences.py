@@ -94,8 +94,8 @@ class GroupedOccurrences:
 _KIND_ORDER: dict[ItemType, int] = {ItemType.EARNING: 0, ItemType.EXPENSE: 1, ItemType.SAVING: 2}
 
 
-def _entry_key(item: Item) -> tuple[int, int]:
-    # Earnings first, then expenses, then savings; largest amount first within a kind.
+def entry_key(item: Item) -> tuple[int, int]:
+    """Sort key within a day: earnings, expenses, savings; largest amount first."""
     return (_KIND_ORDER[item.kind], -item.amount)
 
 
@@ -112,7 +112,7 @@ def group_occurrences_by_date(
         for day in occurrences_in_range(item, range_start, range_end):
             by_date.setdefault(day, []).append(item)
     days = [
-        DayGroup(date=day, items=sorted(entries, key=_entry_key))
+        DayGroup(date=day, items=sorted(entries, key=entry_key))
         for day, entries in sorted(by_date.items())
     ]
     return GroupedOccurrences(days=days, unscheduled=unscheduled)

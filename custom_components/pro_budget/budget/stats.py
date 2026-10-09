@@ -39,6 +39,16 @@ class MemberMonthStats:
         """Return earnings - expenses - savings."""
         return self.earnings - self.expenses.total - self.savings
 
+    @property
+    def savings_rate(self) -> float | None:
+        """Savings / earnings (0-1); None without earnings."""
+        return _rate(self.savings, self.earnings)
+
+    @property
+    def fixed_cost_rate(self) -> float | None:
+        """Fixed expenses / earnings (0-1); None without earnings."""
+        return _rate(self.expenses.fixed, self.earnings)
+
 
 @dataclass(slots=True)
 class HouseholdTotals:
@@ -101,6 +111,20 @@ class MonthStats:
     # Payments between members that settle the shared costs with the fewest transfers.
     transfers: list[Transfer]
     categories: list[CategoryRow]
+
+    @property
+    def savings_rate(self) -> float | None:
+        """Household savings / income (0-1); None without income."""
+        return _rate(self.totals.savings, self.totals.income)
+
+    @property
+    def fixed_cost_rate(self) -> float | None:
+        """Household fixed expenses / income (0-1); None without income."""
+        return _rate(sum(m.expenses.fixed for m in self.members), self.totals.income)
+
+
+def _rate(part: int, whole: int) -> float | None:
+    return part / whole if whole > 0 else None
 
 
 def _currency_order(currency: str) -> tuple[int, str]:

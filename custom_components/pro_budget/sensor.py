@@ -99,20 +99,14 @@ HOUSEHOLD: tuple[HouseholdSensorDescription, ...] = (
         translation_key="savings_rate",
         icon="mdi:percent-outline",
         native_unit_of_measurement=PERCENTAGE,
-        value=lambda d: _rate(
-            d.stats.totals.savings / d.stats.totals.income if d.stats.totals.income else None
-        ),
+        value=lambda d: _rate(d.stats.savings_rate),
     ),
     HouseholdSensorDescription(
         key="fixed_cost_rate",
         translation_key="fixed_cost_rate",
         icon="mdi:percent-outline",
         native_unit_of_measurement=PERCENTAGE,
-        value=lambda d: _rate(
-            sum(m.expenses.fixed for m in d.stats.members) / d.stats.totals.income
-            if d.stats.totals.income
-            else None
-        ),
+        value=lambda d: _rate(d.stats.fixed_cost_rate),
     ),
     HouseholdSensorDescription(
         key="due_this_month",

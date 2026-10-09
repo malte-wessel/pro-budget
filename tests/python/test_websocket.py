@@ -192,3 +192,35 @@ async def test_config_update_requires_admin(
     msg = await client.receive_json()
     assert not msg["success"]
     assert msg["error"]["code"] == "unauthorized"
+
+
+async def test_overview(
+    hass: HomeAssistant,
+    hass_ws_client: WebSocketGenerator,
+    setup: MockConfigEntry,
+    hass_admin_user: MockUser,
+) -> None:
+    """One call returns the scope's stats, the household's stats and the overview figures."""
+    model = setup.runtime_data
+    category = model.categories[0]["id"]
+    uid = hass_admin_user.id
+    base = {"category_id": category, "recurrence": "monthly", "due_day": 1, "user_id": uid}
+    model.add_item({**base, "title": "Salary", "type": "earning", "amount": 300000})
+    rent = model.add_item({**base, "title": "Rent", "type": "expense", "amount": 100000})
+    model.add_item({**base, "title": "ETF", "type": "saving", "amount": 30000})
+    model.set_paid(rent["id"], "2026-08-01", paid=True)
+
+    client = await hass_ws_client(hass)
+    await client.send_json_auto_id(
+        {"type": f"{DOMAIN}/overview", "year": 2026, "month": 8, "user_id": uid}
+    )
+    o = (await client.receive_json())["result"]
+    assert o["stats"][0]["totals"]["remaining"] == 170000
+    assert o["stats"][0]["savings_rate"] == 0.1
+    assert o["stats"][0]["members"][0]["fixed_cost_rate"] == 100000 / 300000
+    assert o["household"]["totals"]["income"] == 300000
+    assert o["progress"] == {"due": 130000, "paid": 100000, "days_in_month": 31, "today_day": None}
+    assert o["year"]["months"][7] == {"month": 8, "total": 130000}
+    assert o["year"]["next_month"]["delta"] == 0
+    assert o["next_income"]["item_id"]
+    assert isinstance(o["upcoming"], list)
