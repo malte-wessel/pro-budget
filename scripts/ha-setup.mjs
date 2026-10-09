@@ -204,7 +204,7 @@ const SEED = [
     amount: 400,
     recurrence: "monthly",
     due_day: 2,
-    category: "Other",
+    category: "Savings",
   },
   // Anna
   {
@@ -293,7 +293,7 @@ const SEED = [
     amount: 250,
     recurrence: "monthly",
     due_day: 3,
-    category: "Other",
+    category: "Savings",
   },
   {
     user: "anna",
@@ -302,7 +302,7 @@ const SEED = [
     amount: 150,
     recurrence: "monthly",
     due_day: 3,
-    category: "Leisure",
+    category: "Savings",
   },
 ];
 

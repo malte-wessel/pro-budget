@@ -68,6 +68,7 @@ DEFAULT_CATEGORIES: Final[tuple[tuple[str, str, str], ...]] = (
     ("other", "mdi:dots-horizontal", "grey"),
     ("insurance", "mdi:shield-outline", "indigo"),
     ("housing", "mdi:home-outline", "orange"),
+    ("savings", "mdi:piggy-bank-outline", "teal"),
 )
 
 DEFAULT_CATEGORY_NAMES: Final[dict[str, dict[str, str]]] = {
@@ -83,6 +84,7 @@ DEFAULT_CATEGORY_NAMES: Final[dict[str, dict[str, str]]] = {
         "other": "Other",
         "insurance": "Insurance",
         "housing": "Housing",
+        "savings": "Savings",
     },
     "de": {
         "subscriptions": "Abos",
@@ -96,5 +98,6 @@ DEFAULT_CATEGORY_NAMES: Final[dict[str, dict[str, str]]] = {
         "other": "Sonstiges",
         "insurance": "Versicherungen",
         "housing": "Wohnen",
+        "savings": "Sparen",
     },
 }
