@@ -28,6 +28,21 @@ export class ProBudgetCategories extends LitElement {
   @query("pro-budget-category-dialog") private _dialog!: ProBudgetCategoryDialog;
   @query("pro-budget-confirm") private _confirm!: ProBudgetConfirm;
 
+  // HA's data table sizes its rows to the header's scroll width only in its own update cycle,
+  // so after a resize the row backgrounds stop short of overflowing columns until something
+  // re-renders it. A new columns object per render is enough; request one on resize.
+  private _resize = new ResizeObserver(() => this.requestUpdate());
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._resize.observe(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._resize.disconnect();
+  }
+
   static styles = [
     sharedStyles,
     css`
