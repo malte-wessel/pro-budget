@@ -134,6 +134,7 @@ export const en = {
   "categories.title": "Categories",
   "categories.add": "Add category",
   "categories.name": "Name",
+  "categories.color": "Colour",
   "categories.icon": "Icon",
   "categories.items": "{count} items",
   "categories.in_use": "In use by {count} items; delete or move them first.",

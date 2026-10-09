@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
+import { cssColor } from "../color.ts";
 import { dueLabel } from "../budget.ts";
 import { money, monthName, percent } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
@@ -86,6 +87,13 @@ export class ProBudgetInsights extends LitElement {
 
   private _item(id: string): Item | undefined {
     return this.budget?.items.find((i) => i.id === id);
+  }
+
+  private _categoryIcon(categoryId: string | undefined) {
+    const c = this.budget?.categories.find((c) => c.id === categoryId);
+    return c?.icon
+      ? html`<ha-icon .icon=${c.icon} style="color: ${cssColor(c.color)}"></ha-icon>`
+      : nothing;
   }
 
   private _frame(content: unknown) {
@@ -202,7 +210,7 @@ export class ProBudgetInsights extends LitElement {
                     const item = this._item(e.item_id);
                     return html`
                       <tr>
-                        <td>${item?.title ?? e.item_id}<br /><span class="muted small">${item ? `${t(h, `recurrence.${item.recurrence}` as never)} · ${dueLabel(h, item)}` : ""}</span></td>
+                        <td>${this._categoryIcon(item?.category_id)} ${item?.title ?? e.item_id}<br /><span class="muted small">${item ? `${t(h, `recurrence.${item.recurrence}` as never)} · ${dueLabel(h, item)}` : ""}</span></td>
                         <td class="num">${money(h, e.monthly, cur)}<span class="muted small"> ${t(h, "common.per_month")}</span></td>
                       </tr>
                     `;

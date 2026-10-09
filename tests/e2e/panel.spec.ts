@@ -54,5 +54,5 @@ test("calendar, insights and categories render", async ({ page }) => {
   await p.locator("hass-tabs-subpage a[href$='/categories'] ha-tab").click();
   await expect(
     p.locator("pro-budget-categories ha-data-table .mdc-data-table__row:not(.empty-row)"),
-  ).toHaveCount(7);
+  ).toHaveCount(11);
 });

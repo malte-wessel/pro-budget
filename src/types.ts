@@ -30,6 +30,8 @@ export interface Category {
   id: string;
   name: string;
   icon: string | null;
+  /** A Home Assistant colour token name, e.g. "orange", or null. */
+  color: string | null;
   order: number;
 }
 

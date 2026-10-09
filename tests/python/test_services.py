@@ -47,7 +47,8 @@ async def test_add_update_remove(
     assert item is not None
     assert item["amount"] == 125050
     assert item["user_id"] == hass_admin_user.id
-    assert item["category_id"] == model.categories[0]["id"]
+    housing = next(c for c in model.categories if c["name"] == "Housing")
+    assert item["category_id"] == housing["id"]
 
     await hass.services.async_call(
         DOMAIN,

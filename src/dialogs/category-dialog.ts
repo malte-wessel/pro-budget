@@ -11,6 +11,8 @@ import { errorText } from "./item-dialog.ts";
 const SCHEMA: HaFormSchema[] = [
   { name: "name", required: true, selector: { text: {} } },
   { name: "icon", selector: { icon: {} } },
+  // HA's own colour picker: the named theme colours, stored by name.
+  { name: "color", selector: { ui_color: {} } },
 ];
 
 @customElement("pro-budget-category-dialog")
@@ -33,7 +35,13 @@ export class ProBudgetCategoryDialog extends LitElement {
 
   open(category?: Category) {
     this._category = category;
-    this._data = category ? { name: category.name, icon: category.icon ?? undefined } : {};
+    this._data = category
+      ? {
+          name: category.name,
+          icon: category.icon ?? undefined,
+          color: category.color ?? undefined,
+        }
+      : {};
     this._error = "";
     this._open = true;
   }
@@ -46,6 +54,7 @@ export class ProBudgetCategoryDialog extends LitElement {
     const fields = {
       name: String(this._data.name ?? ""),
       icon: (this._data.icon as string) || null,
+      color: (this._data.color as string) || null,
     };
     try {
       if (this._category) await api.updateCategory(this.hass!, this._category.id, fields);

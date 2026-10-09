@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
+import { cssColor } from "../color.ts";
 import { money, percent } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
 import { renderMemberChips } from "../members.ts";
@@ -48,8 +49,12 @@ export class ProBudgetOverview extends LitElement {
     return this.budget?.users.find((u) => u.id === id)?.name ?? t(this.hass, "common.unknown_user");
   }
 
-  private _category(id: string): string {
-    return this.budget?.categories.find((c) => c.id === id)?.name ?? id;
+  private _category(id: string) {
+    const c = this.budget?.categories.find((c) => c.id === id);
+    return html`
+      ${c?.icon ? html`<ha-icon .icon=${c.icon} style="color: ${cssColor(c.color)}"></ha-icon> ` : nothing}
+      ${c?.name ?? id}
+    `;
   }
 
   private _frame(content: unknown) {

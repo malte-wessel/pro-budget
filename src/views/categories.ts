@@ -2,6 +2,7 @@ import { mdiDelete, mdiPencil, mdiPlus } from "@mdi/js";
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { api } from "../api.ts";
+import { cssColor } from "../color.ts";
 import type { ProBudgetCategoryDialog } from "../dialogs/category-dialog.ts";
 import type { ProBudgetConfirm } from "../dialogs/confirm.ts";
 import type { DataTableColumns, HomeAssistant, OverflowMenuItem, Route } from "../ha/types.ts";
@@ -14,6 +15,7 @@ interface Row {
   id: string;
   category: Category;
   icon: string | null;
+  color: string;
   name: string;
   items: number;
 }
@@ -43,6 +45,7 @@ export class ProBudgetCategories extends LitElement {
       id: category.id,
       category,
       icon: category.icon,
+      color: cssColor(category.color),
       name: category.name,
       items: b.items.filter((i) => i.category_id === category.id).length,
     }));
@@ -56,7 +59,8 @@ export class ProBudgetCategories extends LitElement {
         type: "icon",
         showNarrow: true,
         moveable: false,
-        template: (r) => (r.icon ? html`<ha-icon .icon=${r.icon}></ha-icon>` : ""),
+        template: (r) =>
+          r.icon ? html`<ha-icon .icon=${r.icon} style="color: ${r.color}"></ha-icon>` : "",
       },
       name: {
         title: t(h, "categories.name"),

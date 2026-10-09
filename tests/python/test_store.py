@@ -113,9 +113,23 @@ async def test_category_validation(store: BudgetStore) -> None:
         store.add_category({"name": ""})
     with pytest.raises(vol.Invalid):
         store.add_category({"name": "X", "icon": "not an icon"})
+    with pytest.raises(vol.Invalid):
+        store.add_category({"name": "X", "color": "#ff0000"})  # token names only
     renamed = store.update_category(store.data["categories"][0]["id"], {"name": "Home"})
     assert renamed["name"] == "Home"
     assert renamed["icon"] == "mdi:home"
+    assert renamed["color"] is None
+    colored = store.update_category(renamed["id"], {"color": "orange"})
+    assert colored["color"] == "orange"
+    assert store.update_category(renamed["id"], {"name": "Home 2"})["color"] == "orange"
+
+
+async def test_category_without_color_key_still_updates(store: BudgetStore) -> None:
+    """Stores written before colours existed have no key."""
+    category = store.data["categories"][0]
+    del category["color"]  # type: ignore[misc]
+    updated = store.update_category(category["id"], {"name": "Legacy"})
+    assert updated["color"] is None
 
 
 async def test_persists_and_reloads(hass: HomeAssistant, store: BudgetStore) -> None:

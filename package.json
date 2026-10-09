@@ -1,7 +1,7 @@
 {
   "name": "pro-budget",
   "version": "0.1.0",
-  "description": "Pro Budget – household budget planning for Home Assistant",
+  "description": "Pro Budget \u2013 household budget planning for Home Assistant",
   "keywords": [
     "home-assistant",
     "hacs",
@@ -60,8 +60,8 @@
     "*": "prettier --write --ignore-unknown",
     "*.{js,mjs,ts,mts}": "eslint --max-warnings 0 --no-warn-ignored",
     "*.py": [
-      "ruff format",
-      "ruff check --fix"
+      "uv run ruff format",
+      "uv run ruff check --fix"
     ]
   }
 }

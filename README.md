@@ -18,7 +18,7 @@ income is already spoken for, and every household member sees their own share.
 
 - **Items** per Home Assistant user: earnings, expenses and savings with a recurrence (daily to annually),
   a due day, fixed or variable, shared or personal, optional start and end dates.
-- **Sidebar panel** to manage items and categories, with an overview, a payment calendar and per-member
+- **Sidebar panel** to manage items and categories (with Home Assistant's icons and named colours), with an overview, a payment calendar and per-member
   insights (savings rate, fixed cost rate, top expenses, the 12-month payment curve).
 - **Entities**: household and per-member sensors (income, expenses, savings, remaining, next payment),
   a `calendar` of every payment and a `todo` list of manual payments to tick off.

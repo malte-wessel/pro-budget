@@ -32,9 +32,10 @@ async def test_subscribe_sends_state_and_updates(
     assert (await client.receive_json())["success"]
     state = (await client.receive_json())["event"]
     assert [c["name"] for c in state["categories"]][:2] == [
-        "Housing",
-        "Groceries",
+        "Subscriptions",
+        "Leisure",
     ]  # seeded, English
+    assert state["categories"][0]["color"] == "purple"
     assert state["items"] == []
     assert state["config"]["currency"] == hass.config.currency
     assert any(u["id"] == hass_admin_user.id for u in state["users"])

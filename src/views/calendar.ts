@@ -1,6 +1,7 @@
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
+import { cssColor } from "../color.ts";
 import { formatDate, money, monthName, parseIso, signedMoney, toIso } from "../format.ts";
 import type { HomeAssistant, Route } from "../ha/types.ts";
 import { renderMemberChips } from "../members.ts";
@@ -147,6 +148,13 @@ export class ProBudgetCalendar extends LitElement {
     return this.budget?.items.find((i) => i.id === id);
   }
 
+  private _categoryIcon(categoryId: string) {
+    const c = this.budget?.categories.find((c) => c.id === categoryId);
+    return c?.icon
+      ? html`<ha-icon .icon=${c.icon} style="color: ${cssColor(c.color)}"></ha-icon>`
+      : nothing;
+  }
+
   private _shift(delta: number) {
     const [y, m] = this._month.split("-").map(Number);
     this._month = toIso(new Date(y, m - 1 + delta, 1)).slice(0, 7);
@@ -212,6 +220,7 @@ export class ProBudgetCalendar extends LitElement {
     return html`
       <div class="entry ${e.paid ? "paid" : ""}">
         <span class="amount ${item.type}">${signedMoney(this.hass, item.amount, cur, outflow)}</span>
+        ${this._categoryIcon(item.category_id)}
         <span class="title grow">${item.title}</span>
         ${
           outflow

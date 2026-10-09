@@ -112,7 +112,7 @@ const SEED = [
     amount: 3200,
     recurrence: "monthly",
     due_day: 28,
-    category: "Other",
+    category: "Salary",
   },
   {
     title: "Rent",
@@ -143,6 +143,14 @@ const SEED = [
     payment_method: "manual",
   },
   {
+    title: "Streaming",
+    type: "expense",
+    amount: 15,
+    recurrence: "monthly",
+    due_day: 3,
+    category: "Subscriptions",
+  },
+  {
     title: "Car insurance",
     type: "expense",
     amount: 640,
@@ -170,11 +178,38 @@ const SEED = [
   },
 ];
 
+/** Titles of the existing items, through the integration's websocket subscription. */
+async function existingTitles(token) {
+  const ws = new WebSocket(BASE.replace(/^http/, "ws") + "/api/websocket");
+  const queue = [];
+  const waiters = [];
+  ws.onmessage = (e) => {
+    const m = JSON.parse(e.data);
+    if (waiters.length) waiters.shift()(m);
+    else queue.push(m);
+  };
+  const next = () =>
+    queue.length ? Promise.resolve(queue.shift()) : new Promise((r) => waiters.push(r));
+  await new Promise((r) => (ws.onopen = r));
+  await next(); // auth_required
+  ws.send(JSON.stringify({ type: "auth", access_token: token }));
+  await next(); // auth_ok
+  ws.send(JSON.stringify({ id: 1, type: "pro_budget/subscribe" }));
+  await next(); // result
+  const state = (await next()).event;
+  ws.close();
+  return new Set(state.items.map((i) => i.title));
+}
+
 async function seed(token) {
+  const existing = await existingTitles(token);
+  let added = 0;
   for (const item of SEED) {
+    if (existing.has(item.title)) continue;
     await call("/api/services/pro_budget/add_item", { method: "POST", token, body: item });
+    added += 1;
   }
-  console.log(`seeded ${SEED.length} demo items`);
+  console.log(`seeded ${added} demo items (${SEED.length - added} already present)`);
 }
 
 const onboarded = await onboard();

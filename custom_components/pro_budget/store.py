@@ -12,7 +12,7 @@ from homeassistant.util.ulid import ulid
 import probatio as vol
 
 from .budget.model import CostKind, Item, ItemType, PaymentMethod, Recurrence
-from .const import STORAGE_KEY, STORAGE_VERSION
+from .const import COLOR_NAMES, STORAGE_KEY, STORAGE_VERSION
 
 
 class CategoryDict(TypedDict):
@@ -21,6 +21,8 @@ class CategoryDict(TypedDict):
     id: str
     name: str
     icon: str | None
+    # One of COLOR_NAMES (a Home Assistant named colour) or None.
+    color: str | None
     order: int
 
 
@@ -75,6 +77,7 @@ CATEGORY_FIELDS = vol.Schema(
     {
         vol.Required("name"): vol.All(str, vol.Strip, vol.Length(min=1, max=80)),
         vol.Optional("icon"): vol.Any(None, vol.All(str, vol.Match(r"^[a-z0-9-]+:[a-z0-9-]+$"))),
+        vol.Optional("color"): vol.Any(None, vol.In(COLOR_NAMES)),
         vol.Optional("order"): vol.All(int, vol.Range(min=0)),
     }
 )
@@ -183,6 +186,7 @@ class BudgetStore:
             "id": ulid(),
             "name": valid["name"],
             "icon": valid.get("icon"),
+            "color": valid.get("color"),
             "order": valid.get("order", len(self.data["categories"])),
         }
         self.data["categories"].append(category)
@@ -194,10 +198,16 @@ class BudgetStore:
         category = self.category(category_id)
         if category is None:
             raise KeyError(category_id)
-        base = {"name": category["name"], "icon": category["icon"], "order": category["order"]}
+        base = {
+            "name": category["name"],
+            "icon": category["icon"],
+            "color": category.get("color"),  # stores from before colours have no key
+            "order": category["order"],
+        }
         valid = CATEGORY_FIELDS({**base, **fields})
         category["name"] = valid["name"]
         category["icon"] = valid.get("icon")
+        category["color"] = valid.get("color")
         category["order"] = valid.get("order", category["order"])
         self.save()
         return category

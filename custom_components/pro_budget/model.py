@@ -20,6 +20,7 @@ from .const import (
     CONF_LEAD_DAYS,
     CONF_MEMBERS,
     DEFAULT_CATEGORIES,
+    DEFAULT_CATEGORY_NAMES,
     DEFAULT_LEAD_DAYS,
 )
 from .store import BudgetStore, CategoryDict, ItemDict, item_from_dict
@@ -53,9 +54,11 @@ class BudgetModel:
         await self.store.async_load()
         if not self.store.data["categories"] and not self.store.data["items"]:
             language = (self.hass.config.language or "en").split("-")[0]
-            defaults = DEFAULT_CATEGORIES.get(language, DEFAULT_CATEGORIES["en"])
-            for order, (name, icon) in enumerate(defaults):
-                self.store.add_category({"name": name, "icon": icon, "order": order})
+            names = DEFAULT_CATEGORY_NAMES.get(language, DEFAULT_CATEGORY_NAMES["en"])
+            for order, (key, icon, color) in enumerate(DEFAULT_CATEGORIES):
+                self.store.add_category(
+                    {"name": names[key], "icon": icon, "color": color, "order": order}
+                )
 
     # --- configuration ---
 

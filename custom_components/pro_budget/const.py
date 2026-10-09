@@ -25,23 +25,76 @@ DEFAULT_LEAD_DAYS: Final = 3
 
 SIGNAL_UPDATED: Final = f"{DOMAIN}_updated"
 
-DEFAULT_CATEGORIES: Final[dict[str, list[tuple[str, str]]]] = {
-    "en": [
-        ("Housing", "mdi:home-outline"),
-        ("Groceries", "mdi:cart-outline"),
-        ("Mobility", "mdi:car-outline"),
-        ("Insurance", "mdi:shield-outline"),
-        ("Leisure", "mdi:party-popper"),
-        ("Health", "mdi:heart-pulse"),
-        ("Other", "mdi:dots-horizontal"),
-    ],
-    "de": [
-        ("Wohnen", "mdi:home-outline"),
-        ("Lebensmittel", "mdi:cart-outline"),
-        ("Mobilität", "mdi:car-outline"),
-        ("Versicherungen", "mdi:shield-outline"),
-        ("Freizeit", "mdi:party-popper"),
-        ("Gesundheit", "mdi:heart-pulse"),
-        ("Sonstiges", "mdi:dots-horizontal"),
-    ],
+# Home Assistant's named colours, as its ui_color selector offers them. Stored by name; the panel
+# renders them through the theme (var(--<name>-color)).
+COLOR_NAMES: Final[tuple[str, ...]] = (
+    "primary",
+    "accent",
+    "red",
+    "pink",
+    "purple",
+    "deep-purple",
+    "indigo",
+    "blue",
+    "light-blue",
+    "cyan",
+    "teal",
+    "green",
+    "light-green",
+    "lime",
+    "yellow",
+    "amber",
+    "orange",
+    "deep-orange",
+    "brown",
+    "light-grey",
+    "grey",
+    "dark-grey",
+    "blue-grey",
+    "black",
+    "white",
+)
+
+# Default categories, seeded on first run: (key, icon, colour). Names per language below.
+DEFAULT_CATEGORIES: Final[tuple[tuple[str, str, str], ...]] = (
+    ("subscriptions", "mdi:refresh-auto", "purple"),
+    ("leisure", "mdi:party-popper", "pink"),
+    ("salary", "mdi:cash-multiple", "green"),
+    ("health", "mdi:heart-pulse", "red"),
+    ("internet", "mdi:web", "cyan"),
+    ("children", "mdi:human-male-child", "amber"),
+    ("groceries", "mdi:cart-outline", "light-green"),
+    ("mobility", "mdi:car-outline", "blue"),
+    ("other", "mdi:dots-horizontal", "grey"),
+    ("insurance", "mdi:shield-outline", "indigo"),
+    ("housing", "mdi:home-outline", "orange"),
+)
+
+DEFAULT_CATEGORY_NAMES: Final[dict[str, dict[str, str]]] = {
+    "en": {
+        "subscriptions": "Subscriptions",
+        "leisure": "Leisure",
+        "salary": "Salary",
+        "health": "Health",
+        "internet": "Internet",
+        "children": "Children",
+        "groceries": "Groceries",
+        "mobility": "Mobility",
+        "other": "Other",
+        "insurance": "Insurance",
+        "housing": "Housing",
+    },
+    "de": {
+        "subscriptions": "Abos",
+        "leisure": "Freizeit",
+        "salary": "Gehalt",
+        "health": "Gesundheit",
+        "internet": "Internet",
+        "children": "Kinder",
+        "groceries": "Lebensmittel",
+        "mobility": "Mobilität",
+        "other": "Sonstiges",
+        "insurance": "Versicherungen",
+        "housing": "Wohnen",
+    },
 }

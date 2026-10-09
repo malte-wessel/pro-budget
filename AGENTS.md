@@ -48,6 +48,7 @@ Then update `CHANGELOG.md` and, for panel changes, check the result in the real 
 - English for docs, comments and commit messages. Commit messages: imperative subject, body explains why.
 - Amounts are integers in minor units (cents) everywhere; formatting happens once, in the panel, with the HA locale and currency.
 - Dates are ISO strings (`YYYY-MM-DD`) in storage and over the websocket.
+- Category colours are Home Assistant colour token names (`COLOR_NAMES` in `const.py`, picked with HA's `ui_color` selector) rendered through the theme by `src/color.ts`, never hex, so custom themes recolour them.
 - Entity states and attributes carry money in major units (`entity.money`), everything else in cents.
 - Options changes reload the entry: members decide which per-member entities exist. A member's entities stay registered and go unavailable when the user leaves the household, so history survives.
 - Service data is compared by value, never identity: Home Assistant hands enums as plain strings (`status == TodoItemStatus.COMPLETED`, not `is`).

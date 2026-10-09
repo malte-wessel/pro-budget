@@ -134,6 +134,7 @@ export const de: Partial<Record<I18nKey, string>> = {
   "categories.title": "Kategorien",
   "categories.add": "Kategorie hinzufügen",
   "categories.name": "Name",
+  "categories.color": "Farbe",
   "categories.icon": "Symbol",
   "categories.items": "{count} Posten",
   "categories.in_use": "Wird von {count} Posten verwendet; lösche oder verschiebe sie zuerst.",
