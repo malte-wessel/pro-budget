@@ -3,7 +3,7 @@ import {
   mdiCalendarMonthOutline,
   mdiChartBoxOutline,
   mdiFormatListBulleted,
-  mdiShapeOutline,
+  mdiCog,
   mdiViewDashboardOutline,
 } from "@mdi/js";
 import type { HomeAssistant, PageNavigation, Route } from "./ha/types.ts";
@@ -14,14 +14,15 @@ export const VIEWS = [
   { id: "items", iconPath: mdiFormatListBulleted },
   { id: "calendar", iconPath: mdiCalendarMonthOutline },
   { id: "insights", iconPath: mdiChartBoxOutline },
-  { id: "categories", iconPath: mdiShapeOutline },
+  { id: "settings", iconPath: mdiCog },
 ] as const;
 export type View = (typeof VIEWS)[number]["id"];
 
 export const DEFAULT_PREFIX = "/pro-budget";
 
 export function currentView(route: Route | undefined): View {
-  const path = route?.path?.replace(/^\//, "").split("/")[0] ?? "";
+  let path = route?.path?.replace(/^\//, "").split("/")[0] ?? "";
+  if (path === "categories") path = "settings"; // the old tab, now a card in settings
   return VIEWS.some((v) => v.id === path) ? (path as View) : "overview";
 }
 

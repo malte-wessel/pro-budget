@@ -8,11 +8,15 @@ from typing import Any
 
 from homeassistant.components import websocket_api
 from homeassistant.components.websocket_api.connection import ActiveConnection
-from homeassistant.components.websocket_api.decorators import async_response, websocket_command
+from homeassistant.components.websocket_api.decorators import (
+    async_response,
+    require_admin,
+    websocket_command,
+)
 from homeassistant.core import HomeAssistant, callback
 import probatio as vol
 
-from .const import DOMAIN
+from .const import CONF_CURRENCY, CONF_LEAD_DAYS, CONF_MEMBERS, DOMAIN
 from .model import BudgetModel
 
 ERR_NOT_FOUND = "not_found"
@@ -44,9 +48,12 @@ async def _state(model: BudgetModel) -> dict[str, Any]:
         "items": model.item_dicts,
         "paid": model.paid,
         "users": await model.async_users(),
+        "all_users": await model.async_all_users(),
         "config": {
             "currency": model.currency,
+            "currency_override": model.entry.options.get(CONF_CURRENCY),
             "lead_days": model.lead_days,
+            "members": model.member_ids,
             "language": model.hass.config.language,
         },
     }
@@ -255,6 +262,48 @@ def ws_occurrences(hass: HomeAssistant, connection: ActiveConnection, msg: dict[
     connection.send_result(msg["id"], _model(hass).occurrences(start, end, msg.get("user_id")))
 
 
+def _currency_option(value: Any) -> str | None:
+    if value is None or value == "":
+        return None
+    if not isinstance(value, str) or len(value) != 3 or not value.isalpha():
+        raise vol.Invalid("expected an ISO 4217 currency code")
+    return value.upper()
+
+
+@websocket_command(
+    {
+        vol.Required("type"): f"{DOMAIN}/config/update",
+        vol.Optional("members"): [str],
+        vol.Optional("lead_days"): vol.All(int, vol.Range(min=0, max=60)),
+        vol.Optional("currency"): vol.Any(None, str),
+    }
+)
+@require_admin
+@callback
+def ws_config_update(
+    hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
+) -> None:
+    """Change the household options (members, lead days, currency); the entry reloads."""
+    model = _model(hass)
+    options = dict(model.entry.options)
+    if "members" in msg:
+        options[CONF_MEMBERS] = msg["members"]
+    if "lead_days" in msg:
+        options[CONF_LEAD_DAYS] = msg["lead_days"]
+    if "currency" in msg:
+        try:
+            currency = _currency_option(msg["currency"])
+        except vol.Invalid as err:
+            connection.send_error(msg["id"], ERR_INVALID, str(err))
+            return
+        if currency is None:
+            options.pop(CONF_CURRENCY, None)
+        else:
+            options[CONF_CURRENCY] = currency
+    hass.config_entries.async_update_entry(model.entry, options=options)
+    connection.send_result(msg["id"], options)
+
+
 @callback
 def async_register_websocket(hass: HomeAssistant) -> None:
     """Register every command once."""
@@ -270,5 +319,6 @@ def async_register_websocket(hass: HomeAssistant) -> None:
         ws_stats,
         ws_insights,
         ws_occurrences,
+        ws_config_update,
     ):
         websocket_api.async_register_command(hass, command)

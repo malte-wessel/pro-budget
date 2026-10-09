@@ -38,6 +38,8 @@ async def test_subscribe_sends_state_and_updates(
     assert state["categories"][0]["color"] == "purple"
     assert state["items"] == []
     assert state["config"]["currency"] == hass.config.currency
+    assert state["config"]["members"] == []
+    assert any(u["id"] == hass_admin_user.id for u in state["all_users"])
     assert any(u["id"] == hass_admin_user.id for u in state["users"])
 
     await client.send_json_auto_id(
@@ -134,3 +136,51 @@ async def test_stats_insights_occurrences(
     days = (await client.receive_json())["result"]
     assert days[0]["date"] == "2026-08-01"
     assert {e["item_id"]: e["paid"] for e in days[0]["entries"]}[rent["id"]] is True
+
+
+async def test_config_update(
+    hass: HomeAssistant,
+    hass_ws_client: WebSocketGenerator,
+    setup: MockConfigEntry,
+    hass_admin_user: MockUser,
+) -> None:
+    """Admins change the options over the websocket; the entry reloads with them."""
+    client = await hass_ws_client(hass)
+    await client.send_json_auto_id(
+        {
+            "type": f"{DOMAIN}/config/update",
+            "members": [hass_admin_user.id],
+            "lead_days": 7,
+            "currency": "chf",
+        }
+    )
+    msg = await client.receive_json()
+    assert msg["success"]
+    assert msg["result"] == {"members": [hass_admin_user.id], "lead_days": 7, "currency": "CHF"}
+    await hass.async_block_till_done()
+    assert setup.options == {"members": [hass_admin_user.id], "lead_days": 7, "currency": "CHF"}
+    assert setup.runtime_data.currency == "CHF"
+
+    await client.send_json_auto_id({"type": f"{DOMAIN}/config/update", "currency": "euro"})
+    msg = await client.receive_json()
+    assert not msg["success"]
+    assert msg["error"]["code"] == "invalid"
+
+    await client.send_json_auto_id({"type": f"{DOMAIN}/config/update", "currency": ""})
+    assert (await client.receive_json())["success"]
+    await hass.async_block_till_done()
+    assert "currency" not in setup.options
+
+
+async def test_config_update_requires_admin(
+    hass: HomeAssistant,
+    hass_ws_client: WebSocketGenerator,
+    setup: MockConfigEntry,
+    hass_admin_user: MockUser,
+) -> None:
+    hass_admin_user.groups = []
+    client = await hass_ws_client(hass)
+    await client.send_json_auto_id({"type": f"{DOMAIN}/config/update", "lead_days": 1})
+    msg = await client.receive_json()
+    assert not msg["success"]
+    assert msg["error"]["code"] == "unauthorized"

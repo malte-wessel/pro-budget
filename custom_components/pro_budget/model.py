@@ -72,15 +72,24 @@ class BudgetModel:
         """Days ahead a payment counts as upcoming."""
         return int(self.entry.options.get(CONF_LEAD_DAYS, DEFAULT_LEAD_DAYS))
 
-    async def async_users(self) -> list[UserInfo]:
-        """Household members: the configured users, or every active human user."""
-        selected: list[str] | None = self.entry.options.get(CONF_MEMBERS) or None
+    async def async_all_users(self) -> list[UserInfo]:
+        """Every active human user (the candidates for membership)."""
         users = [
             UserInfo(id=u.id, name=u.name or u.id, is_admin=u.is_admin)
             for u in await self.hass.auth.async_get_users()
-            if u.is_active and not u.system_generated and (selected is None or u.id in selected)
+            if u.is_active and not u.system_generated
         ]
         return sorted(users, key=lambda u: u["name"].casefold())
+
+    @property
+    def member_ids(self) -> list[str]:
+        """The configured member ids; empty means every active user."""
+        return list(self.entry.options.get(CONF_MEMBERS) or [])
+
+    async def async_users(self) -> list[UserInfo]:
+        """Household members: the configured users, or every active human user."""
+        selected = set(self.member_ids)
+        return [u for u in await self.async_all_users() if not selected or u["id"] in selected]
 
     # --- listeners ---
 

@@ -6,6 +6,26 @@ export const de: Partial<Record<I18nKey, string>> = {
   "nav.items": "Posten",
   "nav.calendar": "Kalender",
   "nav.insights": "Einblicke",
+  "nav.settings": "Einstellungen",
+  "settings.categories": "Kategorien",
+  "settings.categories_hint":
+    "Jeder Posten gehört zu einer Kategorie. Eine verwendete Kategorie kann nicht gelöscht werden.",
+  "settings.members": "Haushaltsmitglieder",
+  "settings.members_hint":
+    "Home-Assistant-Benutzer, die im Budget erscheinen. Ohne Auswahl ist jeder aktive Benutzer Mitglied.",
+  "settings.members_admin": "Nur Administratoren können die Haushaltseinstellungen ändern.",
+  "settings.household": "Haushalt",
+  "settings.currency": "Währung",
+  "settings.currency_hint":
+    "ISO-4217-Code. Leer lassen für die Währung von Home Assistant ({currency}).",
+  "settings.lead_days": "Tage im Voraus, ab denen eine Zahlung als anstehend gilt",
+  "settings.lead_days_hint":
+    "Manuelle Zahlungen erscheinen so viele Tage vor der Fälligkeit auf der To-do-Liste.",
+  "settings.about": "Über",
+  "settings.version": "Pro Budget {version}",
+  "settings.saved": "Gespeichert.",
+  "validation.currency": "Gib einen dreistelligen Währungscode ein oder lass das Feld leer.",
+  "validation.lead_days": "Gib eine Zahl von 0 bis 60 ein.",
   "nav.categories": "Kategorien",
   "common.all": "Alle",
   "common.add": "Hinzufügen",

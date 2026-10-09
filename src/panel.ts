@@ -10,10 +10,11 @@ import "./dialogs/category-dialog.ts";
 import "./dialogs/confirm.ts";
 import "./dialogs/item-dialog.ts";
 import "./views/calendar.ts";
-import "./views/categories.ts";
+
 import "./views/insights.ts";
 import "./views/items.ts";
 import "./views/overview.ts";
+import "./views/settings.ts";
 
 declare const __VERSION__: string;
 
@@ -101,8 +102,8 @@ export class ProBudgetPanel extends LitElement {
         return html`<pro-budget-calendar .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .userId=${this._userId} @user-changed=${onUser}></pro-budget-calendar>`;
       case "insights":
         return html`<pro-budget-insights .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .userId=${this._userId} @user-changed=${onUser}></pro-budget-insights>`;
-      case "categories":
-        return html`<pro-budget-categories .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b}></pro-budget-categories>`;
+      case "settings":
+        return html`<pro-budget-settings .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .version=${common.version}></pro-budget-settings>`;
       default:
         return html`<pro-budget-overview .hass=${common.hass} .narrow=${common.narrow} .route=${common.route} .budget=${b} .userId=${this._userId} .version=${common.version} @user-changed=${onUser}></pro-budget-overview>`;
     }

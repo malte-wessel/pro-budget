@@ -43,15 +43,13 @@ test("editing an item round-trips through the dialog", async ({ page }) => {
   await dialog.locator("ha-button[data-action=secondary]").click();
 });
 
-test("calendar, insights and categories render", async ({ page }) => {
+test("calendar, insights and settings render", async ({ page }) => {
   await openPanel(page, "calendar");
   const p = panel(page);
   await expect(p.locator("pro-budget-calendar ha-card")).toBeVisible();
   // The anchor has no box of its own; click the tab inside it.
   await p.locator("hass-tabs-subpage a[href$='/insights'] ha-tab").click();
   await expect(p.locator("pro-budget-insights .months")).toBeVisible();
-  await p.locator("hass-tabs-subpage a[href$='/categories'] ha-tab").click();
-  await expect(
-    p.locator("pro-budget-categories ha-data-table .mdc-data-table__row:not(.empty-row)"),
-  ).toHaveCount(12);
+  await p.locator("hass-tabs-subpage a[href$='/settings'] ha-tab").click();
+  await expect(p.locator("pro-budget-settings ha-md-list-item")).toHaveCount(12 + 2); // categories + users
 });

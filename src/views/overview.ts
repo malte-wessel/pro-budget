@@ -81,7 +81,6 @@ export class ProBudgetOverview extends LitElement {
       <div class="cards">
         <p class="muted small" style="margin:0 0 12px">${t(this.hass, "common.monthly_hint")}</p>
         ${this._stats.map((s, i) => this._renderCurrency(s, i > 0))}
-        <div class="version">Pro Budget v${this.version}</div>
       </div>
     `);
   }

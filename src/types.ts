@@ -69,7 +69,16 @@ export interface BudgetState {
   items: Item[];
   paid: Record<string, string[]>;
   users: User[];
-  config: { currency: string; lead_days: number; language: string };
+  /** Every active human user: the candidates for membership. */
+  all_users: User[];
+  config: {
+    currency: string;
+    currency_override: string | null;
+    lead_days: number;
+    /** Configured member ids; empty means everyone. */
+    members: string[];
+    language: string;
+  };
 }
 
 export interface ExpenseSplit {

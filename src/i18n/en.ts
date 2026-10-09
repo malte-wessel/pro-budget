@@ -6,6 +6,26 @@ export const en = {
   "nav.items": "Items",
   "nav.calendar": "Calendar",
   "nav.insights": "Insights",
+  "nav.settings": "Settings",
+  "settings.categories": "Categories",
+  "settings.categories_hint":
+    "Every item belongs to a category. A category in use cannot be deleted.",
+  "settings.members": "Household members",
+  "settings.members_hint":
+    "Home Assistant users who appear in the budget. With none selected, every active user is a member.",
+  "settings.members_admin": "Only administrators can change the household settings.",
+  "settings.household": "Household",
+  "settings.currency": "Currency",
+  "settings.currency_hint":
+    "ISO 4217 code. Leave empty to use Home Assistant's currency ({currency}).",
+  "settings.lead_days": "Days ahead a payment counts as upcoming",
+  "settings.lead_days_hint":
+    "Manual payments appear on the to-do list this many days before they are due.",
+  "settings.about": "About",
+  "settings.version": "Pro Budget {version}",
+  "settings.saved": "Saved.",
+  "validation.currency": "Enter a three-letter currency code or leave it empty.",
+  "validation.lead_days": "Enter a number from 0 to 60.",
   "nav.categories": "Categories",
   "common.all": "Everyone",
   "common.add": "Add",
