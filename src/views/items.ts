@@ -25,6 +25,13 @@ const TYPE_ICONS: Record<Item["type"], string> = {
   saving: "mdi:piggy-bank-outline",
 };
 
+// Amount colours by item type, inline because the table renders templates in its shadow root.
+const TYPE_COLORS: Record<Item["type"], string> = {
+  earning: "var(--success-color, #43a047)",
+  expense: "var(--error-color, #db4437)",
+  saving: "var(--info-color, #4a90d9)",
+};
+
 /** A row of the data table: the item plus the values the table sorts, filters and groups by. */
 interface Row {
   id: string;
@@ -151,14 +158,16 @@ export class ProBudgetItems extends LitElement {
         type: "numeric",
         sortable: true,
         minWidth: "120px",
-        template: (r) => money(h, r.amount, r.currency),
+        template: (r) =>
+          html`<span style="color: ${TYPE_COLORS[r.item.type]}">${money(h, r.amount, r.currency)}</span>`,
       },
       monthly: {
         title: t(h, "items.col_monthly"),
         type: "numeric",
         sortable: true,
         minWidth: "120px",
-        template: (r) => html`<span class=${r.item.type}>${money(h, r.monthly, r.currency)}</span>`,
+        template: (r) =>
+          html`<span style="color: ${TYPE_COLORS[r.item.type]}">${money(h, r.monthly, r.currency)}</span>`,
       },
       recurrence: {
         title: t(h, "items.col_recurrence"),
