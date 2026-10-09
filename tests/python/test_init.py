@@ -21,7 +21,7 @@ async def test_setup_registers_panel(hass: HomeAssistant) -> None:
     assert PANEL_URL_PATH in panels
     custom = panels[PANEL_URL_PATH].config["_panel_custom"]
     assert custom["name"] == "pro-budget-panel"
-    assert custom["module_url"].startswith("/pro_budget/static/pro-budget.js?v=")
+    assert custom["module_url"].startswith("/pro_budget/static/pro-budget.js?v=0.1.0-")
 
     assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
