@@ -1,19 +1,13 @@
-import { css, html, LitElement, nothing } from "lit";
+import { css, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { renderDialog } from "../ha/dialog.ts";
-import type { HaFormErrors, HaFormSchema, HomeAssistant } from "../ha/types.ts";
+import type { HomeAssistant } from "../ha/types.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { Category } from "../types.ts";
+import { fieldStyles, selectorField, textField } from "./fields.ts";
 import { errorText } from "./item-dialog.ts";
-
-const SCHEMA: HaFormSchema[] = [
-  { name: "name", required: true, selector: { text: {} } },
-  { name: "icon", selector: { icon: {} } },
-  // HA's own colour picker: the named theme colours, stored by name.
-  { name: "color", selector: { ui_color: {} } },
-];
 
 @customElement("pro-budget-category-dialog")
 export class ProBudgetCategoryDialog extends LitElement {
@@ -26,6 +20,7 @@ export class ProBudgetCategoryDialog extends LitElement {
 
   static styles = [
     sharedStyles,
+    unsafeCSS(fieldStyles),
     css`
       ha-alert {
         display: block;
@@ -48,19 +43,23 @@ export class ProBudgetCategoryDialog extends LitElement {
     this._open = true;
   }
 
-  private get _errors(): HaFormErrors {
-    return String(this._data.name ?? "").trim()
-      ? {}
-      : { name: t(this.hass, "validation.required") };
-  }
-
   private _close() {
     this._open = false;
   }
 
+  private _onClosed = (e: Event) => {
+    if (e.target !== this.renderRoot.querySelector("ha-dialog")) return;
+    this._close();
+  };
+
+  private get _nameError(): string | undefined {
+    return String(this._data.name ?? "").trim() ? undefined : t(this.hass, "validation.required");
+  }
+
   private async _save() {
+    if (this._nameError) return;
     const fields = {
-      name: String(this._data.name ?? ""),
+      name: String(this._data.name ?? "").trim(),
       icon: (this._data.icon as string) || null,
       color: (this._data.color as string) || null,
     };
@@ -73,39 +72,47 @@ export class ProBudgetCategoryDialog extends LitElement {
     }
   }
 
-  // ha-dialog fires `closed` asynchronously, also from an element that was already removed
-  // on close. When the dialog was reopened in between, that stale event must not close it.
-  private _onClosed = (e: Event) => {
-    if (e.target !== this.renderRoot.querySelector("ha-dialog")) return;
-    this._close();
-  };
-
   render() {
     if (!this._open) return nothing;
+    const h = this.hass;
     return renderDialog({
-      heading: t(this.hass, this._category ? "categories.edit" : "categories.new"),
+      heading: t(h, this._category ? "categories.edit" : "categories.new"),
       onClosed: this._onClosed,
       content: html`
         ${this._error ? html`<ha-alert alert-type="error">${this._error}</ha-alert>` : nothing}
-        <ha-form
-          .hass=${this.hass}
-          .data=${this._data}
-          .schema=${SCHEMA}
-          .computeLabel=${(s: HaFormSchema) => t(this.hass, `categories.${s.name}` as never)}
-          .error=${this._touched ? this._errors : {}}
-          .computeError=${(error: string) => error}
-          @value-changed=${(e: CustomEvent<{ value: Record<string, unknown> }>) => {
-            this._touched = true;
-            this._data = e.detail.value;
-          }}
-        ></ha-form>
+        <div class="fields">
+          ${textField(h, {
+            label: t(h, "categories.name"),
+            value: this._data.name,
+            required: true,
+            autofocus: true,
+            error: this._nameError,
+            touched: this._touched,
+            onChange: (v) => {
+              this._touched = true;
+              this._data = { ...this._data, name: v };
+            },
+          })}
+          ${selectorField(h, {
+            label: t(h, "categories.icon"),
+            value: this._data.icon,
+            selector: { icon: {} },
+            onChange: (v) => (this._data = { ...this._data, icon: v }),
+          })}
+          ${selectorField(h, {
+            label: t(h, "categories.color"),
+            value: this._data.color,
+            selector: { ui_color: {} },
+            onChange: (v) => (this._data = { ...this._data, color: v }),
+          })}
+        </div>
       `,
       actions: [
-        { label: t(this.hass, "common.cancel"), onClick: () => this._close() },
+        { label: t(h, "common.cancel"), onClick: () => this._close() },
         {
-          label: t(this.hass, "common.save"),
+          label: t(h, "common.save"),
           primary: true,
-          disabled: Object.keys(this._errors).length > 0,
+          disabled: !!this._nameError,
           onClick: () => this._save(),
         },
       ],

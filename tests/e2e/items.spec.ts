@@ -18,7 +18,7 @@ test("create, edit and delete an item through the dialog", async ({ page }) => {
   // Create
   await p.locator("ha-button[slot=fab]").click();
   const dialog = p.locator("pro-budget-item-dialog ha-dialog");
-  const inputs = dialog.locator("ha-selector-text input");
+  const inputs = dialog.locator("ha-input input");
   await inputs.nth(0).fill(TITLE);
   await inputs.nth(1).fill("12,50");
   await dialog.locator("ha-button[data-action=primary]").click();
@@ -31,18 +31,18 @@ test("create, edit and delete an item through the dialog", async ({ page }) => {
 
   // Edit: change the amount
   await row.click();
-  await expect(dialog.locator("ha-form").first()).toBeVisible();
+  await expect(dialog.locator("ha-input").first()).toBeVisible();
   await expect(inputs.nth(0)).toHaveValue(TITLE);
   await inputs.nth(1).fill("20");
   await dialog.locator("ha-button[data-action=primary]").click();
   await expect(dialog).toHaveCount(0);
   await expect(row).toContainText(/20[.,]00/);
 
-  // Validation: an empty amount is refused inside the dialog
+  // Validation: an empty amount marks the field invalid and disables Save
   await row.click();
   await inputs.nth(1).fill("");
-  await dialog.locator("ha-button[data-action=primary]").click();
-  await expect(dialog.locator("ha-alert")).toBeVisible();
+  await expect(dialog.locator("ha-button[data-action=primary]")).toHaveJSProperty("disabled", true);
+  await expect(dialog.locator("ha-input").nth(1)).toHaveJSProperty("invalid", true);
   await dialog.locator("ha-button[data-action=secondary]").click();
 
   // Delete, through the row's overflow menu (inline icon buttons on wide screens) and the confirmation

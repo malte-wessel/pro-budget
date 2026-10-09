@@ -1,10 +1,10 @@
-import { css, html, LitElement, nothing } from "lit";
+import { css, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api, ApiError } from "../api.ts";
-import { amountInput, parseAmount } from "../format.ts";
+import { amountInput, monthName, parseAmount, weekdayName } from "../format.ts";
 import { renderDialog } from "../ha/dialog.ts";
-import type { HaFormErrors, HaFormSchema, HomeAssistant } from "../ha/types.ts";
-import { t } from "../i18n.ts";
+import type { HaFormErrors, HomeAssistant } from "../ha/types.ts";
+import { t, type I18nKey } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import {
   COST_KINDS,
@@ -16,7 +16,7 @@ import {
   type Item,
   type ItemFields,
 } from "../types.ts";
-import { monthName, weekdayName } from "../format.ts";
+import { fieldStyles, selectField, selectorField, textField } from "./fields.ts";
 
 type FormData = Record<string, unknown>;
 
@@ -61,14 +61,11 @@ export class ProBudgetItemDialog extends LitElement {
   @state() private _error = "";
   @state() private _saving = false;
   @state() private _touched = new Set<string>();
-  @state() private _submitted = false;
 
   static styles = [
     sharedStyles,
+    unsafeCSS(fieldStyles),
     css`
-      ha-dialog {
-        --mdc-dialog-min-width: min(560px, 95vw);
-      }
       ha-alert {
         display: block;
         margin-bottom: 12px;
@@ -82,8 +79,23 @@ export class ProBudgetItemDialog extends LitElement {
     this._data = toForm(item, this.budget, this.hass?.user?.id);
     this._error = "";
     this._touched = new Set();
-    this._submitted = false;
     this._open = true;
+  }
+
+  private _close() {
+    this._open = false;
+  }
+
+  // ha-dialog fires `closed` asynchronously, also from an element that was already removed
+  // on close. When the dialog was reopened in between, that stale event must not close it.
+  private _onClosed = (e: Event) => {
+    if (e.target !== this.renderRoot.querySelector("ha-dialog")) return;
+    this._close();
+  };
+
+  private _set(key: string, value: unknown) {
+    this._touched = new Set([...this._touched, key]);
+    this._data = { ...this._data, [key]: value };
   }
 
   /** Every field's problem, by field name; empty when the form can be saved. */
@@ -111,185 +123,21 @@ export class ProBudgetItemDialog extends LitElement {
     return errors;
   }
 
-  /** Errors shown: only for fields the user touched, or all after a save attempt (as HA's dialogs). */
-  private get _visibleErrors(): HaFormErrors {
-    const all = this._errors;
-    if (this._submitted) return all;
-    return Object.fromEntries(Object.entries(all).filter(([k]) => this._touched.has(k)));
-  }
-
-  private _valueChanged(e: CustomEvent<{ value: FormData }>) {
-    const next = e.detail.value;
-    const touched = new Set(this._touched);
-    for (const key of new Set([...Object.keys(next), ...Object.keys(this._data)])) {
-      if (next[key] !== this._data[key]) touched.add(key);
-    }
-    this._touched = touched;
-    this._data = next;
-  }
-
-  private _close() {
-    this._open = false;
-  }
-
-  private get _schema(): HaFormSchema[] {
-    const b = this.budget!;
-    const rec = this._data.recurrence as string;
-    const weekly = rec === "weekly" || rec === "biweekly";
-    const long = LONG_RECURRENCES.includes(rec as never);
-    const opt = (values: string[], label: (v: string) => string) =>
-      values.map((value) => ({ value, label: label(value) }));
-    const schema: HaFormSchema[] = [
-      { name: "title", required: true, selector: { text: {} } },
-      {
-        name: "type",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: opt(ITEM_TYPES, (v) => t(this.hass, `type.${v}` as never)),
-          },
-        },
-      },
-      {
-        name: "cost_kind",
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: opt(COST_KINDS, (v) => t(this.hass, `cost_kind.${v}` as never)),
-          },
-        },
-      },
-      {
-        name: "amount",
-        required: true,
-        selector: { text: { type: "text", suffix: b.config.currency } },
-      },
-      {
-        name: "category_id",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: b.categories.map((c) => ({ value: c.id, label: c.name })),
-          },
-        },
-      },
-      {
-        name: "user_id",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: b.users.map((u) => ({ value: u.id, label: u.name })),
-          },
-        },
-      },
-      {
-        name: "recurrence",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: opt(RECURRENCES, (v) => t(this.hass, `recurrence.${v}` as never)),
-          },
-        },
-      },
-    ];
-    const due: HaFormSchema[] = [];
-    if (weekly) {
-      due.push({
-        name: "due_day",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: [1, 2, 3, 4, 5, 6, 7].map((d) => ({
-              value: String(d),
-              label: weekdayName(this.hass, d),
-            })),
-          },
-        },
-      });
-    } else if (rec !== "daily") {
-      due.push({
-        name: "due_day",
-        required: true,
-        selector: { number: { min: 1, max: 31, mode: "box" } },
-      });
-    }
-    if (long) {
-      due.push({
-        name: "due_month",
-        required: true,
-        selector: {
-          select: {
-            mode: "dropdown",
-            options: Array.from({ length: 12 }, (_, i) => ({
-              value: String(i + 1),
-              label: monthName(this.hass, i + 1),
-            })),
-          },
-        },
-      });
-    }
-    schema.push(...due);
-    schema.push({ name: "shared", selector: { boolean: {} } });
-    schema.push({
-      name: "advanced",
-      type: "expandable",
-      schema: [
-        {
-          name: "payment_method",
-          selector: {
-            select: {
-              mode: "dropdown",
-              options: [
-                { value: "", label: t(this.hass, "common.none") },
-                ...opt(PAYMENT_METHODS, (v) => t(this.hass, `payment.${v}` as never)),
-              ],
-            },
-          },
-        },
-        { name: "currency", selector: { text: {} } },
-        { name: "start", selector: { date: {} } },
-        { name: "end", selector: { date: {} } },
-      ],
-    });
-    return schema;
-  }
-
-  private _label = (s: HaFormSchema): string => {
-    if (s.name === "user_id") {
-      return t(this.hass, this._data.type === "earning" ? "item.user_earning" : "item.user");
-    }
-    if (s.name === "due_day") {
-      const rec = this._data.recurrence;
-      return t(
-        this.hass,
-        rec === "weekly" || rec === "biweekly" ? "item.due_weekday" : "item.due_day",
-      );
-    }
-    if (s.name === "category_id") return t(this.hass, "item.category");
-    return t(this.hass, `item.${s.name}` as never);
-  };
-
-  private _fields(): ItemFields | string {
+  private _fields(): ItemFields {
     const d = this._data;
-    const amount = parseAmount(String(d.amount ?? ""));
-    if (amount === null) return t(this.hass, "item.amount_invalid");
     const rec = d.recurrence as ItemFields["recurrence"];
     const long = LONG_RECURRENCES.includes(rec);
     return {
-      title: String(d.title ?? ""),
+      title: String(d.title ?? "").trim(),
       type: d.type as ItemFields["type"],
-      amount,
+      amount: parseAmount(String(d.amount ?? "")) ?? 0,
       currency: d.currency ? String(d.currency).toUpperCase() : null,
       category_id: String(d.category_id ?? ""),
       user_id: String(d.user_id ?? ""),
       recurrence: rec,
-      due_day: rec === "daily" ? null : d.due_day == null ? null : Number(d.due_day),
-      due_month: long && d.due_month != null ? Number(d.due_month) : null,
+      due_day:
+        rec === "daily" ? null : d.due_day == null || d.due_day === "" ? null : Number(d.due_day),
+      due_month: long && d.due_month ? Number(d.due_month) : null,
       cost_kind: (d.cost_kind as ItemFields["cost_kind"]) ?? "fixed",
       shared: Boolean(d.shared),
       payment_method: d.payment_method ? (d.payment_method as ItemFields["payment_method"]) : null,
@@ -299,18 +147,12 @@ export class ProBudgetItemDialog extends LitElement {
   }
 
   private async _save() {
-    this._submitted = true;
     if (Object.keys(this._errors).length) return;
-    const fields = this._fields();
-    if (typeof fields === "string") {
-      this._error = fields;
-      return;
-    }
     this._saving = true;
     this._error = "";
     try {
-      if (this._item) await api.updateItem(this.hass!, this._item.id, fields);
-      else await api.createItem(this.hass!, fields);
+      if (this._item) await api.updateItem(this.hass!, this._item.id, this._fields());
+      else await api.createItem(this.hass!, this._fields());
       this._close();
     } catch (err) {
       this._error = errorText(this.hass, err);
@@ -319,12 +161,155 @@ export class ProBudgetItemDialog extends LitElement {
     }
   }
 
-  // ha-dialog fires `closed` asynchronously, also from an element that was already removed
-  // on close. When the dialog was reopened in between, that stale event must not close it.
-  private _onClosed = (e: Event) => {
-    if (e.target !== this.renderRoot.querySelector("ha-dialog")) return;
-    this._close();
-  };
+  private _renderFields() {
+    const h = this.hass;
+    const b = this.budget!;
+    const d = this._data;
+    const errors = this._errors;
+    const touched = (k: string) => this._touched.has(k);
+    const opt = (values: readonly string[], prefix: string) =>
+      values.map((value) => ({ value, label: t(h, `${prefix}.${value}` as I18nKey) }));
+    const rec = String(d.recurrence ?? "");
+    const weekly = rec === "weekly" || rec === "biweekly";
+    const long = LONG_RECURRENCES.includes(rec as never);
+    return html`
+      <div class="fields">
+        ${textField(h, {
+          label: t(h, "item.title"),
+          value: d.title,
+          required: true,
+          autofocus: true,
+          error: errors.title,
+          touched: touched("title"),
+          onChange: (v) => this._set("title", v),
+        })}
+        ${selectField(h, {
+          label: t(h, "item.type"),
+          value: d.type,
+          required: true,
+          options: opt(ITEM_TYPES, "type"),
+          onChange: (v) => this._set("type", v),
+        })}
+        ${textField(h, {
+          label: t(h, "item.amount"),
+          value: d.amount,
+          required: true,
+          suffix: b.config.currency,
+          error: errors.amount,
+          touched: touched("amount"),
+          onChange: (v) => this._set("amount", v),
+        })}
+        ${selectField(h, {
+          label: t(h, "item.cost_kind"),
+          value: d.cost_kind,
+          options: opt(COST_KINDS, "cost_kind"),
+          onChange: (v) => this._set("cost_kind", v),
+        })}
+        ${selectField(h, {
+          label: t(h, "item.category"),
+          value: d.category_id,
+          required: true,
+          options: b.categories.map((c) => ({ value: c.id, label: c.name })),
+          onChange: (v) => this._set("category_id", v),
+        })}
+        ${selectField(h, {
+          label: t(h, d.type === "earning" ? "item.user_earning" : "item.user"),
+          value: d.user_id,
+          required: true,
+          options: b.users.map((u) => ({ value: u.id, label: u.name })),
+          onChange: (v) => this._set("user_id", v),
+        })}
+        ${selectField(h, {
+          label: t(h, "item.recurrence"),
+          value: d.recurrence,
+          required: true,
+          options: opt(RECURRENCES, "recurrence"),
+          onChange: (v) => this._set("recurrence", v),
+        })}
+        ${
+          weekly
+            ? selectField(h, {
+                label: t(h, "item.due_weekday"),
+                value: d.due_day,
+                required: true,
+                options: [1, 2, 3, 4, 5, 6, 7].map((n) => ({
+                  value: String(n),
+                  label: weekdayName(h, n),
+                })),
+                onChange: (v) => this._set("due_day", v),
+              })
+            : rec === "daily"
+              ? nothing
+              : textField(h, {
+                  label: t(h, "item.due_day"),
+                  value: d.due_day,
+                  required: true,
+                  type: "number",
+                  min: 1,
+                  max: 31,
+                  error: errors.due_day,
+                  touched: touched("due_day"),
+                  onChange: (v) => this._set("due_day", v),
+                })
+        }
+        ${
+          long
+            ? selectField(h, {
+                label: t(h, "item.due_month"),
+                value: d.due_month,
+                required: true,
+                options: Array.from({ length: 12 }, (_, i) => ({
+                  value: String(i + 1),
+                  label: monthName(h, i + 1),
+                })),
+                onChange: (v) => this._set("due_month", v),
+              })
+            : nothing
+        }
+        ${selectorField(h, {
+          label: t(h, "item.shared"),
+          value: Boolean(d.shared),
+          selector: { boolean: {} },
+          onChange: (v) => this._set("shared", Boolean(v)),
+        })}
+        <ha-expansion-panel outlined .header=${t(h, "item.advanced")}>
+          <div class="fields">
+            ${selectField(h, {
+              label: t(h, "item.payment_method"),
+              value: d.payment_method || "",
+              options: [
+                { value: "", label: t(h, "common.none") },
+                ...opt(PAYMENT_METHODS, "payment"),
+              ],
+              onChange: (v) => this._set("payment_method", v),
+            })}
+            ${textField(h, {
+              label: t(h, "item.currency"),
+              value: d.currency,
+              onChange: (v) => this._set("currency", v),
+            })}
+            ${selectorField(h, {
+              label: t(h, "item.start"),
+              value: d.start,
+              selector: { date: {} },
+              onChange: (v) => this._set("start", v),
+            })}
+            ${selectorField(h, {
+              label: t(h, "item.end"),
+              value: d.end,
+              selector: { date: {} },
+              onChange: (v) => this._set("end", v),
+            })}
+            ${
+              errors.end && touched("end")
+                ? html`<ha-alert alert-type="error">${errors.end}</ha-alert>`
+                : nothing
+            }
+          </div>
+        </ha-expansion-panel>
+      </div>
+    `;
+  }
 
   render() {
     if (!this._open || !this.budget) return nothing;
@@ -334,15 +319,7 @@ export class ProBudgetItemDialog extends LitElement {
       onClosed: this._onClosed,
       content: html`
         ${this._error ? html`<ha-alert alert-type="error">${this._error}</ha-alert>` : nothing}
-        <ha-form
-          .hass=${this.hass}
-          .data=${this._data}
-          .schema=${this._schema}
-          .computeLabel=${this._label}
-          .error=${this._visibleErrors}
-          .computeError=${(error: string) => error}
-          @value-changed=${this._valueChanged}
-        ></ha-form>
+        ${this._renderFields()}
       `,
       actions: [
         { label: t(this.hass, "common.cancel"), onClick: () => this._close() },

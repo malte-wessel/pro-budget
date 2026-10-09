@@ -22,9 +22,8 @@ test("items view shows HA's data table and opens the dialog with a real form", a
   await p.locator("ha-button[slot=fab]").click();
   // The ha-dialog host has no box of its own; assert on its content.
   const dialog = p.locator("pro-budget-item-dialog ha-dialog");
-  await expect(dialog.locator("ha-form").first()).toBeVisible();
-  // ha-form rendered Home Assistant's selectors, not fallbacks.
-  await expect(dialog.locator("ha-selector-text").first()).toBeVisible();
+  // The fields are Home Assistant's own elements, not fallbacks.
+  await expect(dialog.locator("ha-input").first()).toBeVisible();
   await expect(dialog.locator("ha-selector-select").first()).toBeVisible();
   await dialog.locator("ha-button[data-action=secondary]").click();
   await expect(dialog).toHaveCount(0);
@@ -38,8 +37,8 @@ test("editing an item round-trips through the dialog", async ({ page }) => {
   const row = p.locator("ha-data-table .mdc-data-table__row", { hasText: title });
   await row.click();
   const dialog = p.locator("pro-budget-item-dialog ha-dialog");
-  await expect(dialog.locator("ha-form").first()).toBeVisible();
-  const titleField = dialog.locator("ha-selector-text input").first();
+  await expect(dialog.locator("ha-input").first()).toBeVisible();
+  const titleField = dialog.locator("ha-input input").first();
   await expect(titleField).toHaveValue(title);
   await dialog.locator("ha-button[data-action=secondary]").click();
 });
