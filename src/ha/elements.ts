@@ -13,6 +13,7 @@ export const HA_ELEMENTS = {
   form: "ha-form",
   dialog: "ha-dialog",
   dialogHeader: "ha-dialog-header",
+  dialogFooter: "ha-dialog-footer",
   button: "ha-button",
   alert: "ha-alert",
   circularProgress: "ha-spinner",

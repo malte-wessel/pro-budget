@@ -69,6 +69,9 @@ export interface DataTableColumn<R> {
   extraTemplate?: (row: R) => TemplateResult | string;
 }
 
+/** ha-form's `error`: a message per field name. */
+export type HaFormErrors = Record<string, string>;
+
 export type DataTableColumns<R> = Record<string, DataTableColumn<R>>;
 
 export interface DataTableSorting {

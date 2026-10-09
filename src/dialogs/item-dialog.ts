@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { api, ApiError } from "../api.ts";
 import { amountInput, parseAmount } from "../format.ts";
 import { renderDialog } from "../ha/dialog.ts";
-import type { HaFormSchema, HomeAssistant } from "../ha/types.ts";
+import type { HaFormErrors, HaFormSchema, HomeAssistant } from "../ha/types.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import {
@@ -60,6 +60,8 @@ export class ProBudgetItemDialog extends LitElement {
   @state() private _data: FormData = {};
   @state() private _error = "";
   @state() private _saving = false;
+  @state() private _touched = new Set<string>();
+  @state() private _submitted = false;
 
   static styles = [
     sharedStyles,
@@ -79,7 +81,51 @@ export class ProBudgetItemDialog extends LitElement {
     this._item = item;
     this._data = toForm(item, this.budget, this.hass?.user?.id);
     this._error = "";
+    this._touched = new Set();
+    this._submitted = false;
     this._open = true;
+  }
+
+  /** Every field's problem, by field name; empty when the form can be saved. */
+  private get _errors(): HaFormErrors {
+    const d = this._data;
+    const h = this.hass;
+    const errors: HaFormErrors = {};
+    if (!String(d.title ?? "").trim()) errors.title = t(h, "validation.required");
+    if (parseAmount(String(d.amount ?? "")) === null) errors.amount = t(h, "validation.amount");
+    if (!d.category_id) errors.category_id = t(h, "validation.required");
+    if (!d.user_id) errors.user_id = t(h, "validation.required");
+    const rec = String(d.recurrence ?? "");
+    if (rec !== "daily") {
+      const day = Number(d.due_day);
+      const max = rec === "weekly" || rec === "biweekly" ? 7 : 31;
+      if (d.due_day == null || d.due_day === "" || !Number.isInteger(day) || day < 1 || day > max) {
+        errors.due_day = t(h, "validation.due_day", { max });
+      }
+    }
+    if (LONG_RECURRENCES.includes(rec as never) && !d.due_month) {
+      errors.due_month = t(h, "validation.required");
+    }
+    if (d.start && d.end && String(d.start) > String(d.end))
+      errors.end = t(h, "validation.end_before_start");
+    return errors;
+  }
+
+  /** Errors shown: only for fields the user touched, or all after a save attempt (as HA's dialogs). */
+  private get _visibleErrors(): HaFormErrors {
+    const all = this._errors;
+    if (this._submitted) return all;
+    return Object.fromEntries(Object.entries(all).filter(([k]) => this._touched.has(k)));
+  }
+
+  private _valueChanged(e: CustomEvent<{ value: FormData }>) {
+    const next = e.detail.value;
+    const touched = new Set(this._touched);
+    for (const key of new Set([...Object.keys(next), ...Object.keys(this._data)])) {
+      if (next[key] !== this._data[key]) touched.add(key);
+    }
+    this._touched = touched;
+    this._data = next;
   }
 
   private _close() {
@@ -96,64 +142,58 @@ export class ProBudgetItemDialog extends LitElement {
     const schema: HaFormSchema[] = [
       { name: "title", required: true, selector: { text: {} } },
       {
-        name: "",
-        type: "grid",
-        schema: [
-          {
-            name: "type",
-            required: true,
-            selector: {
-              select: {
-                mode: "dropdown",
-                options: opt(ITEM_TYPES, (v) => t(this.hass, `type.${v}` as never)),
-              },
-            },
+        name: "type",
+        required: true,
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: opt(ITEM_TYPES, (v) => t(this.hass, `type.${v}` as never)),
           },
-          {
-            name: "cost_kind",
-            selector: {
-              select: {
-                mode: "dropdown",
-                options: opt(COST_KINDS, (v) => t(this.hass, `cost_kind.${v}` as never)),
-              },
-            },
+        },
+      },
+      {
+        name: "cost_kind",
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: opt(COST_KINDS, (v) => t(this.hass, `cost_kind.${v}` as never)),
           },
-          {
-            name: "amount",
-            required: true,
-            selector: { text: { type: "text", suffix: b.config.currency } },
+        },
+      },
+      {
+        name: "amount",
+        required: true,
+        selector: { text: { type: "text", suffix: b.config.currency } },
+      },
+      {
+        name: "category_id",
+        required: true,
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: b.categories.map((c) => ({ value: c.id, label: c.name })),
           },
-          {
-            name: "category_id",
-            required: true,
-            selector: {
-              select: {
-                mode: "dropdown",
-                options: b.categories.map((c) => ({ value: c.id, label: c.name })),
-              },
-            },
+        },
+      },
+      {
+        name: "user_id",
+        required: true,
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: b.users.map((u) => ({ value: u.id, label: u.name })),
           },
-          {
-            name: "user_id",
-            required: true,
-            selector: {
-              select: {
-                mode: "dropdown",
-                options: b.users.map((u) => ({ value: u.id, label: u.name })),
-              },
-            },
+        },
+      },
+      {
+        name: "recurrence",
+        required: true,
+        selector: {
+          select: {
+            mode: "dropdown",
+            options: opt(RECURRENCES, (v) => t(this.hass, `recurrence.${v}` as never)),
           },
-          {
-            name: "recurrence",
-            required: true,
-            selector: {
-              select: {
-                mode: "dropdown",
-                options: opt(RECURRENCES, (v) => t(this.hass, `recurrence.${v}` as never)),
-              },
-            },
-          },
-        ],
+        },
       },
     ];
     const due: HaFormSchema[] = [];
@@ -193,7 +233,7 @@ export class ProBudgetItemDialog extends LitElement {
         },
       });
     }
-    if (due.length) schema.push({ name: "", type: "grid", schema: due });
+    schema.push(...due);
     schema.push({ name: "shared", selector: { boolean: {} } });
     schema.push({
       name: "advanced",
@@ -212,14 +252,8 @@ export class ProBudgetItemDialog extends LitElement {
           },
         },
         { name: "currency", selector: { text: {} } },
-        {
-          name: "",
-          type: "grid",
-          schema: [
-            { name: "start", selector: { date: {} } },
-            { name: "end", selector: { date: {} } },
-          ],
-        },
+        { name: "start", selector: { date: {} } },
+        { name: "end", selector: { date: {} } },
       ],
     });
     return schema;
@@ -265,6 +299,8 @@ export class ProBudgetItemDialog extends LitElement {
   }
 
   private async _save() {
+    this._submitted = true;
+    if (Object.keys(this._errors).length) return;
     const fields = this._fields();
     if (typeof fields === "string") {
       this._error = fields;
@@ -303,7 +339,9 @@ export class ProBudgetItemDialog extends LitElement {
           .data=${this._data}
           .schema=${this._schema}
           .computeLabel=${this._label}
-          @value-changed=${(e: CustomEvent<{ value: FormData }>) => (this._data = e.detail.value)}
+          .error=${this._visibleErrors}
+          .computeError=${(error: string) => error}
+          @value-changed=${this._valueChanged}
         ></ha-form>
       `,
       actions: [
@@ -311,7 +349,7 @@ export class ProBudgetItemDialog extends LitElement {
         {
           label: t(this.hass, "common.save"),
           primary: true,
-          disabled: this._saving,
+          disabled: this._saving || Object.keys(this._errors).length > 0,
           onClick: () => this._save(),
         },
       ],

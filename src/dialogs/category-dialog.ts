@@ -2,7 +2,7 @@ import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { api } from "../api.ts";
 import { renderDialog } from "../ha/dialog.ts";
-import type { HaFormSchema, HomeAssistant } from "../ha/types.ts";
+import type { HaFormErrors, HaFormSchema, HomeAssistant } from "../ha/types.ts";
 import { t } from "../i18n.ts";
 import { sharedStyles } from "../styles.ts";
 import type { Category } from "../types.ts";
@@ -22,6 +22,7 @@ export class ProBudgetCategoryDialog extends LitElement {
   @state() private _open = false;
   @state() private _data: Record<string, unknown> = {};
   @state() private _error = "";
+  @state() private _touched = false;
 
   static styles = [
     sharedStyles,
@@ -43,7 +44,14 @@ export class ProBudgetCategoryDialog extends LitElement {
         }
       : {};
     this._error = "";
+    this._touched = false;
     this._open = true;
+  }
+
+  private get _errors(): HaFormErrors {
+    return String(this._data.name ?? "").trim()
+      ? {}
+      : { name: t(this.hass, "validation.required") };
   }
 
   private _close() {
@@ -84,13 +92,22 @@ export class ProBudgetCategoryDialog extends LitElement {
           .data=${this._data}
           .schema=${SCHEMA}
           .computeLabel=${(s: HaFormSchema) => t(this.hass, `categories.${s.name}` as never)}
-          @value-changed=${(e: CustomEvent<{ value: Record<string, unknown> }>) =>
-            (this._data = e.detail.value)}
+          .error=${this._touched ? this._errors : {}}
+          .computeError=${(error: string) => error}
+          @value-changed=${(e: CustomEvent<{ value: Record<string, unknown> }>) => {
+            this._touched = true;
+            this._data = e.detail.value;
+          }}
         ></ha-form>
       `,
       actions: [
         { label: t(this.hass, "common.cancel"), onClick: () => this._close() },
-        { label: t(this.hass, "common.save"), primary: true, onClick: () => this._save() },
+        {
+          label: t(this.hass, "common.save"),
+          primary: true,
+          disabled: Object.keys(this._errors).length > 0,
+          onClick: () => this._save(),
+        },
       ],
     });
   }
